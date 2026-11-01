@@ -66,7 +66,7 @@ Codexの制限付きコマンド環境では一太郎の子プロセスが維持
 
 `samples/<id>/macro/` にコマンドJSON、生成マクロ、UTF-16LEのgetter結果・本文、nonce付き完了通知を保存します。これは診断用の実行ディレクトリです。検証証跡は `evidence/` に別途記録したマクロソース・getter結果と、manifest内の観測値・本文です。証跡とJTDのSHA-256を保存し、`verify`が欠落や改変を検出します。baselineも次の試料の前後でハッシュを照合します。
 
-`verified` は保存前／再読込後のmacro getter証跡と照合結果に基づきます。スクリーンショットは収録しないため、`method: "macro-getter"`、`hasScreenshot: false` と明記します。画像を生成して画面証跡と呼ぶことはしません。
+`verified` は保存前／再読込後のmacro getter証跡と照合結果に基づきます。証跡は各段（保存前・再読込後）ごとにマクロのソースと結果の 2 ファイルで、`method: "macro-getter"` と明記します。画面の画像は収録しません（0.21.3 までの manifest にあった `verification.hasScreenshot` は 0.22.0 で削除しました）。
 
 `verify`は記録の整合性検査です。試料が要求に適合したかはmanifestの`status`と`verification`で確認します。`saved`は要求不一致でもファイルが保存された状態、`failed`は処理失敗、`not-started`は計画にある未着手試料です。未着手があれば`verify`も失敗します。
 

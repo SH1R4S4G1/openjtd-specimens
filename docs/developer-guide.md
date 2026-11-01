@@ -133,7 +133,7 @@ Sample Catalog は外部向けの契約で、`compile` が内部形式の Execut
 - [エージェントの実行経路と既存Recipe](agent-usage.md)
 - [JTD差分観測](observation.md)
 
-画面操作で試料を作っていた旧経路（Computer Use の `sky` を受け取る Workbench、UI Automation の読み取り、`scripts/build-bridge.mjs`、GUI アダプタ）は、`bin/` のどのコマンドからも使われておらず、0.21.0 で削除した。経緯と当時のコードは git の履歴（0.20.2 以前）にある。`src/evidence.mjs` のスクリーンショットのハッシュ検証は、過去の run を `verify` できるように残している。`src/ichitaro-build.mjs` の UI Automation は PDF 経路で窓の文言を読むためのもので、旧経路とは別物である。
+画面操作で試料を作っていた旧経路（Computer Use の `sky` を受け取る Workbench、UI Automation の読み取り、`scripts/build-bridge.mjs`、GUI アダプタ）は、`bin/` のどのコマンドからも使われておらず、0.21.0 で削除した。経緯と当時のコードは git の履歴（0.20.2 以前）にある。スクリーンショットを証跡として保存する経路（`saveEvidence`）と manifest の `verification.hasScreenshot` は 0.22.0 で削除し、証跡としてはマクロの読み戻し（保存前と再読込後）だけを認める（`verified` にはほかに、検証の合格、題名の一致、観測値が要る）。`verify` は証跡ファイルを種類によらずハッシュで照合するので、過去の run に残るスクリーンショットと `hasScreenshot` 欄はそのまま検査できる。`src/ichitaro-build.mjs` の UI Automation は PDF 経路で窓の文言を読むためのもので、旧経路とは別物である。
 
 `catalogs/*` と `runs/*` はローカルの実機証跡（実験ストレージ）で、通常のcloneには含まれません。証跡へのリンクは上記のEvidence gateで検査します。歴史的な件数・速度・能力段階は当該版の記録であり、最新状態は生成された一覧または新規作成したmacro catalogのsummaryを参照します。罫線表はv0.9の旧属性証跡とv0.10以降の検証を区別してください。
 

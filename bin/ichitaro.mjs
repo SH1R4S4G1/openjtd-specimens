@@ -20,7 +20,7 @@ const help = {
     validate: 'Sample Catalog または PDF Catalog（kind: pdf-from-jtd）のSchema・能力・意味的制約を検証します。一太郎は不要です。',
     compile: 'Sample Catalogを既存Execution Recipeと要求対応表へ変換します。一太郎は起動しません。',
     plan: 'JSON レシピを検証し、基準試料と独立した各設定変更を展開します。デスクトップ操作は行いません。',
-    verify: '保存済み run の記録、JTD、スクリーンショット等のハッシュを検査します。',
+    verify: '保存済み run の記録、JTD、マクロの記録などの証跡ファイルのハッシュを検査します。',
     report: '保存済み HTML レポートの絶対パスを返します。ブラウザーは起動しません。',
     help: 'この JSON ヘルプを表示します。',
   },

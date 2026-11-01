@@ -103,32 +103,6 @@ async function activeState(sample) {
   return readJson(path.join(sample.dir, 'sample.json'));
 }
 
-function imageBytes(screenshot) {
-  let input = screenshot;
-  let declaredMime;
-  if (input && typeof input === 'object') {
-    declaredMime = input.mimeType ?? input.mime_type;
-    input = input.data_url ?? input.dataUrl ?? input.url ?? input.image_url ?? input.imageUrl;
-    if (input && typeof input === 'object') input = input.url;
-    if (!input && typeof screenshot.data === 'string') {
-      const mime = declaredMime?.toLowerCase();
-      if (mime === 'image/png' || mime === 'image/jpeg') input = `data:${mime};base64,${screenshot.data}`;
-    }
-  }
-  const match = typeof input === 'string' && /^data:(image\/(?:png|jpeg));base64,([A-Za-z0-9+/]+={0,2})$/i.exec(input);
-  if (!match) throw new Error('Screenshot must be an image/png or image/jpeg data URL; remote URLs are not fetched.');
-  const mimeType = match[1].toLowerCase();
-  if (declaredMime !== undefined && String(declaredMime).toLowerCase() !== mimeType) {
-    throw new Error(`Screenshot MIME type mismatch: declared ${declaredMime}, data URL is ${mimeType}.`);
-  }
-  const bytes = Buffer.from(match[2], 'base64');
-  const valid = mimeType === 'image/png'
-    ? bytes.length >= 24 && bytes.subarray(0, 8).toString('hex') === '89504e470d0a1a0a'
-    : bytes.length >= 4 && bytes.subarray(0, 3).toString('hex') === 'ffd8ff' && bytes.subarray(-2).toString('hex') === 'ffd9';
-  if (!valid || bytes.toString('base64') !== match[2]) throw new Error(`Screenshot is not valid ${mimeType} evidence.`);
-  return { bytes, mimeType, extension: mimeType === 'image/png' ? 'png' : 'jpg' };
-}
-
 export async function createRun({ outputRoot, experiment, environment = {}, source = {} }) {
   if (!outputRoot || !experiment) throw new Error('outputRoot and experiment are required.');
   plannedSamples(experiment);
@@ -165,33 +139,6 @@ export async function appendEvent(run, event) {
     const entry = { sequence: events.length + 1, at: now(), event: clone(event) };
     events.push(entry);
     await atomicWrite(filename, json(events));
-    return entry;
-  });
-}
-
-export async function saveEvidence(sample, { label, phase, accessibility, screenshots = [], observed, verification }) {
-  return locked(sample.dir, async () => {
-    const state = await activeState(sample);
-    if (observed !== undefined && (!observed || typeof observed !== 'object' || Array.isArray(observed))) throw new Error('observed must be an object containing actual UI readings.');
-    const frames = Array.isArray(screenshots) ? screenshots : [screenshots];
-    const images = frames.map(imageBytes); // Validate the entire batch before writing any file.
-    const number = String(state.evidence.length + 1).padStart(4, '0');
-    const files = [];
-    if (accessibility !== undefined) {
-      const relative = `evidence/${number}-accessibility.json`;
-      await atomicWrite(path.join(sample.dir, relative), json(accessibility), true);
-      files.push(await hashArtifact(sample.dir, relative, 'accessibility'));
-    }
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-      const relative = `evidence/${number}-screenshot-${String(i + 1).padStart(2, '0')}.${image.extension}`;
-      await atomicWrite(path.join(sample.dir, relative), image.bytes, true);
-      files.push({ ...await hashArtifact(sample.dir, relative, 'screenshot'), mediaType: image.mimeType });
-    }
-    const entry = clone({ id: number, label: label ?? '', phase: phase ?? '', capturedAt: now(), files, observed, verification });
-    state.evidence.push(entry);
-    await atomicWrite(path.join(sample.dir, 'sample.json'), json(state));
-    await appendEvent({ dir: sample.runDir }, { type: 'evidence-captured', sampleId: sample.id, evidenceId: number });
     return entry;
   });
 }
@@ -274,13 +221,12 @@ export async function finalizeSample(sample, { expectedTitle, actualTitle, verif
     const observed = state.evidence.reduce((result, entry) => ({ ...result, ...entry.observed }), {});
     const proof = clone(verification ?? state.evidence.at(-1)?.verification ?? { passed: false });
     const titleMatches = expectedTitle === undefined || (actualTitle !== undefined && expectedTitle === actualTitle);
-    const hasScreenshot = state.evidence.some(e => e.files.some(f => f.kind === 'screenshot'));
+    // Only macro getter readback before save and after reopen establishes verified.
     const hasMacroReadback = macroReadbackProof(state.evidence, proof);
-    const hasRequiredProof = proof?.method === 'macro-getter' ? hasMacroReadback : hasScreenshot;
-    const verified = proof?.passed === true && titleMatches && hasRequiredProof && Object.keys(observed).length > 0;
+    const verified = proof?.passed === true && titleMatches && hasMacroReadback && Object.keys(observed).length > 0;
     return complete(sample, state, {
       status: verified ? 'verified' : 'saved', document, observed,
-      verification: { ...proof, passed: verified, assertedPassed: proof?.passed === true, titleMatches, hasScreenshot, hasMacroReadback, hasObservedSettings: Object.keys(observed).length > 0 },
+      verification: { ...proof, passed: verified, assertedPassed: proof?.passed === true, titleMatches, hasMacroReadback, hasObservedSettings: Object.keys(observed).length > 0 },
       ...(expectedTitle !== undefined ? { expectedTitle } : {}), ...(actualTitle !== undefined ? { actualTitle } : {}), errors: [],
     });
   });
@@ -318,10 +264,10 @@ async function updateReport(run) {
       const proof=sample.verification?.rangeProof??sample.verification?.keisenProof??sample.verification?.paragraphProof??sample.verification?.columnProof??sample.verification?.headerProof??sample.verification?.namedStyleProof??sample.verification?.footnoteProof??sample.verification?.frameProof??sample.verification?.headerLayoutProof??sample.verification?.styleProof;
       const bodyNotes=sample.verification?.bodyComparison?`<details><summary>本文の比較方法</summary><pre>${escapeHtml(JSON.stringify({bodyComparison:sample.verification.bodyComparison,bodyComparisonDetails:sample.verification.bodyComparisonDetails},null,2))}</pre></details>`:'';
       const verificationNotes=bodyNotes+(proof?`<p>${proof.checks.some(c=>c.widthVerified===false)?'均等幅：未検証（専用getterによる有無のみ）':''}</p><p>${proof.getterDisagreements?.length?`getter間の不一致：${proof.getterDisagreements.length}件。生データと詳細をmanifestに記録。`:''}</p><details><summary>検証の強さ・制限</summary><pre>${escapeHtml(JSON.stringify({strength:proof.strength,reviewRequired:proof.reviewRequired,decorationVerified:proof.decorationVerified,coverage:proof.coverage,bodyComparison:sample.verification.bodyComparison,checks:proof.checks,limitations:proof.limitations},null,2))}</pre></details>`:'');
-      const evidenceLinks = (sample.evidence ?? []).flatMap(e => e.files.filter(f => ['screenshot', 'macro-source', 'macro-result'].includes(f.kind)).map(f => `<a href="${base}${f.path.split('/').map(encodeURIComponent).join('/')}">${escapeHtml(e.label || e.phase || f.kind)}${f.kind === 'screenshot' ? '' : ` (${escapeHtml(f.kind)})`}</a>`)).join(' · ');
+      const evidenceLinks = (sample.evidence ?? []).flatMap(e => e.files.filter(f => ['macro-source', 'macro-result'].includes(f.kind)).map(f => `<a href="${base}${f.path.split('/').map(encodeURIComponent).join('/')}">${escapeHtml(e.label || e.phase || f.kind)} (${escapeHtml(f.kind)})</a>`)).join(' · ');
       return `<tr><td>${escapeHtml(sample.id)}</td><td>${escapeHtml(sample.status)}${verificationNotes}</td><td><pre>${escapeHtml(JSON.stringify(sample.requested ?? {}, null, 2))}</pre></td><td><pre>${escapeHtml(JSON.stringify(sample.observed ?? {}, null, 2))}</pre></td><td>${sample.document ? `<a href="${base}document.jtd">JTD</a> · ` : ''}${sample.manifest ? `<a href="${base}manifest.json">manifest</a>` : ''}<br>${evidenceLinks}<pre>${escapeHtml(JSON.stringify(sample.errors ?? []))}</pre></td></tr>`;
     }).join('\n');
-    await atomicWrite(path.join(run.dir, 'index.html'), `<!doctype html><html lang="ja"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'"><title>一太郎 試料レポート</title><style>body{font:15px system-ui;margin:2rem;color:#172134}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccd2dd;padding:.7rem;vertical-align:top;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere}a{color:#1757b8}</style><h1>一太郎 試料レポート</h1><p>${escapeHtml(typeof metadata.experiment === 'string' ? metadata.experiment : JSON.stringify(metadata.experiment))}</p><p>saved: ファイル保存・ハッシュ確認済み / verified: 観測結果と検証記録あり / failed: 失敗 / pending: 未完了 / not-started: 未開始</p><table><thead><tr><th>試料</th><th>状態</th><th>要求した設定</th><th>観測した設定</th><th>証跡</th></tr></thead><tbody>${rows}</tbody></table></html>\n`);
+    await atomicWrite(path.join(run.dir, 'index.html'), `<!doctype html><html lang="ja"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>一太郎 試料レポート</title><style>body{font:15px system-ui;margin:2rem;color:#172134}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccd2dd;padding:.7rem;vertical-align:top;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere}a{color:#1757b8}</style><h1>一太郎 試料レポート</h1><p>${escapeHtml(typeof metadata.experiment === 'string' ? metadata.experiment : JSON.stringify(metadata.experiment))}</p><p>saved: ファイル保存・ハッシュ確認済み / verified: 観測結果と検証記録あり / failed: 失敗 / pending: 未完了 / not-started: 未開始</p><table><thead><tr><th>試料</th><th>状態</th><th>要求した設定</th><th>観測した設定</th><th>証跡</th></tr></thead><tbody>${rows}</tbody></table></html>\n`);
     return index;
   });
 }

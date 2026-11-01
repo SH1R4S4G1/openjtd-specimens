@@ -4,11 +4,12 @@ import assert from 'node:assert/strict';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { createRun, startSample, appendEvent, saveEvidence, saveMacroEvidence, finalizeSample, failSample, verifyRun } from '../src/evidence.mjs';
+import * as evidence from '../src/evidence.mjs';
 
-const PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aB7sAAAAASUVORK5CYII=';
-const JPEG_BYTES = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x02, 0xff, 0xd9]);
-const JPEG = `data:image/jpeg;base64,${JPEG_BYTES.toString('base64')}`;
+const { createRun, startSample, appendEvent, saveMacroEvidence, finalizeSample, failSample, verifyRun } = evidence;
+
+// A screenshot artifact as runs before 0.22.0 could record it.
+const LEGACY_PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aB7sAAAAASUVORK5CYII=', 'base64');
 
 async function fixture(t, experiment = 'Test corpus') {
   const temporaryRoot = os.tmpdir();
@@ -28,11 +29,11 @@ async function externalSave(sample) { await fs.writeFile(sample.documentPath, Bu
 const MACRO_SOURCE = 'DocumentStyleGet(1);\r\n';
 const MACRO_RESULT = Buffer.from('\ufeff字数=40\r\n行数=30\r\n', 'utf16le');
 const MACRO_PROOF = { passed: true, reopened: true, method: 'macro-getter' };
-async function getterEvidence(sample, phase, verification = phase === 'reopened' ? MACRO_PROOF : { passed: false, reopened: false, method: 'macro-getter' }) {
-  return saveMacroEvidence(sample, { phase, label: `<${phase}>`, macroSource: MACRO_SOURCE, resultBytes: MACRO_RESULT, observed: { settings: { chars: 40, lines: 30 }, units: 'macro' }, verification });
+async function getterEvidence(sample, phase, verification = phase === 'reopened' ? MACRO_PROOF : { passed: false, reopened: false, method: 'macro-getter' }, observed = { settings: { chars: 40, lines: 30 }, units: 'macro' }) {
+  return saveMacroEvidence(sample, { phase, label: `<${phase}>`, macroSource: MACRO_SOURCE, resultBytes: MACRO_RESULT, observed, verification });
 }
 
-test('macro getter proof preserves and hashes ASCII source and raw UTF-16LE results without screenshots', async t => {
+test('macro getter proof preserves and hashes ASCII source and raw UTF-16LE results', async t => {
   const run = await fixture(t);
   const sample = await startSample(run, { id: 'macro', requested: { chars: 40, lines: 30 } });
   await externalSave(sample);
@@ -46,7 +47,7 @@ test('macro getter proof preserves and hashes ASCII source and raw UTF-16LE resu
   }
   const manifest = await finalizeSample(sample);
   assert.equal(manifest.status, 'verified');
-  assert.equal(manifest.verification.hasScreenshot, false);
+  assert.equal(Object.hasOwn(manifest.verification, 'hasScreenshot'), false);
   assert.equal(manifest.verification.hasMacroReadback, true);
   assert.equal(manifest.verification.method, 'macro-getter');
   assert.deepEqual(manifest.observed.settings, { chars: 40, lines: 30 });
@@ -103,14 +104,35 @@ test('incomplete macro phases and arbitrary passed assertions cannot establish v
     assert.equal(manifest.status, 'saved', id);
     assert.equal(manifest.verification.hasMacroReadback, false, id);
   }
-  const fake = await startSample(run, { id: 'metadata-only', requested: {} });
-  await externalSave(fake);
-  for (const phase of ['before-save', 'reopened']) await saveEvidence(fake, { phase, observed: { chars: 40 }, verification: MACRO_PROOF });
-  assert.equal((await finalizeSample(fake, { verification: MACRO_PROOF })).status, 'saved');
-  const screenshotOnly = await startSample(run, { id: 'screenshot-only-macro', requested: {} });
-  await externalSave(screenshotOnly);
-  await saveEvidence(screenshotOnly, { screenshots: [PNG], observed: { chars: 40 }, verification: MACRO_PROOF });
-  assert.equal((await finalizeSample(screenshotOnly)).status, 'saved');
+  // Complete getter phases do not verify a sample whose final proof names another method.
+  for (const method of ['explicit-ui-check', undefined]) {
+    const sample = await startSample(run, { id: `other-method-${method ?? 'none'}`, requested: {} });
+    await externalSave(sample);
+    for (const phase of ['before-save', 'reopened']) await getterEvidence(sample, phase);
+    const manifest = await finalizeSample(sample, { verification: { passed: true, reopened: true, ...(method ? { method } : {}) } });
+    assert.equal(manifest.status, 'saved', method);
+    assert.equal(manifest.verification.hasMacroReadback, false, method);
+  }
+  // A reopened entry that is not complete getter evidence cannot verify, even with a passing proof.
+  const damage = {
+    'no-method': entry => { delete entry.method; },
+    'no-result-file': entry => { entry.files = entry.files.filter(file => file.kind !== 'macro-result'); },
+    'empty-observed': entry => { entry.observed = {}; },
+  };
+  for (const [id, change] of Object.entries(damage)) {
+    const sample = await startSample(run, { id, requested: {} });
+    await externalSave(sample);
+    for (const phase of ['before-save', 'reopened']) await getterEvidence(sample, phase);
+    const statePath = path.join(sample.dir, 'sample.json');
+    const state = JSON.parse(await fs.readFile(statePath, 'utf8'));
+    change(state.evidence.find(entry => entry.phase === 'reopened'));
+    await fs.writeFile(statePath, JSON.stringify(state));
+    const manifest = await finalizeSample(sample, { verification: MACRO_PROOF });
+    assert.equal(manifest.status, 'saved', id);
+    assert.equal(manifest.verification.hasMacroReadback, false, id);
+  }
+  // Screenshot capture was removed in 0.22.0.
+  assert.equal(evidence.saveEvidence, undefined);
 });
 
 test('macro source and result tampering or disappearance prevents completion and integrity checks', async t => {
@@ -147,28 +169,16 @@ test('preserves raw evidence, separates requested from observed, and verifies th
   const run = await fixture(t);
   const sample = await startSample(run, { id: 'base', requested: { chars: 40, lines: 30, margins: { top: 20 } } });
   await externalSave(sample);
-  await saveEvidence(sample, { label: 'settings', phase: 'after-change', accessibility: { text: '40 chars' }, screenshots: [{ data_url: PNG }], observed: { chars: 39, lines: 30, characterSpacing: '0', lineSpacing: '6', margins: { top: 20 } } });
-  const manifest = await finalizeSample(sample, { expectedTitle: 'document.jtd', actualTitle: 'document.jtd', verification: { passed: true, method: 'explicit-ui-check' } });
+  const observed = { chars: 39, lines: 30, characterSpacing: '0', lineSpacing: '6', margins: { top: 20 } };
+  for (const phase of ['before-save', 'reopened']) await getterEvidence(sample, phase, undefined, observed);
+  const manifest = await finalizeSample(sample, { expectedTitle: 'document.jtd', actualTitle: 'document.jtd' });
   assert.equal(manifest.status, 'verified');
   assert.equal(manifest.requested.chars, 40);
   assert.equal(manifest.observed.chars, 39);
-  assert.deepEqual(await fs.readFile(path.join(sample.dir, manifest.evidence[0].files[1].path)), Buffer.from(PNG.split(',')[1], 'base64'));
+  assert.deepEqual(await fs.readFile(path.join(sample.dir, manifest.evidence[0].files[1].path)), MACRO_RESULT);
   assert.equal((await verifyRun(run.dir)).ok, true);
-  await assert.rejects(saveEvidence(sample, { screenshots: [PNG] }), /already complete/);
+  await assert.rejects(getterEvidence(sample, 'reopened'), /already complete/);
   await assert.rejects(finalizeSample(sample), /already complete/);
-});
-
-test('preserves JPEG screenshots as JPEG bytes with a matching extension and media type', async t => {
-  const run = await fixture(t);
-  const sample = await startSample(run, { id: 'jpeg', requested: {} });
-  await externalSave(sample);
-  const entry = await saveEvidence(sample, { screenshots: [{ url: JPEG, mimeType: 'image/jpeg' }] });
-  const artifact = entry.files[0];
-  assert.equal(artifact.path, 'evidence/0001-screenshot-01.jpg');
-  assert.equal(artifact.mediaType, 'image/jpeg');
-  assert.deepEqual(await fs.readFile(path.join(sample.dir, artifact.path)), JPEG_BYTES);
-  await finalizeSample(sample);
-  assert.equal((await verifyRun(run.dir)).ok, true);
 });
 
 test('saved is distinct from verified, and mismatched titles prevent verified', async t => {
@@ -178,8 +188,9 @@ test('saved is distinct from verified, and mismatched titles prevent verified', 
   assert.equal((await finalizeSample(a, { verification: { passed: true } })).status, 'saved');
   const b = await startSample(run, { id: 'b', requested: { lines: 30 } });
   await externalSave(b);
-  await saveEvidence(b, { screenshots: [PNG], observed: { lines: 30 } });
-  const result = await finalizeSample(b, { expectedTitle: 'b.jtd', actualTitle: 'a.jtd', verification: { passed: true } });
+  for (const phase of ['before-save', 'reopened']) await getterEvidence(b, phase, undefined, { lines: 30 });
+  const result = await finalizeSample(b, { expectedTitle: 'b.jtd', actualTitle: 'a.jtd' });
+  assert.equal(result.verification.hasMacroReadback, true);
   assert.equal(result.status, 'saved');
   assert.equal(result.verification.titleMatches, false);
 });
@@ -197,22 +208,19 @@ test('missing save and explicit failures are recorded with completion timestamps
   assert.equal((await verifyRun(run.dir)).ok, true); // Integrity, not experimental success.
 });
 
-test('rejects overwrites, path traversal, Windows reserved names, and remote screenshot URLs', async t => {
+test('rejects overwrites, path traversal, and Windows reserved names', async t => {
   const run = await fixture(t);
   for (const id of ['../escape', 'a/b', 'a\\b', 'CON', 'NUL.txt', 'trailing.', 'C:\\escape']) await assert.rejects(startSample(run, { id, requested: {} }));
   const sample = await startSample(run, { id: 'safe', requested: {} });
   await assert.rejects(startSample(run, { id: 'safe', requested: {} }), { code: 'EEXIST' });
-  await assert.rejects(saveEvidence(sample, { screenshots: ['https://example.com/a.png'] }), /image\/png or image\/jpeg data URL/);
-  await assert.rejects(saveEvidence(sample, { screenshots: [{ url: JPEG, mimeType: 'image/png' }] }), /MIME type mismatch/);
-  await assert.rejects(saveEvidence(sample, { screenshots: ['data:image/webp;base64,AAAA'] }), /image\/png or image\/jpeg data URL/);
   assert.deepEqual(await fs.readdir(path.join(sample.dir, 'evidence')), []);
 });
 
-test('detects modified/missing JTD, modified screenshots, and manifest corruption', async t => {
+test('detects modified/missing JTD, modified macro results, and manifest corruption', async t => {
   const run = await fixture(t);
   const sample = await startSample(run, { id: 'integrity', requested: {} });
   await externalSave(sample);
-  await saveEvidence(sample, { screenshots: [PNG] });
+  for (const phase of ['before-save', 'reopened']) await getterEvidence(sample, phase);
   await finalizeSample(sample);
   const original = await fs.readFile(sample.documentPath);
   await fs.writeFile(sample.documentPath, 'tampered');
@@ -220,7 +228,7 @@ test('detects modified/missing JTD, modified screenshots, and manifest corruptio
   await fs.unlink(sample.documentPath);
   assert.match(JSON.stringify((await verifyRun(run.dir)).errors), /ENOENT/);
   await fs.writeFile(sample.documentPath, original);
-  await fs.appendFile(path.join(sample.dir, 'evidence/0001-screenshot-01.png'), 'tampered');
+  await fs.appendFile(path.join(sample.dir, 'evidence/0001-macro-result.txt'), 'tampered');
   assert.equal((await verifyRun(run.dir)).ok, false);
   await fs.writeFile(path.join(sample.dir, 'manifest.json'), '{ broken');
   assert.equal((await verifyRun(run.dir)).ok, false);
@@ -229,7 +237,7 @@ test('detects modified/missing JTD, modified screenshots, and manifest corruptio
 test('HTML escapes untrusted text and event writes serialize without losing entries', async t => {
   const run = await fixture(t, '<script>alert("experiment")</script>');
   const sample = await startSample(run, { id: 'escape', requested: { text: '<img src=x onerror=alert(1)>' } });
-  await saveEvidence(sample, { screenshots: [PNG], label: '<script>unsafe</script>' });
+  await saveMacroEvidence(sample, { phase: 'before-save', label: '<script>unsafe</script>', macroSource: MACRO_SOURCE, resultBytes: MACRO_RESULT, observed: { chars: 40 } });
   await failSample(sample, new Error('<script>failure</script>'));
   const html = await fs.readFile(path.join(run.dir, 'index.html'), 'utf8');
   assert.ok(!html.includes('<script>'));
@@ -302,9 +310,10 @@ test('completion refuses evidence that disappeared after capture', async t => {
   const run = await fixture(t);
   const sample = await startSample(run, { id: 'missing-proof', requested: { lines: 30 } });
   await externalSave(sample);
-  const evidence = await saveEvidence(sample, { screenshots: [PNG], observed: { lines: 30 } });
-  await fs.unlink(path.join(sample.dir, evidence.files[0].path));
-  const manifest = await finalizeSample(sample, { verification: { passed: true } });
+  const entry = await getterEvidence(sample, 'before-save', undefined, { lines: 30 });
+  await getterEvidence(sample, 'reopened', undefined, { lines: 30 });
+  await fs.unlink(path.join(sample.dir, entry.files[0].path));
+  const manifest = await finalizeSample(sample);
   assert.equal(manifest.status, 'failed');
   assert.equal(manifest.errors[0].code, 'ENOENT');
   assert.equal((await verifyRun(run.dir)).ok, false);
@@ -323,4 +332,32 @@ test('verifyRun separates integrity from completion and leaves completion unknow
   await fs.rm(path.join(run.dir, 'index.json'));
   result = await verifyRun(run.dir);
   assert.deepEqual([result.ok, result.integrityOk, result.complete], [false, false, null]);
+});
+
+test('runs recorded before 0.22.0 with screenshot and accessibility artifacts still verify', async t => {
+  const run = await fixture(t);
+  const sample = await startSample(run, { id: 'legacy', requested: {} });
+  await externalSave(sample);
+  for (const phase of ['before-save', 'reopened']) await getterEvidence(sample, phase);
+  await finalizeSample(sample);
+  // Rewrite the manifest into the older shape: screenshot and accessibility artifacts, and the
+  // hasScreenshot field. verifyRun hashes artifacts whatever their kind and never reads verification.
+  const relative = 'evidence/0001-screenshot-01.png';
+  const accessibility = Buffer.from('{"text":"40 chars"}\n');
+  await fs.writeFile(path.join(sample.dir, relative), LEGACY_PNG);
+  await fs.writeFile(path.join(sample.dir, 'evidence/0001-accessibility.json'), accessibility);
+  const manifestPath = path.join(sample.dir, 'manifest.json');
+  const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
+  const record = (file, kind, bytes) => ({ path: file, kind, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
+  manifest.evidence[0].files.push(record('evidence/0001-accessibility.json', 'accessibility', accessibility), { ...record(relative, 'screenshot', LEGACY_PNG), mediaType: 'image/png' });
+  manifest.verification.hasScreenshot = true;
+  const manifestBytes = Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`);
+  await fs.writeFile(manifestPath, manifestBytes);
+  const indexPath = path.join(run.dir, 'index.json');
+  const index = JSON.parse(await fs.readFile(indexPath, 'utf8'));
+  Object.assign(index.samples[0].manifest, { bytes: manifestBytes.length, sha256: createHash('sha256').update(manifestBytes).digest('hex') });
+  await fs.writeFile(indexPath, JSON.stringify(index));
+  assert.equal((await verifyRun(run.dir)).ok, true);
+  await fs.appendFile(path.join(sample.dir, relative), 'tampered');
+  assert.equal((await verifyRun(run.dir)).ok, false);
 });
