@@ -41,14 +41,14 @@ test('PDF Catalog validation: schema, unique ids and files, 1000 documents, and 
     [[doc('a1'), doc('a1', 'inputs/other.jtd')], /duplicate or reserved document id/],
     [[doc('a1', 'inputs/X.JTD'), doc('b2', 'inputs/x.jtd')], /duplicate file/],
     [[doc('con')], /reserved/],
-    [[doc('a1', 'inputs/../a.jtd')], /pattern/],
-    [[doc('a1', 'inputs/sub/a.jtd')], /pattern/],
-    [[doc('a1', 'a1.jtd')], /length|pattern/],
-    [[doc('a1', 'inputs/a1.docx')], /pattern/],
-    [[{ ...doc('a1'), sha256: 'A'.repeat(64) }], /pattern/],
+    [[doc('a1', 'inputs/../a.jtd')], /does not match the required form: inputs\/<name>\.jtd relative to the catalog \(got "inputs\/\.\.\/a\.jtd"\)/],
+    [[doc('a1', 'inputs/sub/a.jtd')], /required form/],
+    [[doc('a1', 'a1.jtd')], /string length 6 is outside 12\.\.127/],
+    [[doc('a1', 'inputs/a1.docx')], /required form/],
+    [[{ ...doc('a1'), sha256: 'A'.repeat(64) }], /required form: SHA-256 of the submitted JTD, lowercase hex/],
     [[{ ...doc('a1'), title: 'x' }], /unknown field/],
-    [[], /array length/],
-    [Array.from({ length: 1001 }, (_, i) => doc(`d${i}`)), /array length/],
+    [[], /array length 0 is outside 1\.\.1000/],
+    [Array.from({ length: 1001 }, (_, i) => doc(`d${i}`)), /array length 1001 is outside 1\.\.1000/],
   ]) assert.throws(() => validatePdfCatalog(catalogOf(documents)), pattern);
   assert.equal(validatePdfCatalog(catalogOf(Array.from({ length: 1000 }, (_, i) => doc(`d${i}`)))).documentCount, 1000);
   assert.throws(() => validatePdfCatalog({ ...catalogOf([doc('a1')]), kind: 'text' }), /must equal/);

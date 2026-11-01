@@ -23,6 +23,18 @@ export function assertSupportedSchema(schema) {
 const schemaError = (location, message) => Object.assign(new Error(`${location}: ${message}`),
   {code: 'ERR_SAMPLE_SCHEMA', path: location});
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+// A value for an error message: JSON, with a string cut to its first 40
+// characters (code points) and … after the closing quote.
+export function quoteValue(value, limit = 40) {
+  if (typeof value !== 'string') return JSON.stringify(value);
+  const characters = [...value];
+  return characters.length > limit ? `${JSON.stringify(characters.slice(0, limit).join(''))}…` : JSON.stringify(value);
+}
+// The first sentence of a schema description, without its final period.
+const firstSentence = text => (/^.*?\.(?=\s|$)/su.exec(text)?.[0] ?? text).replace(/\.$/u, '');
+// The allowed range of a length: min..max, or only the minimum when there is no maximum.
+const lengthRange = (length, min = 0, max) => max === undefined ? `${length} is below the minimum ${min}` : `${length} is outside ${min}..${max}`;
 const refTarget = (ref, root) => {
   const match = /^#\/\$defs\/([A-Za-z0-9_-]+)$/.exec(ref);
   return match && Object.hasOwn(root.$defs ?? {}, match[1]) ? root.$defs[match[1]] : undefined;
@@ -85,12 +97,18 @@ export function validateSchema(value, schema, root = schema, location = '$') {
   if (types.length && !types.some(isType)) fail(`must have type ${types.join(' or ')}`);
   if (typeof value === 'string') {
     const length = [...value].length; // JSON Schema lengths count Unicode code points.
-    if (length < (schema.minLength ?? 0) || length > (schema.maxLength ?? Infinity)) fail('string length outside supported bounds');
-    if (schema.pattern && !new RegExp(schema.pattern, 'u').test(value)) fail('string does not match required pattern');
+    if (length < (schema.minLength ?? 0) || length > (schema.maxLength ?? Infinity)) fail(`string length ${lengthRange(length, schema.minLength, schema.maxLength)} (got ${quoteValue(value)})`);
+    // A pattern is not readable; the description says the form when the schema has one.
+    if (schema.pattern && !new RegExp(schema.pattern, 'u').test(value)) fail(schema.description
+      ? `does not match the required form: ${firstSentence(schema.description)} (got ${quoteValue(value)})`
+      : `does not match the required pattern ${schema.pattern} (got ${quoteValue(value)})`);
   }
-  if (typeof value === 'number' && (value < (schema.minimum ?? -Infinity) || value > (schema.maximum ?? Infinity))) fail('number outside supported bounds');
+  if (typeof value === 'number' && (value < (schema.minimum ?? -Infinity) || value > (schema.maximum ?? Infinity))) {
+    const {minimum: min, maximum: max} = schema;
+    fail(`${min !== undefined && max !== undefined ? `must be between ${min} and ${max}` : min !== undefined ? `must be at least ${min}` : `must be at most ${max}`} (got ${value})`);
+  }
   if (Array.isArray(value)) {
-    if (value.length < (schema.minItems ?? 0) || value.length > (schema.maxItems ?? Infinity)) fail('array length outside supported bounds');
+    if (value.length < (schema.minItems ?? 0) || value.length > (schema.maxItems ?? Infinity)) fail(`array length ${lengthRange(value.length, schema.minItems, schema.maxItems)}`);
     if (schema.uniqueItems && new Set(value.map(item => JSON.stringify(item))).size !== value.length) fail('items must be unique');
     if (schema.items) for (let i = 0; i < value.length; i++) validateSchema(value[i], schema.items, root, `${location}[${i}]`);
   } else if (value !== null && typeof value === 'object') {

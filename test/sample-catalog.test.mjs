@@ -230,7 +230,7 @@ test('schema errors follow the kind or capability a value names and list the sup
   error(v=>Object.assign(v.samples[0].document.annotations[1],{capability:'character-decoration',parameters:{underline:1,bold:1}}),
     {code:'ERR_SAMPLE_SCHEMA',path:'$.samples[0].document.annotations[1].parameters',message:'$.samples[0].document.annotations[1].parameters: unknown field bold'});
   error(v=>v.samples[0].document.annotations[1].parameters={color:'red'},
-    {path:'$.samples[0].document.annotations[1].parameters.color',message:'$.samples[0].document.annotations[1].parameters.color: string does not match required pattern'});
+    {path:'$.samples[0].document.annotations[1].parameters.color',message:'$.samples[0].document.annotations[1].parameters.color: does not match the required form: Color as R<0-255>G<0-255>B<0-255> in decimal without leading zeros or spaces, for example R0G0B0 or R255G0B0 (got "red")'});
   // A nested oneOf (spacing units) is explained the same way.
   error(v=>Object.assign(v.samples[0].document.annotations[1],{capability:'character-spacing',parameters:{value:1,unit:'pt'}}),
     {message:'$.samples[0].document.annotations[1].parameters.unit: unknown unit "pt"; supported: mm, percent'});
@@ -244,7 +244,7 @@ test('schema errors follow the kind or capability a value names and list the sup
   error(v=>v.samples[0].document.kind='table',
     {path:'$.samples[0].document.kind',message:'$.samples[0].document.kind: unknown kind "table"; supported: text, keisen-table, footnotes, paragraphs'});
   error(v=>{v.samples[0].feature='keisen-table';v.samples[0].document={kind:'keisen-table',rows:5,columns:2};},
-    {path:'$.samples[0].document.rows',message:'$.samples[0].document.rows: number outside supported bounds'});
+    {path:'$.samples[0].document.rows',message:'$.samples[0].document.rows: must be between 1 and 4 (got 5)'});
   error(v=>v.samples[0].document.annotation=[],{message:'$.samples[0].document: unknown field annotation'});
   // Without the discriminator in the value, or for a value that is not an object, the general message stays.
   error(v=>delete v.samples[0].document.annotations[1].capability,
@@ -263,6 +263,39 @@ test('schema errors follow the kind or capability a value names and list the sup
   assert.throws(()=>validateSchema(1,{oneOf:[{type:'number'},{type:'integer'}]}),/\$: must match exactly one supported structure/);
   // A const shared by two branches does not discriminate.
   assert.throws(()=>validateSchema({k:'x'},{oneOf:[{properties:{k:{const:'x'}},required:['y']},{properties:{k:{const:'x'}},required:['z']}]}),/\$: must match exactly one supported structure/);
+});
+
+test('schema errors give the value and the allowed range, and a pattern by its description',()=>{
+  const error=(mutate,message)=>{const input=fixture();mutate(input);assert.throws(()=>compileCatalog(input),{code:'ERR_SAMPLE_SCHEMA',message});};
+  // Numbers: the range and the value.
+  error(v=>{v.samples[0].feature='character-decoration';Object.assign(annotation(v),{capability:'character-decoration',parameters:{underline:16}});},
+    '$.samples[0].document.annotations[0].parameters.underline: must be between 1 and 15 (got 16)');
+  error(v=>annotation(v).range.start=-3,'$.samples[0].document.annotations[0].range.start: must be between 0 and 59999 (got -3)');
+  // One-sided bounds say only the bound that exists.
+  assert.throws(()=>validateSchema(-3,{type:'integer',minimum:0}),{message:'$: must be at least 0 (got -3)'});
+  assert.throws(()=>validateSchema(60,{type:'number',maximum:50}),{message:'$: must be at most 50 (got 60)'});
+  // String and array lengths: the actual length, the range and the string, cut after 40 characters.
+  error(v=>v.samples[0].title='題'.repeat(201),`$.samples[0].title: string length 201 is outside 1..200 (got "${'題'.repeat(40)}"…)`);
+  error(v=>v.samples[0].title='','$.samples[0].title: string length 0 is outside 1..200 (got "")');
+  error(v=>v.samples[0].expected=[],'$.samples[0].expected: array length 0 is outside 1..32');
+  error(v=>v.samples[0].tags=Array.from({length:21},(_,i)=>`t${i}`),'$.samples[0].tags: array length 21 is outside 0..20');
+  assert.throws(()=>validateSchema('',{type:'string',minLength:1}),{message:'$: string length 0 is below the minimum 1 (got "")'});
+  assert.throws(()=>validateSchema([],{type:'array',minItems:1}),{message:'$: array length 0 is below the minimum 1'});
+  // Patterns: the schema description names the form; without one the pattern itself is shown.
+  error(v=>{v.samples[0].feature='character-color';Object.assign(annotation(v),{capability:'character-color',parameters:{color:'R256G0B0'}});},
+    '$.samples[0].document.annotations[0].parameters.color: does not match the required form: Color as R<0-255>G<0-255>B<0-255> in decimal without leading zeros or spaces, for example R0G0B0 or R255G0B0 (got "R256G0B0")');
+  error(v=>v.samples[0].id='Ruby','$.samples[0].id: does not match the required form: Identifier: 1..60 characters, a lowercase letter a-z first, then a-z, 0-9 or hyphens (got "Ruby")');
+  error(v=>annotation(v).parameters.reading='よ\tみ','$.samples[0].document.annotations[0].parameters.reading: does not match the required form: Ruby reading: 1..64 BMP characters without U+0000..U+001F, U+007F or combining marks (got "よ\\tみ")');
+  // A long description gives its first sentence only.
+  error(v=>v.samples[0].document.text='a\tb','$.samples[0].document.text: does not match the required form: 1..60000 BMP characters (got "a\\tb")');
+  assert.throws(()=>validateSchema('x',{type:'string',pattern:'^[0-9]+$'}),{message:'$: does not match the required pattern ^[0-9]+$ (got "x")'});
+  // Every pattern of the Sample Catalog schema has a description, which accepts the same values as before.
+  const missing=[];
+  const walk=(node,at)=>{if(!node||typeof node!=='object')return;if(Array.isArray(node)){node.forEach((child,i)=>walk(child,`${at}[${i}]`));return;}
+    if(typeof node.pattern==='string'&&!node.description)missing.push(at);for(const [key,child] of Object.entries(node))walk(child,`${at}.${key}`);};
+  walk(SAMPLE_SCHEMA,'$');assert.deepEqual(missing,[]);
+  // Positive: a correct catalog still passes.
+  assert.equal(validateCatalog(fixture()).ok,true);
 });
 
 test('every oneOf of the Sample Catalog schema has a discriminator, so its errors keep their location',()=>{
@@ -290,6 +323,89 @@ test('range errors name the annotation index, the text found at the offsets and 
   const lines=fixture();lines.samples[0].document.text='甲乙\n対象丙丁';annotation(lines).range={start:2,end:4,text:'対象'};
   assert.throws(()=>compileCatalog(lines),{message:'test-sample: annotations[0].range: text "対象" is not the text at [2,4) (found "\\n対"; body length 7; start counts from 0 and end is exclusive)'});
   annotation(lines).range={start:3,end:5,text:'対象'};assert.equal(validateCatalog(lines).ok,true);
+});
+
+test('annotation errors name both overlapping annotations by their request index, and a decoration without a value',()=>{
+  const twoOnSameRange=()=>{const input=fixture();input.samples[0].feature='character-decoration';input.samples[0].document.annotations=[
+    {capability:'character-decoration',range:{start:2,end:4,text:'対象'},parameters:{fill:50}},
+    {capability:'character-color',range:{start:2,end:4,text:'対象'},parameters:{color:'R255G255B255'}}];return input;};
+  assert.throws(()=>compileCatalog(twoOnSameRange()),{code:'ERR_SAMPLE_SEMANTIC',path:'test-sample',
+    message:'test-sample: annotations[1] (character-color [2,4) "対象") overlaps annotations[0] (character-decoration [2,4) "対象"); annotations must not overlap even with different capabilities'});
+  // The indexes are those of the request, not of the order by start.
+  const reversed=fixture();reversed.samples[0].document.annotations=[
+    {capability:'character-color',range:{start:3,end:5,text:'象丙'},parameters:{color:'R255G0B0'}},
+    {capability:'ruby',range:{start:0,end:4,text:'甲乙対象'},parameters:{reading:'こうおつたいしょう'}}];
+  assert.throws(()=>compileCatalog(reversed),{message:'test-sample: annotations[0] (character-color [3,5) "象丙") overlaps annotations[1] (ruby [0,4) "甲乙対象"); annotations must not overlap even with different capabilities'});
+  // A long range text is cut after 40 characters.
+  const long=fixture();long.samples[0].feature='character-color';long.samples[0].document={kind:'text',text:'あ'.repeat(60),annotations:[
+    {capability:'character-color',range:{start:0,end:50,text:'あ'.repeat(50)},parameters:{color:'R255G0B0'}},
+    {capability:'character-size',range:{start:10,end:12,text:'ああ'},parameters:{points:20}}]};
+  assert.throws(()=>compileCatalog(long),{message:`test-sample: annotations[1] (character-size [10,12) "ああ") overlaps annotations[0] (character-color [0,50) "${'あ'.repeat(40)}"…); annotations must not overlap even with different capabilities`});
+  // Positive: adjacent ranges with different capabilities pass.
+  const adjacent=twoOnSameRange();adjacent.samples[0].document.annotations[1].range={start:4,end:6,text:'丙丁'};
+  assert.equal(validateCatalog(adjacent).ok,true);
+  // A decoration without underline, strikeThrough or fill is named by its index.
+  const bare=twoOnSameRange();bare.samples[0].document.annotations[1]={capability:'character-decoration',range:{start:4,end:6,text:'丙丁'},parameters:{color:'R1G2B3'}};
+  assert.throws(()=>compileCatalog(bare),{message:'test-sample: annotations[1]: character-decoration requires underline, strikeThrough or fill'});
+});
+
+test('table errors name the cell or merge by its request index and position, with the text and the allowed length',()=>{
+  const table=document=>{const input=fixture();input.samples[0].feature='keisen-table';input.samples[0].document={kind:'keisen-table',...document};return input;};
+  const error=(document,message)=>assert.throws(()=>compileCatalog(table(document)),{code:'ERR_SAMPLE_SEMANTIC',message:`test-sample: ${message}`});
+  const structured={rows:3,columns:3,lineType:1,color:'R0G0B0'};
+  // Cell text: the cell, the text, its length, the allowed length and the width.
+  error({rows:2,columns:2,cells:[{row:1,column:1,attributes:{bold:1}},{row:2,column:2,text:'本文'}]},
+    'cells[1] (row 2, column 2): cell text must be non-whitespace BMP characters, at most 1 for a cell of width 4 half-width columns (min(4, width/2-1)); got "本文", 2 characters');
+  error({rows:2,columns:2,cells:[{row:1,column:2,text:'　'}]},
+    'cells[0] (row 1, column 2): cell text must be non-whitespace BMP characters, at most 1 for a cell of width 4 half-width columns (min(4, width/2-1)); got "　", 1 character');
+  error({...structured,merges:[{from:{row:1,column:1},to:{row:1,column:2}}],cells:[{row:1,column:1,text:'一二三四'}]},
+    'cells[0] (row 1, column 1): cell text must be non-whitespace BMP characters, at most 3 for a merged cell of width 8 half-width columns (min(4, width/2-1)); got "一二三四", 4 characters');
+  // Cells outside the table, repeated or inside a merge.
+  error({rows:2,columns:2,cells:[{row:1,column:1,text:'甲'},{row:3,column:1,text:'乙'}]},'cells[1] (row 3, column 1): cell outside requested table of 2 rows and 2 columns');
+  error({rows:2,columns:2,cells:[{row:2,column:2,text:'甲'},{row:1,column:1,text:'乙'},{row:2,column:2,attributes:{bold:1}}]},
+    'cells[2] (row 2, column 2): duplicate cell specification (cells[0] has the same position)');
+  error({...structured,merges:[{from:{row:2,column:2},to:{row:3,column:3}}],cells:[{row:1,column:1,text:'甲'},{row:3,column:3,text:'乙'}]},
+    'cells[1] (row 3, column 3): a merged cell is addressed by its top-left position; this cell is inside merges[0] (row 2, column 2)-(row 3, column 3), so write (row 2, column 2)');
+  // Merges by their from and to.
+  error({...structured,rows:2,columns:2,merges:[{from:{row:1,column:1},to:{row:3,column:1}}]},'merges[0] (row 1, column 1)-(row 3, column 1): merge outside requested table of 2 rows and 2 columns');
+  error({...structured,merges:[{from:{row:2,column:2},to:{row:1,column:2}}]},'merges[0] (row 2, column 2)-(row 1, column 2): merge needs from at the top-left and at least two cells');
+  error({...structured,merges:[{from:{row:2,column:2},to:{row:3,column:3}},{from:{row:1,column:1},to:{row:2,column:2}}]},
+    'merges[0] (row 2, column 2)-(row 3, column 3): merges overlap; (row 2, column 2) is already in merges[1] (row 1, column 1)-(row 2, column 2)');
+  // Sizes and totals.
+  error({...structured,rowHeights:[2,2]},'rowHeights/columnWidths need one entry per row/column (rowHeights has 2 for 3 rows, columnWidths 3 for 3 columns)');
+  error({...structured,columnWidths:[6,5,4]},'columnWidths are half-width units and must be even (full-width character boundaries); columnWidths[1] is 5');
+  error({...structured,rowHeights:[4,4,4]},'table exceeds the observation canvas: total row height <= 9 lines, total column width <= 18 half-width columns (got 12 lines and 12 half-width columns)');
+  error({rows:2,columns:2,cells:[{row:1,column:1,attributes:{alignment:1,textColor:'R0G0B0',bold:0,italic:0,fill:0,color:'R0G0B0'}},{row:2,column:2,attributes:{bold:1,italic:1}}]},
+    'at most seven cell texts and attributes in total for a table up to 2x2 without merges (got 8)');
+  error({...structured,cells:Array.from({length:9},(_,i)=>({row:1+Math.floor(i/3),column:1+i%3,attributes:{bold:1,italic:1}}))},
+    'at most fifteen merges, cell texts and attributes in total (got 18)');
+  error({...structured,leadingParagraphs:[{text:'甲'},{text:'乙',spacing:{unit:'mm',before:1,after:12}}]},
+    'leadingParagraphs[1].spacing: leading paragraph spacing in mm must be 0..10 (got before 1, after 12)');
+  // Positive: a correct table with a merge, texts and attributes passes.
+  assert.equal(validateCatalog(table({...structured,merges:[{from:{row:2,column:2},to:{row:3,column:3}}],
+    cells:[{row:2,column:2,text:'結合',attributes:{fill:20}},{row:1,column:1,text:'甲'}]})).ok,true);
+});
+
+test('paragraph errors name the paragraph or the format by its index',()=>{
+  const doc=document=>{const input=fixture();input.samples[0].feature='paragraph-attribute';input.samples[0].document={kind:'paragraphs',text:'甲\n乙\n丙',...document};return input;};
+  const error=(document,message)=>assert.throws(()=>compileCatalog(doc(document)),{code:'ERR_SAMPLE_SEMANTIC',message:`test-sample: ${message}`});
+  error({paragraphFormats:[{paragraph:0,alignment:'center'},{paragraph:5,alignment:'right'}]},
+    'paragraphFormats[1]: paragraph index outside text (paragraph 5; the text has paragraphs 0..2)');
+  error({paragraphFormats:[{paragraph:1,alignment:'center'},{paragraph:0,alignment:'left'},{paragraph:1,alignment:'right'}]},
+    'paragraphFormats[2]: duplicate paragraph format (paragraphFormats[0] also formats paragraph 1)');
+  error({text:'甲\n乙 乙\n丙',paragraphFormats:[{paragraph:0,alignment:'center'}]},
+    'text must be 1..8 paragraphs separated by LF, each 1..24 non-whitespace BMP characters (tabs only with paragraphFormats alone); paragraph 1 (counting from 0) is "乙 乙", 3 characters');
+  error({text:'甲\n乙\n丙\n丁\n戊\n己\n庚\n辛\n壬',paragraphFormats:[{paragraph:0,alignment:'center'}]},
+    'text must be 1..8 paragraphs separated by LF, each 1..24 non-whitespace BMP characters (tabs only with paragraphFormats alone); got 9 paragraphs');
+  error({text:'甲\n乙',paragraphFormats:[{paragraph:0,alignment:'center'}]},'paragraphFormats requires 3..8 paragraphs (got 2)');
+  error({text:'甲\n乙',headerFooter:{position:'header',text:'見出し'}},'headerFooter requires exactly 3 paragraphs (got 2)');
+  error({text:'甲\n乙',columns:2},'columns requires 3..8 paragraphs (got 2)');
+  error({text:'甲\n乙\n丙\n丁',columns:2,columnRange:{from:1,to:4}},'columnRange must lie inside the text and must not cover the whole document (from 1, to 4; the text has paragraphs 0..3)');
+  // A text document names its empty paragraph.
+  const empty=fixture();empty.samples[0].document.text='甲乙対象丙丁\n\n戊';
+  assert.throws(()=>compileCatalog(empty),{message:'test-sample: paragraphs separated by LF must not be empty; paragraph 1 (counting from 0) is empty'});
+  // Positive: formats in any order pass.
+  assert.equal(validateCatalog(doc({paragraphFormats:[{paragraph:2,alignment:'right'},{paragraph:0,alignment:'center'}]})).ok,true);
 });
 
 test('CLI validation errors carry the deep path of a schema error',async t=>{

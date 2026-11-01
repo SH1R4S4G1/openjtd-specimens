@@ -1,6 +1,6 @@
 {
   "name": "openjtd-specimens",
-  "version": "0.22.2",
+  "version": "0.22.3",
   "private": true,
   "license": "Apache-2.0",
   "description": "Unofficial tool that makes controlled JTD and PDF specimens with Ichitaro 2026 for OpenJTD, from declarative Sample Catalogs",

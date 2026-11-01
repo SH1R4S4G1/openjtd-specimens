@@ -2,7 +2,7 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { SAMPLE_SCHEMA, APPLICATION_VERSION } from './sample-schema.mjs';
-import { validateSchema, assertJsonData } from './schema-validation.mjs';
+import { validateSchema, assertJsonData, quoteValue } from './schema-validation.mjs';
 import { buildCapabilities, REQUEST_BINDINGS } from './sample-capabilities.mjs';
 import { COLUMN_BASE_FEATURES } from './document-columns.mjs';
 import { expandExperiment } from './experiment.mjs';
@@ -13,6 +13,11 @@ const fail = (location, message) => { throw Object.assign(new Error(`${location}
 const defaults = Object.freeze({chars:40,lines:40,characterSpacing:1,lineSpacing:60,marginTop:30,marginBottom:30,marginLeft:30,marginRight:30});
 const units = {mm:1,inch:2,point:3,character:101,percent:100};
 const reserved = /^(baseline|con|prn|aux|nul|com[1-9]|lpt[1-9])$/i;
+// Places for error messages: a table cell by row and column (1-based) and a
+// merge by its from and to cells.
+const cellAt = ({row, column}) => `(row ${row}, column ${column})`;
+const mergeAt = ({from, to}) => `${cellAt(from)}-${cellAt(to)}`;
+const characters = text => { const count = [...text].length; return `${count} character${count === 1 ? '' : 's'}`; };
 
 // Document-style column format; spacing is left to Ichitaro and recorded.
 function columnFeature(format) {
@@ -63,7 +68,9 @@ function compileSample(sample) {
     // Tab characters are allowed only when paragraph formats are the only element:
     // the other elements compare GetString output, which renders a tab as a space.
     const tabsAllowed = doc.paragraphFormats && ['headerFooter','columns','frames','notes'].every(key => doc[key] === undefined);
-    if (paragraphs.length > 8 || paragraphs.some(p => p.length > 24 || !/^[^\s\p{C}\p{M}\uD800-\uDFFF\u{10000}-\u{10FFFF}]+$/u.test(tabsAllowed ? p.replaceAll('\t','') : p))) fail(sample.id,'text must be 1..8 paragraphs separated by LF, each 1..24 non-whitespace BMP characters (tabs only with paragraphFormats alone)');
+    const badParagraph = paragraphs.findIndex(p => p.length > 24 || !/^[^\s\p{C}\p{M}\uD800-\uDFFF\u{10000}-\u{10FFFF}]+$/u.test(tabsAllowed ? p.replaceAll('\t','') : p));
+    if (paragraphs.length > 8 || badParagraph >= 0) fail(sample.id,`text must be 1..8 paragraphs separated by LF, each 1..24 non-whitespace BMP characters (tabs only with paragraphFormats alone); ${paragraphs.length > 8
+      ? `got ${paragraphs.length} paragraphs` : `paragraph ${badParagraph} (counting from 0) is ${quoteValue(paragraphs[badParagraph])}, ${characters(paragraphs[badParagraph])}`}`);
     const elements = ['headerFooter','columns','paragraphFormats','frames','notes','styles'].filter(key => doc[key] !== undefined);
     if (!elements.length) fail(sample.id,'specify at least one of headerFooter, columns, paragraphFormats, frames, notes or styles');
     if (doc.styles && elements.length > 1) fail(sample.id,'styles cannot combine with other elements');
@@ -104,15 +111,15 @@ function compileSample(sample) {
       if (Object.keys(variant.headerLayout.odd).length === 0) fail(sample.id,'headerFooter needs at least one string for odd pages');
     } else if (doc.headerFooter) {
       used.add('document-header');
-      if (paragraphs.length !== 3) fail(sample.id,'headerFooter requires exactly 3 paragraphs');
+      if (paragraphs.length !== 3) fail(sample.id,`headerFooter requires exactly 3 paragraphs (got ${paragraphs.length})`);
       Object.assign(variant,{headerSteps:[doc.headerFooter.text],headerPosition:doc.headerFooter.position==='footer'?2:1,headerPages:doc.pageBreaks?3:1});
     }
     if (doc.columns !== undefined) {
       used.add('document-columns-body');
-      if (paragraphs.length < 3) fail(sample.id,'columns requires 3..8 paragraphs');
+      if (paragraphs.length < 3) fail(sample.id,`columns requires 3..8 paragraphs (got ${paragraphs.length})`);
       variant.documentColumns = [doc.columns];
       if (doc.columnRange) {
-        if (doc.columnRange.to < doc.columnRange.from || doc.columnRange.to >= paragraphs.length || (doc.columnRange.from === 0 && doc.columnRange.to === paragraphs.length - 1)) fail(sample.id,'columnRange must lie inside the text and must not cover the whole document');
+        if (doc.columnRange.to < doc.columnRange.from || doc.columnRange.to >= paragraphs.length || (doc.columnRange.from === 0 && doc.columnRange.to === paragraphs.length - 1)) fail(sample.id,`columnRange must lie inside the text and must not cover the whole document (from ${doc.columnRange.from}, to ${doc.columnRange.to}; the text has paragraphs 0..${paragraphs.length - 1})`);
         variant.columnRange = {from:doc.columnRange.from,to:doc.columnRange.to};
       }
     }
@@ -123,13 +130,15 @@ function compileSample(sample) {
     }
     if (doc.paragraphFormats) {
       used.add('paragraph-attribute');
-      if (paragraphs.length < 3) fail(sample.id,'paragraphFormats requires 3..8 paragraphs');
-      const formats = [...doc.paragraphFormats].sort((a,b)=>a.paragraph-b.paragraph);
+      if (paragraphs.length < 3) fail(sample.id,`paragraphFormats requires 3..8 paragraphs (got ${paragraphs.length})`);
+      // position keeps the index in the request for error messages.
+      const formats = doc.paragraphFormats.map((format,position)=>({...format,position})).sort((a,b)=>a.paragraph-b.paragraph);
       recipe.paragraphTargets = []; variant.paragraphOperations = [];
       for (const [index, format] of formats.entries()) {
-        if (format.paragraph >= paragraphs.length) fail(sample.id,'paragraph index outside text');
-        if (index && formats[index-1].paragraph === format.paragraph) fail(sample.id,'duplicate paragraph format');
-        if (format.alignment === undefined && !format.indent && !format.spacing && !format.tabs) fail(sample.id,'paragraph format requires alignment, indent, spacing or tabs');
+        const where = `paragraphFormats[${format.position}]`;
+        if (format.paragraph >= paragraphs.length) fail(sample.id,`${where}: paragraph index outside text (paragraph ${format.paragraph}; the text has paragraphs 0..${paragraphs.length - 1})`);
+        if (index && formats[index-1].paragraph === format.paragraph) fail(sample.id,`${where}: duplicate paragraph format (paragraphFormats[${formats[index-1].position}] also formats paragraph ${format.paragraph})`);
+        if (format.alignment === undefined && !format.indent && !format.spacing && !format.tabs) fail(sample.id,`${where}: paragraph format requires alignment, indent, spacing or tabs`);
         const target = `paragraph-${format.paragraph}`;
         recipe.paragraphTargets.push({id:target,index:format.paragraph+1,expected:paragraphs[format.paragraph]});
         const ops = variant.paragraphOperations;
@@ -152,10 +161,11 @@ function compileSample(sample) {
   } else if (doc.kind === 'keisen-table') {
     used.add('keisen-table');
     const heights = doc.rowHeights ?? Array(doc.rows).fill(2), widths = doc.columnWidths ?? Array(doc.columns).fill(4);
-    if (heights.length !== doc.rows || widths.length !== doc.columns) fail(sample.id, 'rowHeights/columnWidths need one entry per row/column');
-    if (widths.some(w => w % 2)) fail(sample.id, 'columnWidths are half-width units and must be even (full-width character boundaries)');
+    if (heights.length !== doc.rows || widths.length !== doc.columns) fail(sample.id, `rowHeights/columnWidths need one entry per row/column (rowHeights has ${heights.length} for ${doc.rows} rows, columnWidths ${widths.length} for ${doc.columns} columns)`);
+    const odd = widths.findIndex(w => w % 2);
+    if (odd >= 0) fail(sample.id, `columnWidths are half-width units and must be even (full-width character boundaries); columnWidths[${odd}] is ${widths[odd]}`);
     const sum = list => list.reduce((a, b) => a + b, 0);
-    if (sum(heights) > 9 || sum(widths) > 18) fail(sample.id, 'table exceeds the observation canvas: total row height <= 9 lines, total column width <= 18 half-width columns');
+    if (sum(heights) > 9 || sum(widths) > 18) fail(sample.id, `table exceeds the observation canvas: total row height <= 9 lines, total column width <= 18 half-width columns (got ${sum(heights)} lines and ${sum(widths)} half-width columns)`);
     const boundaries = (start, sizes) => sizes.reduce((list, size) => [...list, list.at(-1) + size], [start]);
     const rows = boundaries(2, heights), columns = boundaries(3, widths);
     // Larger, sized or merged tables use the structured internal path, which
@@ -192,9 +202,9 @@ function compileSample(sample) {
       // 10.5pt pitch of 5.93mm) refuses what clearly cannot leave the table on page 1.
       const lineWidthMm = 210 - (doc.style?.marginLeft ?? 30) - (doc.style?.marginRight ?? 30), pageLines = doc.style?.lines ?? 40;
       let estimate = recipe.keisenCanvas.rows;
-      for (const paragraph of doc.leadingParagraphs) {
+      for (const [position, paragraph] of doc.leadingParagraphs.entries()) {
         const size = paragraph.sizePt ?? doc.font?.sizePt ?? 10.5, {spacing} = paragraph;
-        if (spacing?.unit === 'mm' && [spacing.before, spacing.after].some(v => v > 10)) fail(sample.id, 'leading paragraph spacing in mm must be 0..10');
+        if (spacing?.unit === 'mm' && [spacing.before, spacing.after].some(v => v > 10)) fail(sample.id, `leadingParagraphs[${position}].spacing: leading paragraph spacing in mm must be 0..10 (got ${['before','after'].filter(key => spacing[key] !== undefined).map(key => `${key} ${spacing[key]}`).join(', ')})`);
         estimate += Math.max(1, Math.ceil(paragraph.text.length * size * 25.4 / 72 / lineWidthMm)) * Math.max(1, size / 10.5);
         if (spacing) estimate += ((spacing.before ?? 0) + (spacing.after ?? 0)) * (spacing.unit === 'mm' ? 1 / 5.93 : 1 / 100);
       }
@@ -204,29 +214,35 @@ function compileSample(sample) {
     }
     variant.keisenOperations = [{type:'table', rows, columns, lineType:doc.lineType??null, color:doc.color??null}];
     // Final-state merges: each requested rectangle becomes one merged cell.
+    // owner is the top-left cell that a cell belongs to; for a merged cell also
+    // the merge's index in the request (merge), as position is for error messages.
     const owner = Array.from({length:doc.rows}, (_, r) => Array.from({length:doc.columns}, (_, c) => ({row:r + 1, column:c + 1})));
-    for (const merge of [...(doc.merges ?? [])].sort((a, b) => a.from.row - b.from.row || a.from.column - b.from.column)) {
-      const {from, to} = merge;
-      if (to.row > doc.rows || to.column > doc.columns) fail(sample.id, 'merge outside requested table');
-      if (to.row < from.row || to.column < from.column || (to.row === from.row && to.column === from.column)) fail(sample.id, 'merge needs from at the top-left and at least two cells');
+    const merges = (doc.merges ?? []).map((merge, position) => ({...merge, position}));
+    const table = `${doc.rows} rows and ${doc.columns} columns`;
+    for (const merge of [...merges].sort((a, b) => a.from.row - b.from.row || a.from.column - b.from.column)) {
+      const {from, to, position} = merge, where = `merges[${position}] ${mergeAt(merge)}`;
+      if (to.row > doc.rows || to.column > doc.columns) fail(sample.id, `${where}: merge outside requested table of ${table}`);
+      if (to.row < from.row || to.column < from.column || (to.row === from.row && to.column === from.column)) fail(sample.id, `${where}: merge needs from at the top-left and at least two cells`);
       for (let r = from.row; r <= to.row; r++) for (let c = from.column; c <= to.column; c++) {
-        if (owner[r - 1][c - 1].row !== r || owner[r - 1][c - 1].column !== c) fail(sample.id, 'merges overlap');
-        owner[r - 1][c - 1] = {row:from.row, column:from.column};
+        const covered = owner[r - 1][c - 1];
+        if (covered.row !== r || covered.column !== c) fail(sample.id, `${where}: merges overlap; ${cellAt({row:r, column:c})} is already in merges[${covered.merge}] ${mergeAt(merges[covered.merge])}`);
+        owner[r - 1][c - 1] = {row:from.row, column:from.column, merge:position};
       }
       variant.keisenOperations.push({type:'cellMerge', from:{...from}, to:{...to}});
     }
-    const cells=[...(doc.cells??[])].sort((a,b)=>a.row-b.row||a.column-b.column);
+    const cells=(doc.cells??[]).map((cell,position)=>({...cell,position})).sort((a,b)=>a.row-b.row||a.column-b.column);
+    const cellWhere = cell => `cells[${cell.position}] ${cellAt(cell)}`;
     for(const [index,cell] of cells.entries()) {
-      if(cell.row>doc.rows||cell.column>doc.columns)fail(sample.id,'cell outside requested table');
-      if(index&&cells[index-1].row===cell.row&&cells[index-1].column===cell.column)fail(sample.id,'duplicate cell specification');
+      if(cell.row>doc.rows||cell.column>doc.columns)fail(sample.id,`${cellWhere(cell)}: cell outside requested table of ${table}`);
+      if(index&&cells[index-1].row===cell.row&&cells[index-1].column===cell.column)fail(sample.id,`${cellWhere(cell)}: duplicate cell specification (cells[${cells[index-1].position}] has the same position)`);
       const top = owner[cell.row - 1][cell.column - 1];
-      if (top.row !== cell.row || top.column !== cell.column) fail(sample.id, 'a merged cell is addressed by its top-left position');
+      if (top.row !== cell.row || top.column !== cell.column) fail(sample.id, `${cellWhere(cell)}: a merged cell is addressed by its top-left position; this cell is inside merges[${top.merge}] ${mergeAt(merges[top.merge])}, so write ${cellAt(top)}`);
     }
     // Text after merges (capacity of the final cell), then attributes in a stable order.
     for (const cell of cells) if (cell.text !== undefined) {
-      const right = doc.merges?.find(m => m.from.row === cell.row && m.from.column === cell.column)?.to.column ?? cell.column;
-      const capacity = Math.min(4, (columns[right] - columns[cell.column - 1]) / 2 - 1);
-      if (cell.text.length > capacity || /[\s\p{M}\p{C}\uD800-\uDFFF]/u.test(cell.text)) fail(sample.id, `cell text must be non-whitespace BMP characters, at most ${capacity} for a cell of width ${columns[right] - columns[cell.column - 1]}`);
+      const merge = doc.merges?.find(m => m.from.row === cell.row && m.from.column === cell.column), right = merge?.to.column ?? cell.column;
+      const width = columns[right] - columns[cell.column - 1], capacity = Math.min(4, width / 2 - 1);
+      if (cell.text.length > capacity || /[\s\p{M}\p{C}\uD800-\uDFFF]/u.test(cell.text)) fail(sample.id, `${cellWhere(cell)}: cell text must be non-whitespace BMP characters, at most ${capacity} for a ${merge ? 'merged ' : ''}cell of width ${width} half-width columns (min(4, width/2-1)); got ${quoteValue(cell.text)}, ${characters(cell.text)}`);
       variant.keisenOperations.push({type:'tableText', cell:{row:cell.row, column:cell.column}, text:cell.text});
     }
     for (const cell of cells)
@@ -234,8 +250,8 @@ function compileSample(sample) {
       for(const attribute of ['alignment','textColor','bold','italic','fill','color'])if(cell.attributes?.[attribute]!==undefined)
         variant.keisenOperations.push({type:'tableAttribute',cell:{row:cell.row,column:cell.column},attribute,value:cell.attributes[attribute]});
     const ruleByRule = doc.rows > 2 || doc.columns > 2 || doc.merges !== undefined;
-    if(!ruleByRule&&variant.keisenOperations.length>8)fail(sample.id,'at most seven cell texts and attributes in total for a table up to 2x2 without merges');
-    if(ruleByRule&&variant.keisenOperations.length>16)fail(sample.id,'at most fifteen merges, cell texts and attributes in total');
+    if(!ruleByRule&&variant.keisenOperations.length>8)fail(sample.id,`at most seven cell texts and attributes in total for a table up to 2x2 without merges (got ${variant.keisenOperations.length - 1})`);
+    if(ruleByRule&&variant.keisenOperations.length>16)fail(sample.id,`at most fifteen merges, cell texts and attributes in total (got ${variant.keisenOperations.length - 1})`);
   } else {
     used.add('plain-text');
     recipe.text = doc.text;
@@ -284,7 +300,8 @@ function compileSample(sample) {
       variant.features.layout = {orientation:doc.writingMode==='vertical'?2:1};
     }
     const textParagraphs = doc.text.split(String.fromCharCode(10));
-    if (textParagraphs.some(p => !p.length)) fail(sample.id,'paragraphs separated by LF must not be empty');
+    const emptyParagraph = textParagraphs.findIndex(p => !p.length);
+    if (emptyParagraph >= 0) fail(sample.id,`paragraphs separated by LF must not be empty; paragraph ${emptyParagraph} (counting from 0) is empty`);
     // CR-003: a body over 2000 characters is horizontal text proven by joined
     // lines and a paragraph walk; annotations are read back character by
     // character only in the paragraphs that hold them (src/ranges.mjs).
@@ -306,7 +323,10 @@ function compileSample(sample) {
       const {capability,range,parameters:p,position} = annotation;
       used.add(capability);
       checkRange(sample.id,doc.text,range,position);
-      if (index && annotations[index-1].range.end > range.start) fail(sample.id,'overlapping annotations are not supported by Sample Catalog v1');
+      if (index && annotations[index-1].range.end > range.start) {
+        const named = item => `annotations[${item.position}] (${item.capability} [${item.range.start},${item.range.end}) ${quoteValue(item.range.text)})`;
+        fail(sample.id,`${named(annotation)} overlaps ${named(annotations[index-1])}; annotations must not overlap even with different capabilities`);
+      }
       const target = `range-${index}`;
       recipe.targets.push({id:target,kind:'text',start:range.start,end:range.end,expected:range.text});
       if (capability === 'character-decoration' || capability === 'character-border') {
@@ -314,7 +334,7 @@ function compileSample(sample) {
         // decoration color per character, so the same color goes on every call.
         const values = capability === 'character-border' ? {border:p.lineType} : {underline:p.underline,strikeThrough:p.strikeThrough,fill:p.fill};
         const set = Object.entries(values).filter(([,value])=>value!==undefined);
-        if (!set.length) fail(sample.id,'character-decoration requires underline, strikeThrough or fill');
+        if (!set.length) fail(sample.id,`annotations[${position}]: character-decoration requires underline, strikeThrough or fill`);
         for (const [attribute,value] of set) variant.operations.push({target,type:'character',attribute,mode:'set',value,...(p.color===undefined?{}:{color:p.color})});
         continue;
       }

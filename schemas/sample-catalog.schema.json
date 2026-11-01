@@ -28,6 +28,7 @@
   "$defs": {
     "id": {
       "type": "string",
+      "description": "Identifier: 1..60 characters, a lowercase letter a-z first, then a-z, 0-9 or hyphens",
       "minLength": 1,
       "maxLength": 60,
       "pattern": "^[a-z][a-z0-9-]*$(?![\\s\\S])"
@@ -48,6 +49,7 @@
         },
         "text": {
           "type": "string",
+          "description": "The body text at [start,end): 1..2000 BMP characters without U+0000..U+001F (line feed included), U+007F or combining marks",
           "minLength": 1,
           "maxLength": 2000,
           "pattern": "^[^\\u0000-\\u001f\\u007f\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}\\p{M}]+$(?![\\s\\S])"
@@ -65,6 +67,7 @@
       "properties": {
         "name": {
           "type": "string",
+          "description": "Font name: 1..120 BMP characters without U+0000..U+001F or U+007F",
           "minLength": 1,
           "maxLength": 120,
           "pattern": "^[^\\u0000-\\u001f\\u007f\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
@@ -190,6 +193,7 @@
         },
         "reading": {
           "type": "string",
+          "description": "Ruby reading: 1..64 BMP characters without U+0000..U+001F, U+007F or combining marks",
           "minLength": 1,
           "maxLength": 64,
           "pattern": "^[^\\u0000-\\u001f\\u007f\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}\\p{M}]+$(?![\\s\\S])"
@@ -297,6 +301,7 @@
       "properties": {
         "name": {
           "type": "string",
+          "description": "Font name: 1..64 characters without U+0000..U+001F or U+007F",
           "minLength": 1,
           "maxLength": 64,
           "pattern": "^[^\\u0000-\\u001f\\u007f]+$(?![\\s\\S])"
@@ -827,6 +832,7 @@
     },
     "rgb": {
       "type": "string",
+      "description": "Color as R<0-255>G<0-255>B<0-255> in decimal without leading zeros or spaces, for example R0G0B0 or R255G0B0",
       "pattern": "^R(?:0|[1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5])G(?:0|[1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5])B(?:0|[1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5])$(?![\\s\\S])"
     },
     "cellAttributes": {
@@ -1023,6 +1029,7 @@
       "properties": {
         "id": {
           "type": "string",
+          "description": "Note identifier: 1..40 characters, a lowercase letter a-z first, then a-z, 0-9 or hyphens",
           "pattern": "^[a-z][a-z0-9-]{0,39}$(?![\\s\\S])"
         },
         "paragraph": {
@@ -1037,6 +1044,7 @@
         },
         "text": {
           "type": "string",
+          "description": "Note text: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
           "minLength": 1,
           "maxLength": 24,
           "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
@@ -1090,18 +1098,21 @@
         },
         "text": {
           "type": "string",
+          "description": "Header or footer string: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
           "minLength": 1,
           "maxLength": 24,
           "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
         },
         "center": {
           "type": "string",
+          "description": "Header or footer string: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
           "minLength": 1,
           "maxLength": 24,
           "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
         },
         "right": {
           "type": "string",
+          "description": "Header or footer string: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
           "minLength": 1,
           "maxLength": 24,
           "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
@@ -1113,18 +1124,21 @@
           "properties": {
             "text": {
               "type": "string",
+              "description": "Header or footer string: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
               "minLength": 1,
               "maxLength": 24,
               "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
             },
             "center": {
               "type": "string",
+              "description": "Header or footer string: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
               "minLength": 1,
               "maxLength": 24,
               "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
             },
             "right": {
               "type": "string",
+              "description": "Header or footer string: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
               "minLength": 1,
               "maxLength": 24,
               "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"
@@ -1408,6 +1422,7 @@
       "properties": {
         "name": {
           "type": "string",
+          "description": "Frame name: 1..32 characters, a lowercase letter a-z first, then a-z, 0-9 or hyphens",
           "pattern": "^[a-z][a-z0-9-]{0,31}$(?![sS])"
         },
         "left": {
@@ -1432,6 +1447,7 @@
         },
         "text": {
           "type": "string",
+          "description": "Frame text: 1..24 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned)",
           "minLength": 1,
           "maxLength": 24,
           "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]+$(?![\\s\\S])"

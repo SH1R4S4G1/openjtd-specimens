@@ -31,9 +31,9 @@ test('CR-009: leading paragraphs come first in the text and move the canvas down
   assert.equal(compile({ ...table, leadingParagraphs: [{ text: 'あ'.repeat(41) }, { text: 'い'.repeat(33), spacing: { unit: 'percent', after: 50 } }] }).recipe.keisenCanvas.leading[1].spacing.unit, 100);
   assert.throws(() => compile({ ...table, leadingParagraphs: Array.from({ length: 8 }, () => ({ text: 'あ'.repeat(200), sizePt: 18 })) }), /more than the 40 lines of the first page/);
   assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: 'あ', spacing: { unit: 'mm', before: 12 } }] }), /spacing in mm must be 0..10/);
-  assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: 'あ'.repeat(201) }] }), { message: '$.samples[0].document.leadingParagraphs[0].text: string length outside supported bounds' });
-  assert.throws(() => compile({ ...table, leadingParagraphs: [] }), { message: '$.samples[0].document.leadingParagraphs: array length outside supported bounds' });
-  assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: '空 白' }] }), { message: '$.samples[0].document.leadingParagraphs[0].text: string does not match required pattern' });
+  assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: 'あ'.repeat(201) }] }), { message: `$.samples[0].document.leadingParagraphs[0].text: string length 201 is outside 0..200 (got "${'あ'.repeat(40)}"…)` });
+  assert.throws(() => compile({ ...table, leadingParagraphs: [] }), { message: '$.samples[0].document.leadingParagraphs: array length 0 is outside 1..8' });
+  assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: '空 白' }] }), { message: '$.samples[0].document.leadingParagraphs[0].text: does not match the required form: 0..200 BMP characters without whitespace; empty makes a blank line (got "空 白")' });
 });
 
 test('CR-009: every table coordinate is shifted by the leading lines; sizes are set and every leading line is read back', () => {

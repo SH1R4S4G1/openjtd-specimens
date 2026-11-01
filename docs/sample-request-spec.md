@@ -18,7 +18,7 @@ UTF-8 JSON（BOM可）のSample Catalogを1ファイルで渡します。JSON Sc
 |---|---|---|
 | root.schemaVersion | ○ | 整数 `1`。要求契約のバージョン |
 | root.id | ○ | Catalogの識別子 |
-| root.samples | ○ | 試料要求の配列、1～100件 |
+| root.samples | ○ | 試料要求の配列、1～200件 |
 | sample.id | ○ | Catalog内で一意の試料識別子 |
 | sample.title | ○ | 人間向けの名前、1～200文字 |
 | sample.purpose | ○ | OpenJTDで何を確かめるか、1～2000文字 |
@@ -44,7 +44,7 @@ UTF-8 JSON（BOM可）のSample Catalogを1ファイルで渡します。JSON Sc
 
 ルビの文字揃え（alignment）と上下配置（placement）は別の属性です。均等配置では左右位置の指定は適用対象外になります。[文字揃えの完成例](../examples/agent/08-ruby-alignment.json)を参照してください。
 
-範囲の重なりは属性が異なっても拒否します。隣接範囲、別々の範囲属性、文書フォントと範囲属性の併用は可能です。annotationsの配列順序に操作順の意味はありません。要求は文書の最終状態を表し、解除・変更の操作履歴は内部Execution Recipeの責務です。未公開の能力を内部実装から推測して要求しないでください。
+範囲の重なりは属性が異なっても拒否します。たとえば同じ範囲に文字色（`character-color`）と塗りつぶし（`character-decoration` の `fill`）を重ねることもできないので、本文では塗りつぶしの上に文字色を指定した文字（たとえば濃度の高い塗りつぶしの上の白い文字）を要求できません。罫線表のセルでは、`cells[].attributes` の `textColor` と `fill` を併用できます。隣接範囲、別々の範囲属性、文書フォントと範囲属性の併用は可能です。annotationsの配列順序に操作順の意味はありません。要求は文書の最終状態を表し、解除・変更の操作履歴は内部Execution Recipeの責務です。未公開の能力を内部実装から推測して要求しないでください。
 
 文書種別ごとに構造が異なります。たとえば空の罫線表の要求を、一般的な表編集や本文と自由に併用できる契約と解釈してはいけません。詳細表のdocument kindとSchemaの分岐を確認してください。
 
@@ -117,7 +117,7 @@ Few-shot用の完成ファイルは [examples/agent](../examples/agent) にあ�
 node bin/ichitaro.mjs validate examples/agent/03-ruby.json
 ```
 
-成功時は標準出力に `ok: true` のJSON、終了コード0。失敗時は標準エラーに `ok: false` と `error.code`、`message`、可能なら `path` を出し、終了コード1にします。Schemaの誤り（`ERR_SAMPLE_SCHEMA`）の `path` は `$.samples[0].document.annotations[1].parameters` のようなJSON上の場所です。`kind`・`capability` のように分岐を決めるフィールドの値が既知なら、その分岐の中の誤りをその場所で示し（例：`$.samples[0].document.annotations[1].parameters: unknown field bold`）、未知なら受け付ける値を列挙します（例：`unknown capability "Bold"; supported: character-scaleX, …`）。そのフィールドがない値や、どの分岐とも決まらない値は `must match exactly one supported structure` で示します。試料ごとの意味的検証の誤り（`ERR_SAMPLE_SEMANTIC`）は試料IDで始まります。範囲の誤りは、注釈の添字（配列での順番、0始まり）、要求した `text`、その位置にある実際の文字（終端が始端以前のときを除く）、本文の長さを示します（例：`annotations[2].range: text "重要" is not the text at [5,7) (found "注意"; body length 24; start counts from 0 and end is exclusive)`）。JSON解析 → Schema検証 → ID・参照・本文範囲・能力・組合せの意味的検証 → 内部計画の検証まで行います。一太郎は起動しません。成功したCatalogをWindows側へ渡してください。
+成功時は標準出力に `ok: true` のJSON、終了コード0。失敗時は標準エラーに `ok: false` と `error.code`、`message`、可能なら `path` を出し、終了コード1にします。Schemaの誤り（`ERR_SAMPLE_SCHEMA`）の `path` は `$.samples[0].document.annotations[1].parameters` のようなJSON上の場所です。`kind`・`capability` のように分岐を決めるフィールドの値が既知なら、その分岐の中の誤りをその場所で示し（例：`$.samples[0].document.annotations[1].parameters: unknown field bold`）、未知なら受け付ける値を列挙します（例：`unknown capability "Bold"; supported: character-scaleX, …`）。そのフィールドがない値や、どの分岐とも決まらない値は `must match exactly one supported structure` で示します。数値の範囲、文字列の長さ、配列の件数の誤りは受け付ける範囲と実際の値を、文字列の形式の誤りは受け付ける形と実際の値を示します（例：`$.samples[0].document.rows: must be between 1 and 4 (got 5)`、`$.samples[0].title: string length 0 is outside 1..200 (got "")`、`$.samples[0].document.annotations[1].parameters.color: does not match the required form: Color as R<0-255>G<0-255>B<0-255> in decimal without leading zeros or spaces, for example R0G0B0 or R255G0B0 (got "red")`。形はSchemaの `description` の最初の文で、`description` がなければ正規表現で示します。文字列の値は先頭40字までを示します）。`description` の最初の文が条件のすべてを書いていない欄もあるので、文に合う値が拒否されたときはSchemaの `pattern` を確かめてください。試料ごとの意味的検証の誤り（`ERR_SAMPLE_SEMANTIC`）は試料IDで始まります。範囲の誤りは、注釈の添字（配列での順番、0始まり）、要求した `text`、その位置にある実際の文字（終端が始端以前のときを除く）、本文の長さを示します（例：`annotations[2].range: text "重要" is not the text at [5,7) (found "注意"; body length 24; start counts from 0 and end is exclusive)`）。JSON解析 → Schema検証 → ID・参照・本文範囲・能力・組合せの意味的検証 → 内部計画の検証まで行います。一太郎は起動しません。成功したCatalogをWindows側へ渡してください。
 
 validate成功は生成時の成功保証ではありません。フォント、既定スタイル、属性による折り返しなどの環境依存があり、保存前・再読込後の本文や属性が一致しなければWindows側は失敗として報告します。
 
