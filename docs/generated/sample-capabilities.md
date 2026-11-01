@@ -4,7 +4,7 @@
 
 直接編集禁止。コード上の能力定義・公開バインディングと正式JSON Schemaから生成します。更新: `node scripts/generate-capabilities.mjs`。
 
-Application: <code>0.21.1</code> / Catalog schema: <code>1</code>
+Application: <code>0.21.2</code> / Catalog schema: <code>1</code>
 
 [概念・書き方・検証](../sample-request-spec.md) / [機械一覧](../../capabilities.json) / [正式Schema](../../schemas/sample-catalog.schema.json) / [内部パラメータの公開対応表](parameter-exposure.md)
 
