@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "ruby",
+  "samples": [
+    {
+      "id": "ruby-reading",
+      "title": "ruby-reading",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "ruby",
+      "expected": [
+        {
+          "property": "range[2:4].ruby.reading",
+          "value": "たいしょう"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "ruby",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "reading": "たいしょう"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

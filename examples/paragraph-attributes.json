@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 1,
+  "name": "paragraph-single-attribute-lifecycle",
+  "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "paragraphTargets": [
+    {
+      "id": "middle",
+      "index": 2,
+      "expected": "対象段落の確認"
+    }
+  ],
+  "samples": [
+    {
+      "id": "alignment-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "alignment-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "alignment-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 3
+        },
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "alignment-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 3
+        },
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "indentStart-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "indentStart-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "indentStart-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "indentStart-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "indentStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "indentEnd-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "indentEnd-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "indentEnd-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "indentEnd-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "indentEnd",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "firstStart-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "firstStart-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "firstStart-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "firstStart-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "firstStart",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "firstEnd-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "firstEnd-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -6,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "firstEnd-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "firstEnd-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "firstEnd",
+          "mode": "set",
+          "value": -3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spaceBefore-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spaceBefore-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spaceBefore-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "spaceBefore-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceBefore",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spaceAfter-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spaceAfter-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spaceAfter-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "spaceAfter-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 6,
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "spaceAfter",
+          "mode": "set",
+          "value": 3,
+          "unit": 1
+        }
+      ]
+    }
+  ]
+}

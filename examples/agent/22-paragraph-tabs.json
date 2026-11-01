@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "id": "paragraph-tabs",
+  "samples": [
+    {
+      "id": "tabs-mm",
+      "title": "tabs-mm",
+      "purpose": "mm単位のタブ位置とタブ文字を確認する",
+      "feature": "paragraph-tabs",
+      "expected": [
+        {
+          "property": "paragraph[1].tabs.positions",
+          "value": "5,10"
+        },
+        {
+          "property": "paragraph[1].tabs.unit",
+          "value": "mm"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n項目\t値\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "tabs": {
+              "unit": "mm",
+              "positions": [
+                5,
+                10
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "tabs-columns-two-tabs",
+      "title": "tabs-columns-two-tabs",
+      "purpose": "カラム単位のタブ位置と1段落に2つのタブ文字を確認する",
+      "feature": "paragraph-tabs",
+      "expected": [
+        {
+          "property": "paragraph[1].tabs.positions",
+          "value": "4,8,12"
+        },
+        {
+          "property": "paragraph[1].tabs.unit",
+          "value": "columns"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n甲\t乙\t丙\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "tabs": {
+              "unit": "columns",
+              "positions": [
+                4,
+                8,
+                12
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "tabs-with-indent",
+      "title": "tabs-with-indent",
+      "purpose": "字下げ・中央揃えとタブ位置の同時指定を確認する",
+      "feature": "paragraph-tabs",
+      "expected": [
+        {
+          "property": "paragraph[1].tabs.positions",
+          "value": "6"
+        },
+        {
+          "property": "paragraph[1].indent.start",
+          "value": 2
+        },
+        {
+          "property": "paragraph[0].alignment",
+          "value": "center"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "見出しの段落\n項目\t値\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 0,
+            "alignment": "center"
+          },
+          {
+            "paragraph": 1,
+            "indent": {
+              "unit": "columns",
+              "start": 2
+            },
+            "tabs": {
+              "unit": "columns",
+              "positions": [
+                6
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

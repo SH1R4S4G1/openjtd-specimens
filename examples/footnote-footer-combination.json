@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "name": "footnote-footer-combination",
+  "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "footnote-footer",
+      "settings": {},
+      "headerSteps": [
+        "脚部乙"
+      ],
+      "headerPosition": 2,
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "n1",
+            "paragraph": 1,
+            "offset": 0,
+            "text": "注記"
+          }
+        ]
+      }
+    }
+  ]
+}

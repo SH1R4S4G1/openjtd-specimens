@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "id": "table-structure",
+  "samples": [
+    {
+      "id": "text-2x2",
+      "title": "罫線表 2x2 セル文字",
+      "purpose": "既定寸法の2x2表で各セルの1文字を読み戻す",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "text": "甲"
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "text": "乙"
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "text": "丙"
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "text": "丁"
+          }
+        ]
+      }
+    },
+    {
+      "id": "grid-3x3",
+      "title": "罫線表 3x3",
+      "purpose": "3x3表の全セル文字",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 3,
+        "columns": 3,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "text": "壱"
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "text": "弐"
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "text": "参"
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "text": "肆"
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "text": "伍"
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "text": "陸"
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "text": "漆"
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "text": "捌"
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "text": "玖"
+          }
+        ]
+      }
+    },
+    {
+      "id": "grid-4x4",
+      "title": "罫線表 4x4",
+      "purpose": "4x4表の対角セル文字と属性",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 4,
+        "columns": 4,
+        "lineType": 3,
+        "color": "R0G0B255",
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "text": "A"
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "text": "B",
+            "attributes": {
+              "fill": 30
+            }
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "text": "C",
+            "attributes": {
+              "bold": 1
+            }
+          },
+          {
+            "row": 4,
+            "column": 4,
+            "text": "D",
+            "attributes": {
+              "textColor": "R255G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "sized",
+      "title": "罫線表 行高・列幅",
+      "purpose": "行高と列幅を指定し、広いセルに複数文字を置く",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "rowHeights": [
+          2,
+          3
+        ],
+        "columnWidths": [
+          6,
+          10
+        ],
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "text": "甲乙"
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "text": "一二三四"
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "text": "下段"
+          }
+        ]
+      }
+    },
+    {
+      "id": "merge-header-row",
+      "title": "罫線表 見出し行の結合",
+      "purpose": "1行目の3セルを結合して見出し文字と属性を置く",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 3,
+        "columns": 3,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "merges": [
+          {
+            "from": {
+              "row": 1,
+              "column": 1
+            },
+            "to": {
+              "row": 1,
+              "column": 3
+            }
+          }
+        ],
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "text": "見出し",
+            "attributes": {
+              "alignment": 2,
+              "fill": 20
+            }
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "text": "左"
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "text": "右"
+          }
+        ]
+      }
+    },
+    {
+      "id": "merge-blocks",
+      "title": "罫線表 2つの矩形結合",
+      "purpose": "4x4表の左上と右下の2x2を結合する",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 4,
+        "columns": 4,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "merges": [
+          {
+            "from": {
+              "row": 1,
+              "column": 1
+            },
+            "to": {
+              "row": 2,
+              "column": 2
+            }
+          },
+          {
+            "from": {
+              "row": 3,
+              "column": 3
+            },
+            "to": {
+              "row": 4,
+              "column": 4
+            }
+          }
+        ],
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "text": "左上"
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "text": "右下"
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "text": "他"
+          },
+          {
+            "row": 4,
+            "column": 1,
+            "text": "外"
+          }
+        ]
+      }
+    },
+    {
+      "id": "merge-column",
+      "title": "罫線表 縦方向の結合",
+      "purpose": "1列目の3セルを縦に結合する",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 3,
+        "columns": 2,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "columnWidths": [
+          6,
+          6
+        ],
+        "merges": [
+          {
+            "from": {
+              "row": 1,
+              "column": 1
+            },
+            "to": {
+              "row": 3,
+              "column": 1
+            }
+          }
+        ],
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "text": "縦"
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "text": "中段"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "incompleteRuns": {
+    "2026-10-11T15-48-21-708Z-df94173c": "表構造の初回接続試験。部分結合の検証で停止した記録（docs/maintainer/table-structure-development.md）。",
+    "2026-10-12T01-42-17-981Z-023be8c2": "段落書式の初回run。正値の先頭行行末シフトで停止した記録（docs/maintainer/paragraph-development.md）。",
+    "2026-10-12T11-29-53-162Z-20c278c0": "ヘッダー試験。baseline保存後のレポートエラーで中断した記録（docs/maintainer/document-structure-development.md）。",
+    "2026-10-13T12-27-01-895Z-dc2e11b3": "単独脚注の先行run。固定した接頭辞が実機と合わず停止した記録（docs/footnotes.md）。",
+    "2026-10-14T02-25-57-266Z-ef7ee9c5": "枠の最初の内部実行。GetStringが本文に余分な空白を返し本文不一致で停止した記録（docs/frames.md）。",
+    "2026-10-14T11-47-35-730Z-ffadf709": "単独脚注の再実行。脚注エリアのラベルが番号形式になり照合不一致で停止した記録（docs/combinations.md）。",
+    "2026-10-14T11-51-34-218Z-ee4dd1f9": "脚注履歴の再実行。ラベルが過去の番号を保持し照合不一致で停止した記録（docs/combinations.md）。",
+    "2026-10-14T11-57-14-361Z-d90d8473": "名前付きスタイルの再実行。登録名一覧の並び順の違いで停止した記録（docs/combinations.md）。"
+  }
+}

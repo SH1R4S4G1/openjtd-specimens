@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "id": "document-style",
+  "samples": [
+    {
+      "id": "style-reference",
+      "title": "style-reference",
+      "purpose": "文書スタイル指定値の保存・再読込保持を検証",
+      "feature": "document-style",
+      "expected": [
+        {
+          "property": "document.style.chars",
+          "value": 40
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "文書スタイル検証用本文甲乙丙丁",
+        "style": {
+          "chars": 40,
+          "lines": 40,
+          "marginTop": 30,
+          "marginBottom": 30,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "layoutPriority": "counts"
+        }
+      }
+    },
+    {
+      "id": "style-counts",
+      "title": "style-counts",
+      "purpose": "文書スタイル指定値の保存・再読込保持を検証",
+      "feature": "document-style",
+      "expected": [
+        {
+          "property": "document.style.chars",
+          "value": 36
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "文書スタイル検証用本文甲乙丙丁",
+        "style": {
+          "chars": 36,
+          "lines": 36,
+          "marginTop": 30,
+          "marginBottom": 30,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "layoutPriority": "counts"
+        }
+      }
+    },
+    {
+      "id": "style-spacing",
+      "title": "style-spacing",
+      "purpose": "文書スタイル指定値の保存・再読込保持を検証",
+      "feature": "document-style",
+      "expected": [
+        {
+          "property": "document.style.characterSpacing",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "文書スタイル検証用本文甲乙丙丁",
+        "style": {
+          "characterSpacing": 2,
+          "lineSpacing": 70,
+          "marginTop": 30,
+          "marginBottom": 30,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "layoutPriority": "spacing"
+        }
+      }
+    },
+    {
+      "id": "style-margins",
+      "title": "style-margins",
+      "purpose": "文書スタイル指定値の保存・再読込保持を検証",
+      "feature": "document-style",
+      "expected": [
+        {
+          "property": "document.style.chars",
+          "value": 40
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "文書スタイル検証用本文甲乙丙丁",
+        "style": {
+          "chars": 40,
+          "lines": 40,
+          "marginTop": 25,
+          "marginBottom": 25,
+          "marginLeft": 25,
+          "marginRight": 25,
+          "layoutPriority": "counts"
+        }
+      }
+    }
+  ]
+}

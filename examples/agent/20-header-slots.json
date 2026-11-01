@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "id": "header-slots",
+  "samples": [
+    {
+      "id": "header-three-slots",
+      "title": "header-three-slots",
+      "purpose": "ヘッダーの左・中央・右の文字列を確認する",
+      "feature": "header-layout",
+      "expected": [
+        {
+          "property": "header.top.left.text",
+          "value": "左側"
+        },
+        {
+          "property": "header.top.center.text",
+          "value": "中央"
+        },
+        {
+          "property": "header.top.right.text",
+          "value": "右側"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "headerFooter": {
+          "position": "header",
+          "text": "左側",
+          "center": "中央",
+          "right": "右側"
+        }
+      }
+    },
+    {
+      "id": "footer-center",
+      "title": "footer-center",
+      "purpose": "中央寄せのフッターを確認する",
+      "feature": "header-layout",
+      "expected": [
+        {
+          "property": "footer.bottom.center.text",
+          "value": "中央脚部"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "headerFooter": {
+          "position": "footer",
+          "center": "中央脚部"
+        }
+      }
+    },
+    {
+      "id": "odd-even-header",
+      "title": "odd-even-header",
+      "purpose": "奇数ページ左・偶数ページ右のヘッダーを確認する",
+      "feature": "header-layout",
+      "expected": [
+        {
+          "property": "header.odd.left.text",
+          "value": "奇数頁"
+        },
+        {
+          "property": "header.even.right.text",
+          "value": "偶数頁"
+        },
+        {
+          "property": "pageCount",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "一ページ目の本文\n二ページ目の本文",
+        "headerFooter": {
+          "position": "header",
+          "text": "奇数頁",
+          "evenPages": {
+            "right": "偶数頁"
+          }
+        }
+      }
+    }
+  ]
+}

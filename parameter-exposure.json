@@ -1,0 +1,1636 @@
+{
+  "schemaVersion": 1,
+  "parameters": [
+    {
+      "capability": "plain-text",
+      "parameter": "text",
+      "status": "public",
+      "definition": "textDocument",
+      "field": "text",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "trial.text",
+      "status": "internal-only",
+      "note": "旧単独脚注Recipe互換のみ"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "trial.steps",
+      "status": "public",
+      "definition": "footnoteDocument",
+      "field": "notes",
+      "note": "外部は最終脚注集合。履歴は内部Recipeのみ"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "body.text",
+      "status": "public",
+      "definition": "footnoteDocument",
+      "field": "text",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "step.action",
+      "status": "fixed",
+      "note": "外部集合からaddを構成。modify/removeは内部履歴のみ"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "step.id",
+      "status": "public",
+      "definition": "footnote",
+      "field": "id",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "step.paragraph",
+      "status": "public",
+      "definition": "footnote",
+      "field": "paragraph",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "step.offset",
+      "status": "public",
+      "definition": "footnote",
+      "field": "offset",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-footnote",
+      "parameter": "step.text",
+      "status": "public",
+      "definition": "footnote",
+      "field": "text",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "named-styles",
+      "parameter": "trial.kind",
+      "status": "internal-only",
+      "note": "定義・適用・直接指定・再定義・解除の履歴試験は内部Recipeのみ。外部は最終状態のstyles"
+    },
+    {
+      "capability": "named-styles",
+      "parameter": "trial.steps",
+      "status": "internal-only",
+      "note": "定義・適用・直接指定・再定義・解除の履歴試験は内部Recipeのみ。外部は最終状態のstyles"
+    },
+    {
+      "capability": "named-styles",
+      "parameter": "styles.kind",
+      "status": "public",
+      "definition": "styleDefinition",
+      "field": "kind",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "named-styles",
+      "parameter": "styles.name",
+      "status": "public",
+      "definition": "styleDefinition",
+      "field": "name",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "named-styles",
+      "parameter": "styles.sizePt",
+      "status": "public",
+      "definition": "styleDefinition",
+      "field": "sizePt",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "named-styles",
+      "parameter": "styles.paragraph",
+      "status": "public",
+      "definition": "styleApplication",
+      "field": "paragraph",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "named-styles",
+      "parameter": "styles.style",
+      "status": "public",
+      "definition": "styleApplication",
+      "field": "style",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-header",
+      "parameter": "sample.headerSteps",
+      "status": "public",
+      "definition": "headerFooter",
+      "field": "text",
+      "note": "外部は最終文字列1個。設定・変更・解除の履歴は内部Recipeのみ"
+    },
+    {
+      "capability": "document-header",
+      "parameter": "sample.headerPosition",
+      "status": "public",
+      "definition": "headerFooter",
+      "field": "position",
+      "note": "header→1（上端）、footer→2（下端）"
+    },
+    {
+      "capability": "document-header",
+      "parameter": "sample.headerPages",
+      "status": "public",
+      "definition": "paragraphsDocument",
+      "field": "pageBreaks",
+      "note": "true→3ページ（各段落を別ページ）、省略→1ページ"
+    },
+    {
+      "capability": "document-columns-body",
+      "parameter": "sample.documentColumns",
+      "status": "public",
+      "definition": "paragraphsDocument",
+      "field": "columns",
+      "note": "外部は最終段数2または3。段数の変更・解除履歴は内部Recipeのみ"
+    },
+    {
+      "capability": "document-columns-body",
+      "parameter": "sample.columnRange",
+      "status": "public",
+      "definition": "columnRange",
+      "field": [
+        "from",
+        "to"
+      ],
+      "note": "段組を適用する段落範囲（0始まり、両端を含む）。省略時は文書全体"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "target.id",
+      "status": "fixed",
+      "note": "コンパイラが段落IDを生成"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "target.index",
+      "status": "public",
+      "definition": "paragraphFormat",
+      "field": "paragraph",
+      "note": "0始まり→1始まり"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "target.expected",
+      "status": "fixed",
+      "note": "本文の該当段落から導出"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "operation.target",
+      "status": "fixed",
+      "note": "コンパイラが構成"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "operation.attribute",
+      "status": "fixed",
+      "note": "tabs"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "operation.mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "operation.value",
+      "status": "public",
+      "definition": "paragraphFormat",
+      "field": "tabs",
+      "note": "positions。タブ種類は左揃え固定で未検証"
+    },
+    {
+      "capability": "paragraph-tabs",
+      "parameter": "operation.unit",
+      "status": "public",
+      "definition": "paragraphFormat",
+      "field": "tabs",
+      "note": "mm→1、columns→101"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "tableBand.type",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "tableBand.axis",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "tableBand.mode",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "tableBand.index",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "tableBand.size",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellMerge.type",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": "merges",
+      "note": "結合矩形ごとに1つのcellMergeへ変換。重なりは拒否"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellMerge.from",
+      "status": "public",
+      "definition": "tableMerge",
+      "field": "from",
+      "note": "最終状態の結合矩形の左上"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellMerge.to",
+      "status": "public",
+      "definition": "tableMerge",
+      "field": "to",
+      "note": "最終状態の結合矩形の右下"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellSplit.type",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellSplit.cell",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellSplit.rows",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellSplit.columns",
+      "status": "internal-only",
+      "note": "行列の追加・削除と分割の操作履歴は内部Recipeのみ。外部は最終状態の行列数・寸法・結合で表す"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellAddress.row",
+      "status": "public",
+      "definition": "tableAddress",
+      "field": "row",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table-structure",
+      "parameter": "cellAddress.column",
+      "status": "public",
+      "definition": "tableAddress",
+      "field": "column",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "range-text",
+      "parameter": "target.id",
+      "status": "fixed",
+      "note": "コンパイラが範囲IDを生成"
+    },
+    {
+      "capability": "range-text",
+      "parameter": "target.kind",
+      "status": "fixed",
+      "note": "textのみ"
+    },
+    {
+      "capability": "range-text",
+      "parameter": "target.start",
+      "status": "public",
+      "definition": "range",
+      "field": "start",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "range-text",
+      "parameter": "target.end",
+      "status": "public",
+      "definition": "range",
+      "field": "end",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "range-text",
+      "parameter": "target.expected",
+      "status": "public",
+      "definition": "range",
+      "field": "text",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "character-scaleX",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-scaleX",
+      "parameter": "value",
+      "status": "public",
+      "definition": "scale",
+      "field": "percent",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "character-size",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-size",
+      "parameter": "value",
+      "status": "public",
+      "definition": "size",
+      "field": "points",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "character-spacing",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-spacing",
+      "parameter": "value",
+      "status": "public",
+      "definition": "spacing",
+      "field": "value",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "character-spacing",
+      "parameter": "unit",
+      "status": "public",
+      "definition": "spacing",
+      "field": "unit",
+      "note": "mm→1、percent→100"
+    },
+    {
+      "capability": "closely-spacing",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "evenly-spacing",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "evenly-spacing",
+      "parameter": "value",
+      "status": "public",
+      "definition": "evenly",
+      "field": "width",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "evenly-spacing",
+      "parameter": "unit",
+      "status": "public",
+      "definition": "evenly",
+      "field": "unit",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "evenly-spacing",
+      "parameter": "widthMode",
+      "status": "fixed",
+      "note": "絶対幅のみ。相対幅は未公開"
+    },
+    {
+      "capability": "ruby",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "ruby",
+      "parameter": "reading",
+      "status": "public",
+      "definition": "ruby",
+      "field": "reading",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "ruby",
+      "parameter": "evenly",
+      "status": "public",
+      "definition": "ruby",
+      "field": "alignment",
+      "note": "distributed→1、それ以外→0。省略時は一太郎APIの既定動作"
+    },
+    {
+      "capability": "ruby",
+      "parameter": "position",
+      "status": "public",
+      "definition": "ruby",
+      "field": "alignment",
+      "note": "left→1、center→2、right→3。distributed時は適用対象外"
+    },
+    {
+      "capability": "ruby",
+      "parameter": "sizeMm",
+      "status": "public",
+      "definition": "ruby",
+      "field": "sizeMm",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "ruby",
+      "parameter": "distanceMm",
+      "status": "public",
+      "definition": "ruby",
+      "field": "distanceMm",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "ruby",
+      "parameter": "placement",
+      "status": "public",
+      "definition": "ruby",
+      "field": "placement",
+      "note": "above→1、below→2"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "underline.mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "underline.value",
+      "status": "public",
+      "definition": "decoration",
+      "field": "underline",
+      "note": "線種コード1..15"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "underline.color",
+      "status": "public",
+      "definition": "decoration",
+      "field": "color",
+      "note": "範囲内の全装飾で共有する1色。同じ値を各呼出へ渡す"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "strikeThrough.mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "strikeThrough.value",
+      "status": "public",
+      "definition": "decoration",
+      "field": "strikeThrough",
+      "note": "線種コード1..15"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "strikeThrough.color",
+      "status": "public",
+      "definition": "decoration",
+      "field": "color",
+      "note": "範囲内の全装飾で共有する1色。同じ値を各呼出へ渡す"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "fill.mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "fill.value",
+      "status": "public",
+      "definition": "decoration",
+      "field": "fill",
+      "note": "塗り濃度1..100／パターン101..107のコード"
+    },
+    {
+      "capability": "character-decoration",
+      "parameter": "fill.color",
+      "status": "public",
+      "definition": "decoration",
+      "field": "color",
+      "note": "範囲内の全装飾で共有する1色。同じ値を各呼出へ渡す"
+    },
+    {
+      "capability": "character-font-style",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-font-style",
+      "parameter": "value",
+      "status": "public",
+      "definition": "fontStyle",
+      "field": "style",
+      "note": "regular→標準、bold→太字、italic→斜体"
+    },
+    {
+      "capability": "character-color",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-color",
+      "parameter": "value",
+      "status": "public",
+      "definition": "textColor",
+      "field": "color",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "character-font",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-font",
+      "parameter": "value",
+      "status": "public",
+      "definition": "fontName",
+      "field": "name",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "character-border",
+      "parameter": "mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "character-border",
+      "parameter": "value",
+      "status": "public",
+      "definition": "border",
+      "field": "lineType",
+      "note": "線種コード1..15"
+    },
+    {
+      "capability": "character-border",
+      "parameter": "color",
+      "status": "public",
+      "definition": "border",
+      "field": "color",
+      "note": "他の文字装飾と共有する飾り色"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "canvas.rows",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "canvas.columns",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "canvas.leading",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "line.type",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "line.mode",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "line.from",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "line.to",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "line.lineType",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "line.color",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "point.row",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "body-keisen",
+      "parameter": "point.column",
+      "status": "internal-only",
+      "note": "独立した本文罫線の外部要求は未公開"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "canvas.rows",
+      "status": "fixed",
+      "note": "空白観測キャンバスの大きさはコンパイラが決定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "canvas.columns",
+      "status": "fixed",
+      "note": "空白観測キャンバスの大きさはコンパイラが決定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "canvas.leading",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": "leadingParagraphs",
+      "note": "表の前の本文の段落（CR-009）。表と座標を、段落が占める行の分（折り返しを含む。実行時に読む）だけ下へずらす"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "leading.text",
+      "status": "public",
+      "definition": "leadingParagraph",
+      "field": "text",
+      "note": "段落の字（空なら空行。長ければ折り返す）"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "leading.size",
+      "status": "public",
+      "definition": "leadingParagraph",
+      "field": "sizePt",
+      "note": "その段落の字の大きさ（pt）。省けば文書の大きさ"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "leading.spacing",
+      "status": "public",
+      "definition": "leadingParagraph",
+      "field": "spacing",
+      "note": "その段落の前と後の空き（mm または ％）"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "table.type",
+      "status": "fixed",
+      "note": "table"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "table.rows",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": [
+        "rows",
+        "rowHeights"
+      ],
+      "note": "行数と行高（通常行単位）から罫線境界列へ変換"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "table.columns",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": [
+        "columns",
+        "columnWidths"
+      ],
+      "note": "列数と列幅（半角単位・偶数）から罫線境界列へ変換"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "table.lineType",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": "lineType",
+      "note": "省略時は一太郎の現在の設定値"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "table.color",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": "color",
+      "note": "省略時は一太郎の現在の設定値"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableAttribute.type",
+      "status": "fixed",
+      "note": "tableAttribute"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableAttribute.attribute",
+      "status": "fixed",
+      "note": "cells.attributesのキーから導出。全表一括指定は未公開"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableAttribute.value",
+      "status": "fixed",
+      "note": "cells.attributesの値から導出"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableAttribute.cell",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": "cells",
+      "note": "最終状態を持つセル集合。順序は正規化"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableRule.type",
+      "status": "internal-only",
+      "note": "表境界単位の変更・復元履歴は内部Recipeのみ。外部の最終状態契約には未公開"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableRule.axis",
+      "status": "internal-only",
+      "note": "表境界単位の変更・復元履歴は内部Recipeのみ。外部の最終状態契約には未公開"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableRule.boundary",
+      "status": "internal-only",
+      "note": "表境界単位の変更・復元履歴は内部Recipeのみ。外部の最終状態契約には未公開"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableRule.lineType",
+      "status": "internal-only",
+      "note": "表境界単位の変更・復元履歴は内部Recipeのみ。外部の最終状態契約には未公開"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableRule.color",
+      "status": "internal-only",
+      "note": "表境界単位の変更・復元履歴は内部Recipeのみ。外部の最終状態契約には未公開"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableText.type",
+      "status": "fixed",
+      "note": "tableText"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableText.cell",
+      "status": "public",
+      "definition": "tableDocument",
+      "field": "cells",
+      "note": "文字を持つセル。結合セルは左上位置で指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "tableText.text",
+      "status": "public",
+      "definition": "tableCell",
+      "field": "text",
+      "note": "最終状態のセル文字。結合後のセル幅から決まる文字数上限を検査。置換・消去の履歴は内部Recipeのみ"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cell.row",
+      "status": "public",
+      "definition": "tableCell",
+      "field": "row",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cell.column",
+      "status": "public",
+      "definition": "tableCell",
+      "field": "column",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cellValue.alignment",
+      "status": "public",
+      "definition": "cellAttributes",
+      "field": "alignment",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cellValue.textColor",
+      "status": "public",
+      "definition": "cellAttributes",
+      "field": "textColor",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cellValue.bold",
+      "status": "public",
+      "definition": "cellAttributes",
+      "field": "bold",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cellValue.italic",
+      "status": "public",
+      "definition": "cellAttributes",
+      "field": "italic",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cellValue.fill",
+      "status": "public",
+      "definition": "cellAttributes",
+      "field": "fill",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table",
+      "parameter": "cellValue.color",
+      "status": "public",
+      "definition": "cellAttributes",
+      "field": "color",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "keisen-table-resize",
+      "parameter": "tableResize.type",
+      "status": "internal-only",
+      "note": "寸法変更の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-resize",
+      "parameter": "tableResize.axis",
+      "status": "internal-only",
+      "note": "寸法変更の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-resize",
+      "parameter": "tableResize.index",
+      "status": "internal-only",
+      "note": "寸法変更の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-resize",
+      "parameter": "tableResize.delta",
+      "status": "internal-only",
+      "note": "寸法変更の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-topology",
+      "parameter": "tableDivide.type",
+      "status": "internal-only",
+      "note": "分割・結合の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-topology",
+      "parameter": "tableDivide.axis",
+      "status": "internal-only",
+      "note": "分割・結合の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-topology",
+      "parameter": "tableDivide.parts",
+      "status": "internal-only",
+      "note": "分割・結合の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-topology",
+      "parameter": "tableMerge.type",
+      "status": "internal-only",
+      "note": "分割・結合の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-topology",
+      "parameter": "tableMerge.axis",
+      "status": "internal-only",
+      "note": "分割・結合の操作履歴は未公開"
+    },
+    {
+      "capability": "keisen-table-topology",
+      "parameter": "tableMerge.boundary",
+      "status": "internal-only",
+      "note": "分割・結合の操作履歴は未公開"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "target.id",
+      "status": "fixed",
+      "note": "コンパイラが段落IDを生成"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "target.index",
+      "status": "public",
+      "definition": "paragraphFormat",
+      "field": "paragraph",
+      "note": "0始まり→1始まりに変換"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "target.expected",
+      "status": "fixed",
+      "note": "本文の該当段落から導出"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "operation.target",
+      "status": "fixed",
+      "note": "コンパイラが構成"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "operation.attribute",
+      "status": "fixed",
+      "note": "alignment／indent／spacingの指定からalignment・indent・paragraphSpacingを構成。単成分の内部属性は履歴試験用"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "operation.mode",
+      "status": "fixed",
+      "note": "setのみ。変更・解除の操作履歴は外部要求に公開しない"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "operation.value",
+      "status": "public",
+      "definition": "paragraphFormat",
+      "field": [
+        "alignment",
+        "indent",
+        "spacing"
+      ],
+      "note": "left→1、center→2、right→3、distributed→10。indent・spacingの各成分も同じ値へ対応"
+    },
+    {
+      "capability": "paragraph-attribute",
+      "parameter": "operation.unit",
+      "status": "public",
+      "definition": "paragraphFormat",
+      "field": [
+        "indent",
+        "spacing"
+      ],
+      "note": "indent: mm→1、columns→101／spacing: mm→1、percent→100"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "target.id",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "target.index",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "target.expected",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "operation.target",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "operation.attribute",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "operation.mode",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "operation.value",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "paragraph-decoration",
+      "parameter": "operation.unit",
+      "status": "internal-only",
+      "note": "段落飾りの線種・線色・塗り濃度／パターンを単属性の内部Recipeで試作。getterがなくsaved・要画面確認のまま保持し、検証済みにはしない。外部非公開"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.name",
+      "status": "public",
+      "definition": "frame",
+      "field": "name",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.left",
+      "status": "public",
+      "definition": "frame",
+      "field": "left",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.top",
+      "status": "public",
+      "definition": "frame",
+      "field": "top",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.width",
+      "status": "public",
+      "definition": "frame",
+      "field": "width",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.height",
+      "status": "public",
+      "definition": "frame",
+      "field": "height",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.text",
+      "status": "public",
+      "definition": "frame",
+      "field": "text",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.writingMode",
+      "status": "public",
+      "definition": "frame",
+      "field": "writingMode",
+      "note": "horizontal→1、vertical→2"
+    },
+    {
+      "capability": "layout-frame",
+      "parameter": "frame.border",
+      "status": "public",
+      "definition": "frame",
+      "field": "border",
+      "note": "true→1、false/省略→0"
+    },
+    {
+      "capability": "header-layout",
+      "parameter": "layout.position",
+      "status": "public",
+      "definition": "headerFooter",
+      "field": "position",
+      "note": "header→1、footer→2"
+    },
+    {
+      "capability": "header-layout",
+      "parameter": "layout.odd",
+      "status": "public",
+      "definition": "headerFooter",
+      "field": [
+        "text",
+        "center",
+        "right"
+      ],
+      "note": "text→左、center→中央、right→右（全ページまたは奇数ページ）"
+    },
+    {
+      "capability": "header-layout",
+      "parameter": "layout.even",
+      "status": "public",
+      "definition": "headerFooter",
+      "field": "evenPages",
+      "note": "偶数ページの文字列。2段落（各ページ1段落）が必要"
+    },
+    {
+      "capability": "pdf-from-jtd",
+      "parameter": "export.jtd",
+      "status": "fixed",
+      "note": "PDF Catalogのdocuments[].fileの写し（出力先のjtd/<document-id>.jtd）。写しのSHA-256はdocuments[].sha256と一致が必要"
+    },
+    {
+      "capability": "pdf-from-jtd",
+      "parameter": "export.pdf",
+      "status": "fixed",
+      "note": "出力先のpdf/<document-id>.pdfに固定"
+    },
+    {
+      "capability": "pdf-from-jtd",
+      "parameter": "export.workDir",
+      "status": "fixed",
+      "note": "出力先のpdf/<document-id>.macroに固定"
+    },
+    {
+      "capability": "pdf-from-jtd",
+      "parameter": "export.existing",
+      "status": "fixed",
+      "note": "PDF Catalogでは常にtrue（WarningMode(0)、シート数・文書マクロ数の記録）。--pdfではfalse"
+    },
+    {
+      "capability": "pdf-from-jtd",
+      "parameter": "export.sheetPdfPrefix",
+      "status": "fixed",
+      "note": "出力先のpdf/<document-id>.sheet-に固定。2シート以上の文書だけ、シートごとに<prefix><i>.pdfを保存（0.17.0）"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "japaneseName",
+      "status": "public",
+      "definition": "font",
+      "field": "name",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "japaneseStyle",
+      "status": "internal-only",
+      "note": "文書フォントのこの属性は未公開"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "westernName",
+      "status": "internal-only",
+      "note": "文書フォントのこの属性は未公開"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "westernStyle",
+      "status": "internal-only",
+      "note": "文書フォントのこの属性は未公開"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "digitFont",
+      "status": "internal-only",
+      "note": "文書フォントのこの属性は未公開"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "size",
+      "status": "public",
+      "definition": "font",
+      "field": "sizePt",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "sizeUnit",
+      "status": "fixed",
+      "note": "ポイント単位3のみ"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "scaleY",
+      "status": "internal-only",
+      "note": "文書フォントのこの属性は未公開"
+    },
+    {
+      "capability": "document-font",
+      "parameter": "scaleX",
+      "status": "internal-only",
+      "note": "文書フォントのこの属性は未公開"
+    },
+    {
+      "capability": "document-paper",
+      "parameter": "name",
+      "status": "public",
+      "definition": "page",
+      "field": [
+        "paper",
+        "orientation"
+      ],
+      "note": "「<paper> 単票・縦方向／横方向」の用紙名へ変換。実機確認済みの10名のみ"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "gap",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "gapMm",
+      "note": "mm（gapUnit=1）"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "rule",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "rule",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "twoEnabled",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "twoColumn",
+      "note": "指定時に1"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "twoGap",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "twoColumn",
+      "note": "gapMm"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "twoSpacing",
+      "status": "fixed",
+      "note": "一太郎が字数から計算した値を読み戻して記録。要求値にしない"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "twoChars",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "twoColumn",
+      "note": "chars"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "threeEnabled",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "threeColumn",
+      "note": "指定時に1"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "threeGap",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "threeColumn",
+      "note": "gapMm"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "threeSpacing",
+      "status": "fixed",
+      "note": "一太郎が字数から計算した値を読み戻して記録。要求値にしない"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "threeChars",
+      "status": "public",
+      "definition": "columnFormat",
+      "field": "threeColumn",
+      "note": "chars"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "gapUnit",
+      "status": "fixed",
+      "note": "mm（1）に固定"
+    },
+    {
+      "capability": "document-columns",
+      "parameter": "spacingUnit",
+      "status": "fixed",
+      "note": "設定しない。読み戻した単位を記録"
+    },
+    {
+      "capability": "document-layout",
+      "parameter": "orientation",
+      "status": "public",
+      "definition": "textDocument",
+      "field": "writingMode",
+      "note": "horizontal→1、vertical→2。範囲注釈は横書きのみ"
+    },
+    {
+      "capability": "document-page",
+      "parameter": "position",
+      "status": "public",
+      "definition": "pageNumber",
+      "field": "position",
+      "note": "none→0、bottom-left→1、bottom-center→2、bottom-right→3、top-left→4、top-center→5、top-right→6"
+    },
+    {
+      "capability": "document-page",
+      "parameter": "margin",
+      "status": "public",
+      "definition": "pageNumber",
+      "field": "marginMm",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-page",
+      "parameter": "marginUnit",
+      "status": "fixed",
+      "note": "mm（1）に固定"
+    },
+    {
+      "capability": "document-page",
+      "parameter": "decoration",
+      "status": "public",
+      "definition": "pageNumber",
+      "field": "decoration",
+      "note": "保存される文字列。印字結果は未検証"
+    },
+    {
+      "capability": "document-page",
+      "parameter": "distribution",
+      "status": "internal-only",
+      "note": "ページ振り分けは未公開"
+    },
+    {
+      "capability": "document-page",
+      "parameter": "kanji",
+      "status": "internal-only",
+      "note": "縦書き時の漢数字は未公開"
+    },
+    {
+      "capability": "document-page",
+      "parameter": "start",
+      "status": "public",
+      "definition": "pageNumber",
+      "field": "start",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "justification",
+      "status": "public",
+      "definition": "typesetting",
+      "field": "justification",
+      "note": "true→1（必ず行末まで揃える）、false→0。2は一太郎が拒否"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "wordWrap",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "hyphenation",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "separatorMargin",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "separatorMarginUnit",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "westernTight",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "westernSpace",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "halfBracketsJapanese",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "kinsoku",
+      "status": "public",
+      "definition": "typesetting",
+      "field": "kinsoku",
+      "note": "true→1、false→0"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "lineStartForbidden",
+      "status": "public",
+      "definition": "typesetting",
+      "field": "lineStartForbidden",
+      "note": "文字列全体を置換"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "lineEndForbidden",
+      "status": "public",
+      "definition": "typesetting",
+      "field": "lineEndForbidden",
+      "note": "文字列全体を置換"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "hanging",
+      "status": "public",
+      "definition": "typesetting",
+      "field": "hanging",
+      "note": "true→1。追い込み0の明示が必要"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "pushIn",
+      "status": "public",
+      "definition": "typesetting",
+      "field": "pushIn",
+      "note": "対応する最終属性を指定"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "bracketOverlap",
+      "status": "public",
+      "definition": "typesetting",
+      "field": "bracketOverlap",
+      "note": "false→0。追い込み0の明示が必要"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "basePosition",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "lineStartShift",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "keisenLineStretch",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "spreading",
+      "status": "internal-only",
+      "note": "設定値が反映されないため未公開（記録のみ）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "japaneseFontHalfAlnum",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-typesetting",
+      "parameter": "wordRuleApprox",
+      "status": "internal-only",
+      "note": "欧文・ベース位置等の体裁は未公開（全項目を保存前後で記録・比較）"
+    },
+    {
+      "capability": "document-style-source",
+      "parameter": "styleSource",
+      "status": "public",
+      "definition": "textDocument",
+      "field": "styleSource",
+      "note": "new-document→設定しない（基準試料・試料とも文書スタイルのsetterを呼ばない）。読み戻し値を記録"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "chars",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "chars",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "lines",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "lines",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "characterSpacing",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "characterSpacing",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "lineSpacing",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "lineSpacing",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "marginTop",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "marginTop",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "marginBottom",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "marginBottom",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "marginLeft",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "marginLeft",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "marginRight",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "marginRight",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    },
+    {
+      "capability": "document-style",
+      "parameter": "layoutPriority",
+      "status": "public",
+      "definition": "documentStyle",
+      "field": "layoutPriority",
+      "note": "優先側と余白は必須、従属側は任意。明示値を保存・再読込で照合。字間・行間は%、余白はmm"
+    }
+  ]
+}

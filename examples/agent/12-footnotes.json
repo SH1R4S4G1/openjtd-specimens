@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "id": "footnotes",
+  "samples": [
+    {
+      "id": "notes-three",
+      "title": "notes-three",
+      "purpose": "脚注の最終状態と所属を保存再読込で検証",
+      "feature": "document-footnote",
+      "expected": [
+        {
+          "property": "footnotes.count",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "footnotes",
+        "text": "甲乙丙丁\n戊己庚辛\n壬癸子丑",
+        "notes": [
+          {
+            "id": "middle",
+            "paragraph": 0,
+            "offset": 2,
+            "text": "第一脚注"
+          },
+          {
+            "id": "end",
+            "paragraph": 1,
+            "offset": 4,
+            "text": "第二脚注"
+          },
+          {
+            "id": "start",
+            "paragraph": 2,
+            "offset": 0,
+            "text": "第三脚注"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-changed",
+      "title": "notes-changed",
+      "purpose": "脚注の最終状態と所属を保存再読込で検証",
+      "feature": "document-footnote",
+      "expected": [
+        {
+          "property": "footnotes.count",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "footnotes",
+        "text": "甲乙丙丁\n戊己庚辛\n壬癸子丑",
+        "notes": [
+          {
+            "id": "middle",
+            "paragraph": 0,
+            "offset": 2,
+            "text": "第一脚注"
+          },
+          {
+            "id": "end",
+            "paragraph": 1,
+            "offset": 4,
+            "text": "変更された脚注"
+          },
+          {
+            "id": "start",
+            "paragraph": 2,
+            "offset": 0,
+            "text": "第三脚注"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-removed",
+      "title": "notes-removed",
+      "purpose": "脚注の最終状態と所属を保存再読込で検証",
+      "feature": "document-footnote",
+      "expected": [
+        {
+          "property": "footnotes.count",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "footnotes",
+        "text": "甲乙丙丁\n戊己庚辛\n壬癸子丑",
+        "notes": [
+          {
+            "id": "middle",
+            "paragraph": 0,
+            "offset": 2,
+            "text": "第一脚注"
+          },
+          {
+            "id": "start",
+            "paragraph": 2,
+            "offset": 0,
+            "text": "第三脚注"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-empty",
+      "title": "notes-empty",
+      "purpose": "脚注の最終状態と所属を保存再読込で検証",
+      "feature": "document-footnote",
+      "expected": [
+        {
+          "property": "footnotes.count",
+          "value": 0
+        }
+      ],
+      "document": {
+        "kind": "footnotes",
+        "text": "甲乙丙丁\n戊己庚辛\n壬癸子丑",
+        "notes": []
+      }
+    }
+  ]
+}

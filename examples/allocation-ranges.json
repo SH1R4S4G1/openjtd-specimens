@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "name": "allocation-ranges",
+  "text": "甲乙対象丙丁",
+  "defaults": {"chars":40,"lines":40,"characterSpacing":1,"lineSpacing":60,"marginTop":30,"marginBottom":30,"marginLeft":30,"marginRight":30},
+  "targets": [{"id":"middle","kind":"text","start":2,"end":4,"expected":"対象"}],
+  "samples": [
+    {"id":"control","settings":{}},
+    {"id":"closely-set","settings":{},"operations":[{"target":"middle","type":"character","attribute":"closely","mode":"set"}]},
+    {"id":"closely-clear","settings":{},"operations":[{"target":"middle","type":"character","attribute":"closely","mode":"set"},{"target":"middle","type":"character","attribute":"closely","mode":"clear"}]},
+    {"id":"closely-reset","settings":{},"operations":[{"target":"middle","type":"character","attribute":"closely","mode":"set"},{"target":"middle","type":"character","attribute":"closely","mode":"clear"},{"target":"middle","type":"character","attribute":"closely","mode":"set"}]},
+    {"id":"evenly-columns","settings":{},"operations":[{"target":"middle","type":"character","attribute":"evenly","mode":"set","value":8,"unit":101,"widthMode":1}]},
+    {"id":"evenly-mm","settings":{},"operations":[{"target":"middle","type":"character","attribute":"evenly","mode":"set","value":20,"unit":1,"widthMode":1}]},
+    {"id":"evenly-modify","settings":{},"operations":[{"target":"middle","type":"character","attribute":"evenly","mode":"set","value":8,"unit":101,"widthMode":1},{"target":"middle","type":"character","attribute":"evenly","mode":"modify","value":10,"unit":101,"widthMode":1}]},
+    {"id":"evenly-clear","settings":{},"operations":[{"target":"middle","type":"character","attribute":"evenly","mode":"set","value":8,"unit":101,"widthMode":1},{"target":"middle","type":"character","attribute":"evenly","mode":"clear"}]},
+    {"id":"evenly-reset","settings":{},"operations":[{"target":"middle","type":"character","attribute":"evenly","mode":"set","value":8,"unit":101,"widthMode":1},{"target":"middle","type":"character","attribute":"evenly","mode":"clear"},{"target":"middle","type":"character","attribute":"evenly","mode":"set","value":6,"unit":101,"widthMode":1}]}
+  ]
+}

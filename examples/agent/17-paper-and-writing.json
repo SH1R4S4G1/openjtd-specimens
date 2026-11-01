@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "id": "paper-and-writing",
+  "samples": [
+    {
+      "id": "a5-portrait",
+      "title": "a5-portrait",
+      "purpose": "A5縦の用紙サイズを確認する（字数等は一太郎が調整した値を記録）",
+      "feature": "document-paper",
+      "expected": [
+        {
+          "property": "page.paper",
+          "value": "A5"
+        },
+        {
+          "property": "page.orientation",
+          "value": "portrait"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "用紙と文字組の確認",
+        "page": {
+          "paper": "A5",
+          "orientation": "portrait"
+        }
+      }
+    },
+    {
+      "id": "b5-landscape",
+      "title": "b5-landscape",
+      "purpose": "B5横の用紙サイズと向きを確認する",
+      "feature": "document-paper",
+      "expected": [
+        {
+          "property": "page.paper",
+          "value": "B5"
+        },
+        {
+          "property": "page.orientation",
+          "value": "landscape"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "用紙と文字組の確認",
+        "page": {
+          "paper": "B5",
+          "orientation": "landscape"
+        }
+      }
+    },
+    {
+      "id": "a5-with-style",
+      "title": "a5-with-style",
+      "purpose": "A5縦で実現可能な字数・行数・余白を明示した文書スタイルを確認する",
+      "feature": "document-paper",
+      "expected": [
+        {
+          "property": "page.paper",
+          "value": "A5"
+        },
+        {
+          "property": "style.chars",
+          "value": 25
+        },
+        {
+          "property": "style.lines",
+          "value": 30
+        },
+        {
+          "property": "style.marginLeft",
+          "value": 20
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "用紙と文字組の確認",
+        "page": {
+          "paper": "A5",
+          "orientation": "portrait"
+        },
+        "style": {
+          "layoutPriority": "counts",
+          "chars": 25,
+          "lines": 30,
+          "marginTop": 20,
+          "marginBottom": 20,
+          "marginLeft": 20,
+          "marginRight": 20
+        }
+      }
+    },
+    {
+      "id": "vertical",
+      "title": "vertical",
+      "purpose": "文書全体の縦書きを確認する",
+      "feature": "document-layout",
+      "expected": [
+        {
+          "property": "layout.writingMode",
+          "value": "vertical"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "用紙と文字組の確認",
+        "writingMode": "vertical"
+      }
+    },
+    {
+      "id": "vertical-a4-landscape",
+      "title": "vertical-a4-landscape",
+      "purpose": "A4横・縦書きの組合せを確認する",
+      "feature": "document-layout",
+      "expected": [
+        {
+          "property": "layout.writingMode",
+          "value": "vertical"
+        },
+        {
+          "property": "page.paper",
+          "value": "A4"
+        },
+        {
+          "property": "page.orientation",
+          "value": "landscape"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "用紙と文字組の確認",
+        "writingMode": "vertical",
+        "page": {
+          "paper": "A4",
+          "orientation": "landscape"
+        }
+      }
+    },
+    {
+      "id": "vertical-with-style",
+      "title": "vertical-with-style",
+      "purpose": "縦書きで字数・行数・余白を明示した文書スタイルを確認する",
+      "feature": "document-layout",
+      "expected": [
+        {
+          "property": "layout.writingMode",
+          "value": "vertical"
+        },
+        {
+          "property": "style.chars",
+          "value": 30
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "用紙と文字組の確認",
+        "writingMode": "vertical",
+        "style": {
+          "layoutPriority": "counts",
+          "chars": 30,
+          "lines": 30,
+          "marginTop": 20,
+          "marginBottom": 20,
+          "marginLeft": 20,
+          "marginRight": 20
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "combination",
+  "samples": [
+    {
+      "id": "font-and-ruby",
+      "title": "font-and-ruby",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "ruby",
+      "expected": [
+        {
+          "property": "range[2:4].ruby.reading",
+          "value": "たいしょう"
+        },
+        {
+          "property": "document.font.sizePt",
+          "value": 12
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "font": {
+          "sizePt": 12
+        },
+        "annotations": [
+          {
+            "capability": "ruby",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "reading": "たいしょう",
+              "placement": "above"
+            }
+          }
+        ]
+      },
+      "testIntent": "regression",
+      "tags": [
+        "ruby",
+        "font"
+      ],
+      "prerequisites": [
+        "一太郎2026の既定和文フォントが使用可能"
+      ]
+    }
+  ]
+}

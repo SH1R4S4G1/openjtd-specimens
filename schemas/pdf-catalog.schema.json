@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OpenJTD PDF Catalog v1",
+  "description": "Existing JTD documents to open in Ichitaro and save as PDF (CR-006). The JTD files are not part of the catalog: they are placed beside it under inputs/ and identified by SHA-256. Semantic validation (unique ids and files) is also required.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "kind": {
+      "const": "pdf-from-jtd"
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/document"
+      },
+      "minItems": 1,
+      "maxItems": 1000
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "kind",
+    "id",
+    "documents"
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "pattern": "^[a-z][a-z0-9-]*$(?![\\s\\S])"
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "file": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 127,
+          "pattern": "^inputs/[A-Za-z0-9][A-Za-z0-9._-]*\\.[Jj][Tt][Dd]$(?![\\s\\S])",
+          "description": "inputs/<name>.jtd relative to the catalog. The name is at most 120 characters. Files must not collide when case is ignored."
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+          "description": "SHA-256 of the submitted JTD, lowercase hex. The copy that Ichitaro opens must have this hash."
+        }
+      },
+      "required": [
+        "id",
+        "file",
+        "sha256"
+      ]
+    }
+  }
+}

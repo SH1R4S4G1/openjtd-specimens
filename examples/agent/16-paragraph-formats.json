@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "id": "paragraph-formats",
+  "samples": [
+    {
+      "id": "center-aligned",
+      "title": "center-aligned",
+      "purpose": "段落の中央揃えを確認する",
+      "feature": "paragraph-attribute",
+      "expected": [
+        {
+          "property": "paragraph[1].alignment",
+          "value": "center"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "alignment": "center"
+          }
+        ]
+      }
+    },
+    {
+      "id": "right-and-distributed",
+      "title": "right-and-distributed",
+      "purpose": "複数段落の右揃えと均等揃えを確認する",
+      "feature": "paragraph-attribute",
+      "expected": [
+        {
+          "property": "paragraph[0].alignment",
+          "value": "right"
+        },
+        {
+          "property": "paragraph[2].alignment",
+          "value": "distributed"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 0,
+            "alignment": "right"
+          },
+          {
+            "paragraph": 2,
+            "alignment": "distributed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "indent-columns",
+      "title": "indent-columns",
+      "purpose": "行頭・行末・先頭行の字下げ（カラム単位）を確認する",
+      "feature": "paragraph-attribute",
+      "expected": [
+        {
+          "property": "paragraph[1].indent.start",
+          "value": 2
+        },
+        {
+          "property": "paragraph[1].indent.end",
+          "value": 1
+        },
+        {
+          "property": "paragraph[1].indent.firstLineStart",
+          "value": 1
+        },
+        {
+          "property": "paragraph[1].indent.unit",
+          "value": "columns"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "indent": {
+              "unit": "columns",
+              "start": 2,
+              "end": 1,
+              "firstLineStart": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hanging-indent-mm",
+      "title": "hanging-indent-mm",
+      "purpose": "ぶら下げ（先頭行の行末側シフト）をmm単位で確認する",
+      "feature": "paragraph-attribute",
+      "expected": [
+        {
+          "property": "paragraph[1].indent.start",
+          "value": 5
+        },
+        {
+          "property": "paragraph[1].indent.firstLineEnd",
+          "value": -2
+        },
+        {
+          "property": "paragraph[1].indent.unit",
+          "value": "mm"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "indent": {
+              "unit": "mm",
+              "start": 5,
+              "firstLineEnd": -2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "spacing-mm",
+      "title": "spacing-mm",
+      "purpose": "段落前後の段落間（mm）を確認する",
+      "feature": "paragraph-attribute",
+      "expected": [
+        {
+          "property": "paragraph[1].spacing.before",
+          "value": 3
+        },
+        {
+          "property": "paragraph[1].spacing.after",
+          "value": 2
+        },
+        {
+          "property": "paragraph[1].spacing.unit",
+          "value": "mm"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "spacing": {
+              "unit": "mm",
+              "before": 3,
+              "after": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "combined-format",
+      "title": "combined-format",
+      "purpose": "1段落の文字揃え・字下げ・段落間の同時指定を確認する",
+      "feature": "paragraph-attribute",
+      "expected": [
+        {
+          "property": "paragraph[1].alignment",
+          "value": "center"
+        },
+        {
+          "property": "paragraph[1].indent.start",
+          "value": 1
+        },
+        {
+          "property": "paragraph[1].spacing.after",
+          "value": 50
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "alignment": "center",
+            "indent": {
+              "unit": "columns",
+              "start": 1
+            },
+            "spacing": {
+              "unit": "percent",
+              "after": 50
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

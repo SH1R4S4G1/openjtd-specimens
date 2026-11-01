@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "font-variations",
+  "samples": [
+    {
+      "id": "font-1",
+      "title": "font-1",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "document-font",
+      "expected": [
+        {
+          "property": "document.font.sizePt",
+          "value": 10.5
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "font": {
+          "sizePt": 10.5
+        }
+      }
+    },
+    {
+      "id": "font-2",
+      "title": "font-2",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "document-font",
+      "expected": [
+        {
+          "property": "document.font.sizePt",
+          "value": 12
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "font": {
+          "sizePt": 12
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "name": "footnote-overrides",
+  "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "footnotes-b5-12pt-style",
+      "settings": {
+        "chars": 30,
+        "lines": 30,
+        "marginTop": 25,
+        "marginBottom": 25,
+        "marginLeft": 25,
+        "marginRight": 25
+      },
+      "features": {
+        "font": {
+          "size": 12
+        },
+        "paper": {
+          "name": "B5 単票・縦方向"
+        }
+      },
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "n1",
+            "paragraph": 0,
+            "offset": 2,
+            "text": "注記一"
+          },
+          {
+            "action": "add",
+            "id": "n2",
+            "paragraph": 2,
+            "offset": 7,
+            "text": "注記二"
+          }
+        ]
+      }
+    },
+    {
+      "id": "footnotes-header-a4-landscape",
+      "settings": {},
+      "features": {
+        "paper": {
+          "name": "A4 単票・横方向"
+        }
+      },
+      "headerSteps": [
+        "見出し甲"
+      ],
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "n1",
+            "paragraph": 1,
+            "offset": 3,
+            "text": "注記"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "id": "column-range",
+  "samples": [
+    {
+      "id": "middle-two-columns",
+      "title": "middle-two-columns",
+      "purpose": "第2〜第4段落だけの2段組区間を確認する",
+      "feature": "document-columns-body",
+      "expected": [
+        {
+          "property": "paragraph[1..3].columns",
+          "value": 2
+        },
+        {
+          "property": "paragraph[0].columns",
+          "value": 1
+        },
+        {
+          "property": "paragraph[4].columns",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文\n第四段落の本文\n第五段落の本文",
+        "columns": 2,
+        "columnRange": {
+          "from": 1,
+          "to": 3
+        }
+      }
+    },
+    {
+      "id": "tail-three-columns",
+      "title": "tail-three-columns",
+      "purpose": "第3段落から文末までの3段組区間を確認する",
+      "feature": "document-columns-body",
+      "expected": [
+        {
+          "property": "paragraph[2..4].columns",
+          "value": 3
+        },
+        {
+          "property": "paragraph[0..1].columns",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文\n第四段落の本文\n第五段落の本文",
+        "columns": 3,
+        "columnRange": {
+          "from": 2,
+          "to": 4
+        }
+      }
+    },
+    {
+      "id": "head-two-columns-with-header",
+      "title": "head-two-columns-with-header",
+      "purpose": "3段落文書の先頭2段落の2段組区間とヘッダーの共存を確認する",
+      "feature": "document-columns-body",
+      "expected": [
+        {
+          "property": "paragraph[0..1].columns",
+          "value": 2
+        },
+        {
+          "property": "header.top.left.text",
+          "value": "見出し甲"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "columns": 2,
+        "columnRange": {
+          "from": 0,
+          "to": 1
+        },
+        "headerFooter": {
+          "position": "header",
+          "text": "見出し甲"
+        }
+      }
+    }
+  ]
+}

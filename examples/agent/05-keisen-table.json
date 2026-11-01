@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "keisen-table",
+  "samples": [
+    {
+      "id": "table-2x2",
+      "title": "table-2x2",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        },
+        {
+          "property": "table.columns",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2
+      }
+    }
+  ]
+}

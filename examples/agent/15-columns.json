@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "document-columns",
+  "samples": [
+    {
+      "id": "two-columns",
+      "title": "two-columns",
+      "purpose": "文書全体の2段組を確認する",
+      "feature": "document-columns-body",
+      "expected": [
+        {
+          "property": "section.columns",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落です\n第二段落です\n第三段落です",
+        "columns": 2
+      }
+    },
+    {
+      "id": "three-columns",
+      "title": "three-columns",
+      "purpose": "5段落の文書全体の3段組を確認する",
+      "feature": "document-columns-body",
+      "expected": [
+        {
+          "property": "section.columns",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "一の段落\n二の段落\n三の段落\n四の段落\n五の段落",
+        "columns": 3
+      }
+    }
+  ]
+}

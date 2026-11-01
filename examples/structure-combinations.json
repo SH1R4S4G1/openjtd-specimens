@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "name": "structure-combinations",
+  "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "paragraphTargets": [
+    {
+      "id": "middle",
+      "index": 2,
+      "expected": "第二段落の本文"
+    }
+  ],
+  "samples": [
+    {
+      "id": "header-columns",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲"
+      ],
+      "documentColumns": [
+        2
+      ]
+    },
+    {
+      "id": "header-paragraph",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲"
+      ],
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 2
+          },
+          "unit": 101
+        }
+      ]
+    },
+    {
+      "id": "columns-paragraph",
+      "settings": {},
+      "documentColumns": [
+        3
+      ],
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 2
+          },
+          "unit": 101
+        }
+      ]
+    },
+    {
+      "id": "header-frame",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲"
+      ],
+      "frames": [
+        {
+          "name": "frame-a",
+          "left": 50,
+          "top": 150,
+          "width": 60,
+          "height": 30,
+          "text": "枠内の文字"
+        }
+      ]
+    },
+    {
+      "id": "columns-frame",
+      "settings": {},
+      "documentColumns": [
+        2
+      ],
+      "frames": [
+        {
+          "name": "frame-a",
+          "left": 50,
+          "top": 150,
+          "width": 60,
+          "height": 30,
+          "text": "枠内の文字"
+        }
+      ]
+    },
+    {
+      "id": "paragraph-frame",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 2
+          },
+          "unit": 101
+        }
+      ],
+      "frames": [
+        {
+          "name": "frame-a",
+          "left": 50,
+          "top": 150,
+          "width": 60,
+          "height": 30,
+          "text": "枠内の文字"
+        }
+      ]
+    },
+    {
+      "id": "header-columns-paragraph-frame",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲"
+      ],
+      "documentColumns": [
+        2
+      ],
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 2
+          },
+          "unit": 101
+        }
+      ],
+      "frames": [
+        {
+          "name": "frame-a",
+          "left": 50,
+          "top": 150,
+          "width": 60,
+          "height": 30,
+          "text": "枠内の文字"
+        }
+      ]
+    }
+  ]
+}

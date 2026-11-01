@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "id": "named-styles",
+  "samples": [
+    {
+      "id": "paragraph-style-applied",
+      "title": "paragraph-style-applied",
+      "purpose": "段落スタイルの定義（14pt）と中間段落への適用を確認する",
+      "feature": "named-styles",
+      "expected": [
+        {
+          "property": "styles.paragraph[Midashi].sizePt",
+          "value": 14
+        },
+        {
+          "property": "paragraph[1].paragraphStyle",
+          "value": "Midashi"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "本文の開始甲乙丙\n本文の中間丁戊己\n本文の末尾庚辛壬",
+        "styles": {
+          "definitions": [
+            {
+              "kind": "paragraph",
+              "name": "Midashi",
+              "sizePt": 14
+            }
+          ],
+          "applications": [
+            {
+              "paragraph": 1,
+              "style": "Midashi"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "character-style-applied",
+      "title": "character-style-applied",
+      "purpose": "文字スタイルの定義（12pt）と先頭段落への適用を確認する",
+      "feature": "named-styles",
+      "expected": [
+        {
+          "property": "styles.character[Kyocho].sizePt",
+          "value": 12
+        },
+        {
+          "property": "paragraph[0].characterSize",
+          "value": 12
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "本文の開始甲乙丙\n本文の中間丁戊己\n本文の末尾庚辛壬",
+        "styles": {
+          "definitions": [
+            {
+              "kind": "character",
+              "name": "Kyocho",
+              "sizePt": 12
+            }
+          ],
+          "applications": [
+            {
+              "paragraph": 0,
+              "style": "Kyocho"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "mixed-and-unused",
+      "title": "mixed-and-unused",
+      "purpose": "文字・段落スタイルを別段落に適用し、未適用の定義も文書に残ることを確認する",
+      "feature": "named-styles",
+      "expected": [
+        {
+          "property": "styles.count",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "本文の開始甲乙丙\n本文の中間丁戊己\n本文の末尾庚辛壬",
+        "styles": {
+          "definitions": [
+            {
+              "kind": "paragraph",
+              "name": "Midashi",
+              "sizePt": 16
+            },
+            {
+              "kind": "character",
+              "name": "Chuki",
+              "sizePt": 9
+            },
+            {
+              "kind": "paragraph",
+              "name": "Unused",
+              "sizePt": 20
+            }
+          ],
+          "applications": [
+            {
+              "paragraph": 0,
+              "style": "Midashi"
+            },
+            {
+              "paragraph": 2,
+              "style": "Chuki"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "styles-12pt-base",
+      "title": "styles-12pt-base",
+      "purpose": "12ptの文書で段落スタイルを確認する",
+      "feature": "named-styles",
+      "expected": [
+        {
+          "property": "paragraph[2].paragraphStyle",
+          "value": "Honbun"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "本文の開始甲乙丙\n本文の中間丁戊己\n本文の末尾庚辛壬",
+        "styles": {
+          "definitions": [
+            {
+              "kind": "paragraph",
+              "name": "Honbun",
+              "sizePt": 11
+            }
+          ],
+          "applications": [
+            {
+              "paragraph": 2,
+              "style": "Honbun"
+            }
+          ]
+        },
+        "font": {
+          "sizePt": 12
+        }
+      }
+    }
+  ]
+}

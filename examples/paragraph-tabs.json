@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "name": "paragraph-tab-positions",
+  "text": "前段落の確認\n項目\t値\n後段落の確認",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "paragraphTargets": [
+    {
+      "id": "middle",
+      "index": 2,
+      "expected": "項目\t値"
+    }
+  ],
+  "samples": [
+    {
+      "id": "tabs-1-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "tabs-1-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            8,
+            16
+          ],
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "tabs-1-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            8,
+            16
+          ],
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "tabs-1-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            8,
+            16
+          ],
+          "unit": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "tabs-101-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 101
+        }
+      ]
+    },
+    {
+      "id": "tabs-101-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            8,
+            16
+          ],
+          "unit": 101
+        }
+      ]
+    },
+    {
+      "id": "tabs-101-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            8,
+            16
+          ],
+          "unit": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "tabs-101-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            8,
+            16
+          ],
+          "unit": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "tabs",
+          "mode": "set",
+          "value": [
+            5,
+            10
+          ],
+          "unit": 101
+        }
+      ]
+    }
+  ]
+}

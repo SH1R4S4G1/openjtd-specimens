@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "id": "typesetting",
+  "samples": [
+    {
+      "id": "justification-off",
+      "title": "justification-off",
+      "purpose": "ジャスティフィケーションを「しない」にする",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.justification",
+          "value": false
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "禁則と体裁の確認。行頭に「句読点」や（括弧）が来る場合、一太郎の設定に従って処理されます。",
+        "typesetting": {
+          "justification": false
+        }
+      }
+    },
+    {
+      "id": "kinsoku-off",
+      "title": "kinsoku-off",
+      "purpose": "禁則処理を「しない」にする（ぶら下げ・追い込み・括弧類の重なりは一太郎が0にする）",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.kinsoku",
+          "value": false
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "禁則と体裁の確認。行頭に「句読点」や（括弧）が来る場合、一太郎の設定に従って処理されます。",
+        "typesetting": {
+          "kinsoku": false
+        }
+      }
+    },
+    {
+      "id": "hanging-on",
+      "title": "hanging-on",
+      "purpose": "ぶら下げを「する」にする（追い込みを0と明示）",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.hanging",
+          "value": true
+        },
+        {
+          "property": "typesetting.pushIn",
+          "value": false
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "禁則と体裁の確認。行頭に「句読点」や（括弧）が来る場合、一太郎の設定に従って処理されます。",
+        "typesetting": {
+          "hanging": true,
+          "pushIn": false
+        }
+      }
+    },
+    {
+      "id": "push-in-off",
+      "title": "push-in-off",
+      "purpose": "追い込みを「しない」にする",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.pushIn",
+          "value": false
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "禁則と体裁の確認。行頭に「句読点」や（括弧）が来る場合、一太郎の設定に従って処理されます。",
+        "typesetting": {
+          "pushIn": false
+        }
+      }
+    },
+    {
+      "id": "bracket-overlap-off",
+      "title": "bracket-overlap-off",
+      "purpose": "括弧類の重なり処理を「しない」にする（追い込みを0と明示）",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.bracketOverlap",
+          "value": false
+        },
+        {
+          "property": "typesetting.pushIn",
+          "value": false
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "禁則と体裁の確認。行頭に「句読点」や（括弧）が来る場合、一太郎の設定に従って処理されます。",
+        "typesetting": {
+          "bracketOverlap": false,
+          "pushIn": false
+        }
+      }
+    },
+    {
+      "id": "line-start-forbidden",
+      "title": "line-start-forbidden",
+      "purpose": "行頭禁則文字を置き換える",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.lineStartForbidden",
+          "value": "、。」）"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "禁則と体裁の確認。行頭に「句読点」や（括弧）が来る場合、一太郎の設定に従って処理されます。",
+        "typesetting": {
+          "lineStartForbidden": "、。」）"
+        }
+      }
+    },
+    {
+      "id": "line-end-forbidden",
+      "title": "line-end-forbidden",
+      "purpose": "行末禁則文字を置き換える",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.lineEndForbidden",
+          "value": "「（"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "禁則と体裁の確認。行頭に「句読点」や（括弧）が来る場合、一太郎の設定に従って処理されます。",
+        "typesetting": {
+          "lineEndForbidden": "「（"
+        }
+      }
+    },
+    {
+      "id": "paragraphs-kinsoku-off",
+      "title": "paragraphs-kinsoku-off",
+      "purpose": "段落書式と併用して禁則処理を「しない」にする",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.kinsoku",
+          "value": false
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "前段落の確認。\n「対象」段落の確認。\n後段落の確認。",
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "alignment": "center"
+          }
+        ],
+        "typesetting": {
+          "kinsoku": false
+        }
+      }
+    },
+    {
+      "id": "combination-hanging",
+      "title": "combination-hanging",
+      "purpose": "ヘッダー・2段組・段落書式・枠と併用してぶら下げと行頭禁則文字を設定する",
+      "feature": "document-typesetting",
+      "expected": [
+        {
+          "property": "typesetting.justification",
+          "value": false
+        },
+        {
+          "property": "typesetting.hanging",
+          "value": true
+        },
+        {
+          "property": "typesetting.pushIn",
+          "value": false
+        },
+        {
+          "property": "typesetting.lineStartForbidden",
+          "value": "、。」）"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文。\n第二段落の本文、\n第三段落の本文。",
+        "headerFooter": {
+          "position": "header",
+          "text": "見出し甲"
+        },
+        "columns": 2,
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "alignment": "center",
+            "indent": {
+              "unit": "columns",
+              "start": 2
+            }
+          }
+        ],
+        "frames": [
+          {
+            "name": "frame-a",
+            "left": 50,
+            "top": 150,
+            "width": 60,
+            "height": 30,
+            "text": "枠内の文字"
+          }
+        ],
+        "typesetting": {
+          "justification": false,
+          "hanging": true,
+          "pushIn": false,
+          "lineStartForbidden": "、。」）"
+        }
+      }
+    }
+  ]
+}

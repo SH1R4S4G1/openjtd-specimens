@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "character-spacing",
+  "samples": [
+    {
+      "id": "tight-spacing",
+      "title": "tight-spacing",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "closely-spacing",
+      "expected": [
+        {
+          "property": "range[2:4].spacing",
+          "value": "tight"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "closely-spacing",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {}
+          }
+        ]
+      }
+    },
+    {
+      "id": "numeric-spacing",
+      "title": "numeric-spacing",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "character-spacing",
+      "expected": [
+        {
+          "property": "range[2:4].spacingPercent",
+          "value": -2
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-spacing",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "value": -2,
+              "unit": "percent"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

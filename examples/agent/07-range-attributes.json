@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "id": "range-attributes",
+  "samples": [
+    {
+      "id": "wide-text",
+      "title": "wide-text",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "character-scaleX",
+      "expected": [
+        {
+          "property": "range[2:4].scaleX",
+          "value": 120
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-scaleX",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "percent": 120
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "large-text",
+      "title": "large-text",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "character-size",
+      "expected": [
+        {
+          "property": "range[2:4].sizePt",
+          "value": 12
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-size",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "points": 12
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "even-text",
+      "title": "even-text",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "evenly-spacing",
+      "expected": [
+        {
+          "property": "range[2:4].evenlyPresent",
+          "value": true
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "evenly-spacing",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "width": 20,
+              "unit": "mm"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "name": "extended-style",
+  "text": "一太郎 Macro 検証 ABC 0123",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "features": {
+        "font": {
+          "size": 12
+        }
+      },
+      "id": "font-size-12",
+      "settings": {}
+    },
+    {
+      "features": {
+        "font": {
+          "scaleX": 120
+        }
+      },
+      "id": "font-wide",
+      "settings": {}
+    },
+    {
+      "features": {
+        "font": {
+          "scaleY": 120
+        }
+      },
+      "id": "font-tall",
+      "settings": {}
+    },
+    {
+      "features": {
+        "font": {
+          "digitFont": 10
+        }
+      },
+      "id": "digit-japanese",
+      "settings": {}
+    },
+    {
+      "features": {
+        "columns": {
+          "gap": 8
+        }
+      },
+      "id": "column-gap-8",
+      "settings": {}
+    },
+    {
+      "features": {
+        "columns": {
+          "rule": 1
+        }
+      },
+      "id": "column-rule-1",
+      "settings": {}
+    },
+    {
+      "features": {
+        "columns": {
+          "twoEnabled": 1,
+          "twoChars": 19,
+          "twoGap": 7
+        }
+      },
+      "id": "two-columns",
+      "settings": {}
+    },
+    {
+      "features": {
+        "columns": {
+          "threeEnabled": 1,
+          "threeChars": 12,
+          "threeGap": 7
+        }
+      },
+      "id": "three-columns",
+      "settings": {}
+    },
+    {
+      "features": {
+        "layout": {
+          "orientation": 2
+        }
+      },
+      "id": "vertical",
+      "settings": {}
+    },
+    {
+      "features": {
+        "paper": {
+          "name": "A4 単票・横方向"
+        }
+      },
+      "id": "paper-landscape",
+      "settings": {}
+    }
+  ]
+}

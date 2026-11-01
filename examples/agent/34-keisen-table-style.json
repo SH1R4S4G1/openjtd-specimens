@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "id": "keisen-table-style",
+  "samples": [
+    {
+      "id": "table-default",
+      "title": "table-default",
+      "purpose": "罫線表 2×4、文書スタイルは新規文書の形のまま（style なし）",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        },
+        {
+          "property": "table.columns",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 4,
+        "lineType": 1,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-left24",
+      "title": "table-left24",
+      "purpose": "罫線表 2×4、左の余白だけ 24mm（CR-008）",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        },
+        {
+          "property": "table.columns",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 4,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "style": {
+          "chars": 40,
+          "lines": 40,
+          "marginTop": 30,
+          "marginBottom": 30,
+          "marginLeft": 24,
+          "marginRight": 30,
+          "layoutPriority": "counts"
+        }
+      }
+    },
+    {
+      "id": "table-48chars",
+      "title": "table-48chars",
+      "purpose": "罫線表 2×4、48 字・左右の余白 16mm（CR-008）",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        },
+        {
+          "property": "table.columns",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 4,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "style": {
+          "chars": 48,
+          "lines": 40,
+          "marginTop": 30,
+          "marginBottom": 30,
+          "marginLeft": 16,
+          "marginRight": 16,
+          "layoutPriority": "counts"
+        }
+      }
+    }
+  ]
+}

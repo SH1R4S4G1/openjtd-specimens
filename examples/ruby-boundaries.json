@@ -1,0 +1,21 @@
+{
+  "schemaVersion":1,
+  "name":"ruby-boundaries",
+  "text":"対象対象甲乙",
+  "defaults":{"chars":40,"lines":40,"characterSpacing":1,"lineSpacing":60,"marginTop":30,"marginBottom":30,"marginLeft":30,"marginRight":30},
+  "targets":[
+    {"id":"first","kind":"text","start":0,"end":2,"expected":"対象"},
+    {"id":"second","kind":"text","start":2,"end":4,"expected":"対象"},
+    {"id":"last","kind":"text","start":4,"end":6,"expected":"甲乙"},
+    {"id":"single","kind":"text","start":5,"end":6,"expected":"乙"}
+  ],
+  "samples":[
+    {"id":"first-left","settings":{},"operations":[{"target":"first","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう","evenly":0,"position":1}]},
+    {"id":"second-right","settings":{},"operations":[{"target":"second","type":"character","attribute":"ruby","mode":"set","reading":"よみ","evenly":0,"position":3}]},
+    {"id":"last-below","settings":{},"operations":[{"target":"last","type":"character","attribute":"ruby","mode":"set","reading":"こうおつ","placement":2}]},
+    {"id":"single-character","settings":{},"operations":[{"target":"single","type":"character","attribute":"ruby","mode":"set","reading":"おつ"}]},
+    {"id":"adjacent-clear-first","settings":{},"operations":[{"target":"first","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう"},{"target":"second","type":"character","attribute":"ruby","mode":"set","reading":"よみ"},{"target":"first","type":"character","attribute":"ruby","mode":"clear"}]},
+    {"id":"adjacent-clear-second","settings":{},"operations":[{"target":"first","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう"},{"target":"second","type":"character","attribute":"ruby","mode":"set","reading":"よみ"},{"target":"second","type":"character","attribute":"ruby","mode":"clear"}]},
+    {"id":"adjacent-modify-second","settings":{},"operations":[{"target":"first","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう"},{"target":"second","type":"character","attribute":"ruby","mode":"set","reading":"よみ"},{"target":"second","type":"character","attribute":"ruby","mode":"modify","reading":"へんこう","evenly":0,"position":2,"sizeMm":4,"distanceMm":0.5,"placement":2}]}
+  ]
+}

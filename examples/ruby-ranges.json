@@ -1,0 +1,19 @@
+{
+  "schemaVersion":1,
+  "name":"ruby-ranges",
+  "text":"甲乙対象丙丁",
+  "defaults":{"chars":40,"lines":40,"characterSpacing":1,"lineSpacing":60,"marginTop":30,"marginBottom":30,"marginLeft":30,"marginRight":30},
+  "targets":[{"id":"middle","kind":"text","start":2,"end":4,"expected":"対象"}],
+  "samples":[
+    {"id":"control","settings":{}},
+    {"id":"ruby-set","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう"}]},
+    {"id":"ruby-modify","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう"},{"target":"middle","type":"character","attribute":"ruby","mode":"modify","reading":"よみ"}]},
+    {"id":"ruby-clear","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう"},{"target":"middle","type":"character","attribute":"ruby","mode":"clear"}]},
+    {"id":"ruby-reset","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう"},{"target":"middle","type":"character","attribute":"ruby","mode":"clear"},{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"よみ"}]},
+    {"id":"ruby-center","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"よみ","evenly":0,"position":2}]},
+    {"id":"ruby-size","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう","sizeMm":4}]},
+    {"id":"ruby-distance","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう","distanceMm":0.5}]},
+    {"id":"ruby-below","settings":{},"operations":[{"target":"middle","type":"character","attribute":"ruby","mode":"set","reading":"たいしょう","placement":2}]}
+  ]
+}
+

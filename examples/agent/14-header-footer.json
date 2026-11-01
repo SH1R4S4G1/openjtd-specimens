@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "header-footer",
+  "samples": [
+    {
+      "id": "header-left",
+      "title": "header-left",
+      "purpose": "全ページ共通の上端左寄せヘッダー文字列を確認する",
+      "feature": "document-header",
+      "expected": [
+        {
+          "property": "header.top.left.text",
+          "value": "見出し甲"
+        },
+        {
+          "property": "pageCount",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落です\n第二段落です\n第三段落です",
+        "headerFooter": {
+          "position": "header",
+          "text": "見出し甲"
+        }
+      }
+    },
+    {
+      "id": "footer-left",
+      "title": "footer-left",
+      "purpose": "下端左寄せフッター文字列を確認する",
+      "feature": "document-header",
+      "expected": [
+        {
+          "property": "footer.bottom.left.text",
+          "value": "脚部乙"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落です\n第二段落です\n第三段落です",
+        "headerFooter": {
+          "position": "footer",
+          "text": "脚部乙"
+        }
+      }
+    },
+    {
+      "id": "header-three-pages",
+      "title": "header-three-pages",
+      "purpose": "3ページ文書の全ページに同じヘッダーが現れることを確認する",
+      "feature": "document-header",
+      "expected": [
+        {
+          "property": "header.top.left.text",
+          "value": "共通見出し"
+        },
+        {
+          "property": "pageCount",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落です\n第二段落です\n第三段落です",
+        "headerFooter": {
+          "position": "header",
+          "text": "共通見出し"
+        },
+        "pageBreaks": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "name": "footnote-lifecycle",
+  "text": "甲乙丙丁\n戊己庚辛\n壬癸子丑",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "created",
+      "settings": {},
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "middle",
+            "paragraph": 0,
+            "offset": 2,
+            "text": "第一脚注"
+          },
+          {
+            "action": "add",
+            "id": "end",
+            "paragraph": 1,
+            "offset": 4,
+            "text": "第二脚注"
+          },
+          {
+            "action": "add",
+            "id": "start",
+            "paragraph": 2,
+            "offset": 0,
+            "text": "第三脚注"
+          }
+        ]
+      }
+    },
+    {
+      "id": "modified",
+      "settings": {},
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "middle",
+            "paragraph": 0,
+            "offset": 2,
+            "text": "第一脚注"
+          },
+          {
+            "action": "add",
+            "id": "end",
+            "paragraph": 1,
+            "offset": 4,
+            "text": "第二脚注"
+          },
+          {
+            "action": "add",
+            "id": "start",
+            "paragraph": 2,
+            "offset": 0,
+            "text": "第三脚注"
+          },
+          {
+            "action": "modify",
+            "id": "end",
+            "text": "変更された脚注"
+          }
+        ]
+      }
+    },
+    {
+      "id": "deleted",
+      "settings": {},
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "middle",
+            "paragraph": 0,
+            "offset": 2,
+            "text": "第一脚注"
+          },
+          {
+            "action": "add",
+            "id": "end",
+            "paragraph": 1,
+            "offset": 4,
+            "text": "第二脚注"
+          },
+          {
+            "action": "add",
+            "id": "start",
+            "paragraph": 2,
+            "offset": 0,
+            "text": "第三脚注"
+          },
+          {
+            "action": "modify",
+            "id": "end",
+            "text": "変更された脚注"
+          },
+          {
+            "action": "remove",
+            "id": "end"
+          }
+        ]
+      }
+    },
+    {
+      "id": "reverse-adjacent",
+      "settings": {},
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "late",
+            "paragraph": 2,
+            "offset": 4,
+            "text": "末尾注"
+          },
+          {
+            "action": "add",
+            "id": "early",
+            "paragraph": 0,
+            "offset": 0,
+            "text": "先頭注"
+          },
+          {
+            "action": "add",
+            "id": "adjacent",
+            "paragraph": 0,
+            "offset": 1,
+            "text": "隣接注"
+          }
+        ]
+      }
+    },
+    {
+      "id": "all-cleared",
+      "settings": {},
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "late",
+            "paragraph": 2,
+            "offset": 4,
+            "text": "末尾注"
+          },
+          {
+            "action": "add",
+            "id": "early",
+            "paragraph": 0,
+            "offset": 0,
+            "text": "先頭注"
+          },
+          {
+            "action": "add",
+            "id": "adjacent",
+            "paragraph": 0,
+            "offset": 1,
+            "text": "隣接注"
+          },
+          {
+            "action": "remove",
+            "id": "early"
+          },
+          {
+            "action": "remove",
+            "id": "adjacent"
+          },
+          {
+            "action": "remove",
+            "id": "late"
+          }
+        ]
+      }
+    },
+    {
+      "id": "reset",
+      "settings": {},
+      "footnote": {
+        "steps": [
+          {
+            "action": "add",
+            "id": "late",
+            "paragraph": 2,
+            "offset": 4,
+            "text": "末尾注"
+          },
+          {
+            "action": "add",
+            "id": "early",
+            "paragraph": 0,
+            "offset": 0,
+            "text": "先頭注"
+          },
+          {
+            "action": "add",
+            "id": "adjacent",
+            "paragraph": 0,
+            "offset": 1,
+            "text": "隣接注"
+          },
+          {
+            "action": "remove",
+            "id": "early"
+          },
+          {
+            "action": "remove",
+            "id": "adjacent"
+          },
+          {
+            "action": "remove",
+            "id": "late"
+          },
+          {
+            "action": "add",
+            "id": "reset",
+            "paragraph": 1,
+            "offset": 2,
+            "text": "再設定注"
+          }
+        ]
+      }
+    }
+  ]
+}

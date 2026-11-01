@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "id": "structure-combinations",
+  "samples": [
+    {
+      "id": "all-structure-elements",
+      "title": "all-structure-elements",
+      "purpose": "ヘッダー・2段組・段落属性・枠を1文書に同時に含めた場合の解析を確認する",
+      "feature": "layout-frame",
+      "expected": [
+        {
+          "property": "header.top.left.text",
+          "value": "見出し甲"
+        },
+        {
+          "property": "section.columns",
+          "value": 2
+        },
+        {
+          "property": "paragraph[1].alignment",
+          "value": "center"
+        },
+        {
+          "property": "frame[frame-a].text",
+          "value": "枠内の文字"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "headerFooter": {
+          "position": "header",
+          "text": "見出し甲"
+        },
+        "columns": 2,
+        "paragraphFormats": [
+          {
+            "paragraph": 1,
+            "alignment": "center",
+            "indent": {
+              "unit": "columns",
+              "start": 2
+            }
+          }
+        ],
+        "frames": [
+          {
+            "name": "frame-a",
+            "left": 50,
+            "top": 150,
+            "width": 60,
+            "height": 30,
+            "text": "枠内の文字"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-with-header",
+      "title": "notes-with-header",
+      "purpose": "脚注とヘッダーの共存を確認する",
+      "feature": "document-footnote",
+      "expected": [
+        {
+          "property": "header.top.left.text",
+          "value": "見出し甲"
+        },
+        {
+          "property": "notes.count",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "headerFooter": {
+          "position": "header",
+          "text": "見出し甲"
+        },
+        "notes": [
+          {
+            "id": "n1",
+            "paragraph": 0,
+            "offset": 3,
+            "text": "注記一"
+          },
+          {
+            "id": "n2",
+            "paragraph": 2,
+            "offset": 7,
+            "text": "注記二"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-footer-b5-style",
+      "title": "notes-footer-b5-style",
+      "purpose": "B5・12pt・文書スタイル指定の文書で脚注とフッターを確認する",
+      "feature": "document-footnote",
+      "expected": [
+        {
+          "property": "footer.bottom.left.text",
+          "value": "脚部乙"
+        },
+        {
+          "property": "page.paper",
+          "value": "B5"
+        },
+        {
+          "property": "style.chars",
+          "value": 30
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "headerFooter": {
+          "position": "footer",
+          "text": "脚部乙"
+        },
+        "notes": [
+          {
+            "id": "n1",
+            "paragraph": 1,
+            "offset": 0,
+            "text": "注記"
+          }
+        ],
+        "font": {
+          "sizePt": 12
+        },
+        "page": {
+          "paper": "B5",
+          "orientation": "portrait"
+        },
+        "style": {
+          "layoutPriority": "counts",
+          "chars": 30,
+          "lines": 30,
+          "marginTop": 25,
+          "marginBottom": 25,
+          "marginLeft": 25,
+          "marginRight": 25
+        }
+      }
+    },
+    {
+      "id": "columns-formats-landscape",
+      "title": "columns-formats-landscape",
+      "purpose": "A4横の3段組と段落の右揃えを確認する",
+      "feature": "document-columns-body",
+      "expected": [
+        {
+          "property": "section.columns",
+          "value": 3
+        },
+        {
+          "property": "paragraph[2].alignment",
+          "value": "right"
+        },
+        {
+          "property": "page.orientation",
+          "value": "landscape"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "columns": 3,
+        "paragraphFormats": [
+          {
+            "paragraph": 2,
+            "alignment": "right"
+          }
+        ],
+        "page": {
+          "paper": "A4",
+          "orientation": "landscape"
+        }
+      }
+    },
+    {
+      "id": "frame-footer-12pt",
+      "title": "frame-footer-12pt",
+      "purpose": "12ptの文書でフッターと縦書き枠を確認する",
+      "feature": "layout-frame",
+      "expected": [
+        {
+          "property": "footer.bottom.left.text",
+          "value": "脚部乙"
+        },
+        {
+          "property": "frame[frame-v].writingMode",
+          "value": "vertical"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "headerFooter": {
+          "position": "footer",
+          "text": "脚部乙"
+        },
+        "frames": [
+          {
+            "name": "frame-v",
+            "left": 120,
+            "top": 120,
+            "width": 40,
+            "height": 80,
+            "text": "縦書きの枠",
+            "writingMode": "vertical",
+            "border": true
+          }
+        ],
+        "font": {
+          "sizePt": 12
+        }
+      }
+    }
+  ]
+}

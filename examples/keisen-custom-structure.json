@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "name": "structured-custom-size-and-local-split",
+  "text": "　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　\n　　　　　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 12,
+    "columns": 23
+  },
+  "samples": [
+    {
+      "id": "custom-row-insert",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "甲"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "text": "乙"
+        },
+        {
+          "type": "tableBand",
+          "axis": "row",
+          "mode": "insert",
+          "index": 2,
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "custom-row-restore",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "甲"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "text": "乙"
+        },
+        {
+          "type": "tableBand",
+          "axis": "row",
+          "mode": "insert",
+          "index": 2,
+          "size": 4
+        },
+        {
+          "type": "tableBand",
+          "axis": "row",
+          "mode": "delete",
+          "index": 2
+        }
+      ]
+    },
+    {
+      "id": "custom-column-insert",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "甲"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "text": "乙"
+        },
+        {
+          "type": "tableBand",
+          "axis": "column",
+          "mode": "insert",
+          "index": 2,
+          "size": 8
+        }
+      ]
+    },
+    {
+      "id": "custom-column-restore",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "甲"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "text": "乙"
+        },
+        {
+          "type": "tableBand",
+          "axis": "column",
+          "mode": "insert",
+          "index": 2,
+          "size": 8
+        },
+        {
+          "type": "tableBand",
+          "axis": "column",
+          "mode": "delete",
+          "index": 2
+        }
+      ]
+    },
+    {
+      "id": "split-bottom-right",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            6,
+            10
+          ],
+          "columns": [
+            3,
+            11,
+            19
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "甲"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 2
+          },
+          "text": "乙"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 2,
+            "column": 1
+          },
+          "text": "丙"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "text": "丁"
+        },
+        {
+          "type": "cellSplit",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "rows": 2,
+          "columns": 2
+        }
+      ]
+    }
+  ]
+}

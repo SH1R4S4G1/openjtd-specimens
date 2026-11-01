@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "name": "character-ranges",
+  "text": "甲乙対象丙丁",
+  "defaults": {"chars":40,"lines":40,"characterSpacing":1,"lineSpacing":60,"marginTop":30,"marginBottom":30,"marginLeft":30,"marginRight":30},
+  "targets": [{"id":"middle","kind":"text","start":2,"end":4,"expected":"対象"}],
+  "samples": [
+    {"id":"control","settings":{}},
+    {"id":"width-120","settings":{},"operations":[{"target":"middle","type":"character","attribute":"scaleX","mode":"set","value":120}]},
+    {"id":"size-12","settings":{},"operations":[{"target":"middle","type":"character","attribute":"size","mode":"set","value":12}]},
+    {"id":"spacing-positive","settings":{},"operations":[{"target":"middle","type":"character","attribute":"spacing","mode":"set","value":10,"unit":100}]},
+    {"id":"spacing-negative","settings":{},"operations":[{"target":"middle","type":"character","attribute":"spacing","mode":"set","value":-10,"unit":100}]},
+    {"id":"spacing-clear","settings":{},"operations":[{"target":"middle","type":"character","attribute":"spacing","mode":"set","value":10,"unit":100},{"target":"middle","type":"character","attribute":"spacing","mode":"clear"}]},
+    {"id":"spacing-reset","settings":{},"operations":[{"target":"middle","type":"character","attribute":"spacing","mode":"set","value":10,"unit":100},{"target":"middle","type":"character","attribute":"spacing","mode":"clear"},{"target":"middle","type":"character","attribute":"spacing","mode":"set","value":-10,"unit":100}]}
+  ]
+}

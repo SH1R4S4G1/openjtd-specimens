@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "name": "font-coverage",
+  "text": "一太郎 Macro 検証 ABC 0123",
+  "defaults": {"chars":40,"lines":40,"characterSpacing":1,"lineSpacing":60,"marginTop":30,"marginBottom":30,"marginLeft":30,"marginRight":30},
+  "mode": "cartesian",
+  "repeats": 2,
+  "axes": [
+    {"field":"features.font.size","values":[10.5,12]},
+    {"field":"features.font.scaleX","values":[100,120]}
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "name": "keisen-table-resize",
+  "text": "　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 8,
+    "columns": 15
+  },
+  "samples": [
+    {
+      "id": "control",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        }
+      ]
+    },
+    {
+      "id": "row-grow",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableResize",
+          "axis": "row",
+          "index": 1,
+          "delta": 1
+        }
+      ]
+    },
+    {
+      "id": "row-restore",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableResize",
+          "axis": "row",
+          "index": 1,
+          "delta": 1
+        },
+        {
+          "type": "tableResize",
+          "axis": "row",
+          "index": 1,
+          "delta": -1
+        }
+      ]
+    },
+    {
+      "id": "column-grow",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableResize",
+          "axis": "column",
+          "index": 1,
+          "delta": 2
+        }
+      ]
+    },
+    {
+      "id": "column-restore",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableResize",
+          "axis": "column",
+          "index": 1,
+          "delta": 2
+        },
+        {
+          "type": "tableResize",
+          "axis": "column",
+          "index": 1,
+          "delta": -2
+        }
+      ]
+    },
+    {
+      "id": "row-second",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableResize",
+          "axis": "row",
+          "index": 2,
+          "delta": 1
+        }
+      ]
+    },
+    {
+      "id": "column-second",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableResize",
+          "axis": "column",
+          "index": 2,
+          "delta": 2
+        }
+      ]
+    },
+    {
+      "id": "resize-cell",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableResize",
+          "axis": "row",
+          "index": 1,
+          "delta": 1
+        },
+        {
+          "type": "tableResize",
+          "axis": "column",
+          "index": 2,
+          "delta": 2
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "attribute": "fill",
+          "value": 50
+        }
+      ]
+    }
+  ]
+}

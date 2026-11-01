@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "name": "allocation-boundaries",
+  "text": "対象対象甲乙",
+  "defaults": {"chars":40,"lines":40,"characterSpacing":1,"lineSpacing":60,"marginTop":30,"marginBottom":30,"marginLeft":30,"marginRight":30},
+  "targets": [
+    {"id":"first","kind":"text","start":0,"end":2,"expected":"対象"},
+    {"id":"second","kind":"text","start":2,"end":4,"expected":"対象"},
+    {"id":"last","kind":"text","start":4,"end":6,"expected":"甲乙"}
+  ],
+  "samples": [
+    {"id":"closely-first","settings":{},"operations":[{"target":"first","type":"character","attribute":"closely","mode":"set"}]},
+    {"id":"closely-last","settings":{},"operations":[{"target":"last","type":"character","attribute":"closely","mode":"set"}]},
+    {"id":"second-points","settings":{},"operations":[{"target":"second","type":"character","attribute":"evenly","mode":"set","value":36,"unit":3,"widthMode":1}]},
+    {"id":"last-inch-clear","settings":{},"operations":[{"target":"last","type":"character","attribute":"evenly","mode":"set","value":0.5,"unit":2,"widthMode":1},{"target":"last","type":"character","attribute":"evenly","mode":"clear"}]},
+    {"id":"relative-change","settings":{},"operations":[{"target":"second","type":"character","attribute":"evenly","mode":"set","value":2,"unit":101,"widthMode":2},{"target":"second","type":"character","attribute":"evenly","mode":"modify","value":-1,"unit":101,"widthMode":2}]},
+    {"id":"adjacent-clear-first","settings":{},"operations":[{"target":"first","type":"character","attribute":"evenly","mode":"set","value":6,"unit":101,"widthMode":1},{"target":"second","type":"character","attribute":"evenly","mode":"set","value":8,"unit":101,"widthMode":1},{"target":"first","type":"character","attribute":"evenly","mode":"clear"}]},
+    {"id":"adjacent-clear-second","settings":{},"operations":[{"target":"first","type":"character","attribute":"evenly","mode":"set","value":6,"unit":101,"widthMode":1},{"target":"second","type":"character","attribute":"evenly","mode":"set","value":8,"unit":101,"widthMode":1},{"target":"second","type":"character","attribute":"evenly","mode":"clear"}]}
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "kind": "pdf-from-jtd",
+  "id": "existing-jtd-pdf",
+  "title": "既存の文書の参照 PDF",
+  "purpose": "このアプリが作っていない JTD を一太郎で開き、変えずに PDF にする（CR-006）。JTD は inputs/ に置き、ハッシュで指す",
+  "documents": [
+    {
+      "id": "doc-115848",
+      "file": "inputs/115848.jtd",
+      "sha256": "5b4d22014949ebf8c1a2b3611f1b1796ec936ca896022b2d011a9e2c43436bd8"
+    },
+    {
+      "id": "doc-134084",
+      "file": "inputs/134084.jtd",
+      "sha256": "086b9f7deedfa7215efcf3d081935cb96b0123e0b227232cd12157542962f8e7"
+    }
+  ]
+}

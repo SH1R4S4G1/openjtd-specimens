@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "id": "column-format",
+  "samples": [
+    {
+      "id": "common-gap-rule",
+      "title": "common-gap-rule",
+      "purpose": "文書スタイルの共通段間と段間罫線を確認する",
+      "feature": "document-columns",
+      "expected": [
+        {
+          "property": "documentStyle.columns.gapMm",
+          "value": 10
+        },
+        {
+          "property": "documentStyle.columns.rule",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "段組書式の確認",
+        "columnFormat": {
+          "gapMm": 10,
+          "rule": 1
+        }
+      }
+    },
+    {
+      "id": "two-column-format",
+      "title": "two-column-format",
+      "purpose": "2段組の段間・字数の書式を確認する（本文は1段）",
+      "feature": "document-columns",
+      "expected": [
+        {
+          "property": "documentStyle.columns.two.gapMm",
+          "value": 7
+        },
+        {
+          "property": "documentStyle.columns.two.chars",
+          "value": 19
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "段組書式の確認",
+        "columnFormat": {
+          "twoColumn": {
+            "gapMm": 7,
+            "chars": 19
+          }
+        }
+      }
+    },
+    {
+      "id": "three-column-format",
+      "title": "three-column-format",
+      "purpose": "3段組の段間・字数の書式を確認する",
+      "feature": "document-columns",
+      "expected": [
+        {
+          "property": "documentStyle.columns.three.gapMm",
+          "value": 7
+        },
+        {
+          "property": "documentStyle.columns.three.chars",
+          "value": 12
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "段組書式の確認",
+        "columnFormat": {
+          "threeColumn": {
+            "gapMm": 7,
+            "chars": 12
+          }
+        }
+      }
+    },
+    {
+      "id": "format-with-body-columns",
+      "title": "format-with-body-columns",
+      "purpose": "2段組書式と本文の2段組を同時に指定する（書式の適用は検証範囲外）",
+      "feature": "document-columns",
+      "expected": [
+        {
+          "property": "documentStyle.columns.two.chars",
+          "value": 19
+        },
+        {
+          "property": "section.columns",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "columns": 2,
+        "columnFormat": {
+          "rule": 3,
+          "twoColumn": {
+            "gapMm": 7,
+            "chars": 19
+          }
+        }
+      }
+    }
+  ]
+}

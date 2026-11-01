@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "name": "paragraph-decoration-review",
+  "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "paragraphTargets": [
+    {
+      "id": "middle",
+      "index": 2,
+      "expected": "対象段落の確認"
+    }
+  ],
+  "samples": [
+    {
+      "id": "border-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "border-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "border-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 3
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "border-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 1
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 3
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationLine",
+          "mode": "set",
+          "value": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "id": "application-defaults",
+  "samples": [
+    {
+      "id": "ruby-defaults",
+      "title": "ruby-defaults",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "ruby",
+      "expected": [
+        {
+          "property": "range[2:4].ruby.reading",
+          "value": "たいしょう"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "ruby",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "reading": "たいしょう"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ruby-explicit",
+      "title": "ruby-explicit",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "ruby",
+      "expected": [
+        {
+          "property": "range[2:4].ruby.reading",
+          "value": "たいしょう"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "ruby",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "reading": "たいしょう",
+              "placement": "below",
+              "sizeMm": 4,
+              "distanceMm": 0.5,
+              "alignment": "center"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ruby-partial",
+      "title": "ruby-partial",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "ruby",
+      "expected": [
+        {
+          "property": "range[2:4].ruby.reading",
+          "value": "たいしょう"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "ruby",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "reading": "たいしょう",
+              "alignment": "left"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "table-defaults",
+      "title": "table-defaults",
+      "purpose": "省略した罫線属性の実値と保存後の保持を観測",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 1,
+        "columns": 1
+      }
+    },
+    {
+      "id": "table-type",
+      "title": "table-type",
+      "purpose": "省略した罫線属性の実値と保存後の保持を観測",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 1,
+        "columns": 1,
+        "lineType": 3
+      }
+    },
+    {
+      "id": "table-color",
+      "title": "table-color",
+      "purpose": "省略した罫線属性の実値と保存後の保持を観測",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 1,
+        "columns": 1,
+        "color": "R0G0B255"
+      }
+    }
+  ]
+}

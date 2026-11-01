@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "name": "document-columns-simple",
+  "text": "第一段落の開始甲乙丙\n第二段落の中間丁戊己\n第三段落の末尾庚辛壬",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "two-set",
+      "settings": {},
+      "documentColumns": [
+        2
+      ]
+    },
+    {
+      "id": "three-change",
+      "settings": {},
+      "documentColumns": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "one-clear",
+      "settings": {},
+      "documentColumns": [
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "id": "two-reset",
+      "settings": {},
+      "documentColumns": [
+        2,
+        3,
+        1,
+        2
+      ]
+    }
+  ]
+}

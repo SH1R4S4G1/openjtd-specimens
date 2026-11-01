@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "name": "layout-frames",
+  "text": "本文の第一段落\n本文の第二段落\n本文の第三段落",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "one-frame",
+      "settings": {},
+      "frames": [
+        {
+          "name": "frame-a",
+          "left": 50,
+          "top": 100,
+          "width": 60,
+          "height": 30,
+          "text": "枠内の文字"
+        }
+      ]
+    },
+    {
+      "id": "vertical-border",
+      "settings": {},
+      "frames": [
+        {
+          "name": "frame-v",
+          "left": 120,
+          "top": 120,
+          "width": 40,
+          "height": 80,
+          "text": "縦書きの枠",
+          "writingMode": 2,
+          "border": 1
+        }
+      ]
+    },
+    {
+      "id": "three-frames",
+      "settings": {},
+      "frames": [
+        {
+          "name": "top-left",
+          "left": 30,
+          "top": 80,
+          "width": 50,
+          "height": 25,
+          "text": "左上の枠"
+        },
+        {
+          "name": "top-right",
+          "left": 120,
+          "top": 80,
+          "width": 50,
+          "height": 25,
+          "text": "右上の枠",
+          "border": 1
+        },
+        {
+          "name": "bottom",
+          "left": 40,
+          "top": 180,
+          "width": 120,
+          "height": 40,
+          "text": "下段の横長枠"
+        }
+      ]
+    }
+  ]
+}

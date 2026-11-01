@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "name": "paragraph-grouped-attributes",
+  "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "paragraphTargets": [
+    {
+      "id": "first",
+      "index": 1,
+      "expected": "前段落の確認"
+    },
+    {
+      "id": "middle",
+      "index": 2,
+      "expected": "対象段落の確認"
+    },
+    {
+      "id": "last",
+      "index": 3,
+      "expected": "後段落の確認"
+    }
+  ],
+  "samples": [
+    {
+      "id": "indent-columns",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 2,
+            "end": 1,
+            "firstStart": 1
+          },
+          "unit": 101
+        }
+      ]
+    },
+    {
+      "id": "indent-hanging-mm",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 5,
+            "firstEnd": -2
+          },
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spacing-mm",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "paragraphSpacing",
+          "mode": "set",
+          "value": {
+            "before": 3,
+            "after": 2
+          },
+          "unit": 1
+        }
+      ]
+    },
+    {
+      "id": "spacing-percent",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "paragraphSpacing",
+          "mode": "set",
+          "value": {
+            "after": 50
+          },
+          "unit": 100
+        }
+      ]
+    },
+    {
+      "id": "combined",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 2
+        },
+        {
+          "target": "middle",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 1,
+            "end": 1
+          },
+          "unit": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "paragraphSpacing",
+          "mode": "set",
+          "value": {
+            "before": 2,
+            "after": 2
+          },
+          "unit": 1
+        },
+        {
+          "target": "last",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regroup-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "first",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "start": 3
+          },
+          "unit": 101
+        },
+        {
+          "target": "first",
+          "attribute": "indent",
+          "mode": "set",
+          "value": {
+            "end": 2
+          },
+          "unit": 101
+        },
+        {
+          "target": "last",
+          "attribute": "paragraphSpacing",
+          "mode": "set",
+          "value": {
+            "before": 4
+          },
+          "unit": 1
+        },
+        {
+          "target": "last",
+          "attribute": "paragraphSpacing",
+          "mode": "clear"
+        }
+      ]
+    }
+  ]
+}

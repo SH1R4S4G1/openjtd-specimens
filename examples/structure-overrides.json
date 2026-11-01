@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "name": "structure-overrides",
+  "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "paragraphTargets": [
+    {
+      "id": "middle",
+      "index": 2,
+      "expected": "第二段落の本文"
+    }
+  ],
+  "samples": [
+    {
+      "id": "header-b5-12pt-style",
+      "settings": {
+        "chars": 30,
+        "lines": 30,
+        "marginTop": 25,
+        "marginBottom": 25,
+        "marginLeft": 25,
+        "marginRight": 25
+      },
+      "features": {
+        "font": {
+          "size": 12
+        },
+        "paper": {
+          "name": "B5 単票・縦方向"
+        }
+      },
+      "headerSteps": [
+        "見出し甲"
+      ]
+    },
+    {
+      "id": "columns-a4-landscape",
+      "settings": {},
+      "features": {
+        "paper": {
+          "name": "A4 単票・横方向"
+        }
+      },
+      "documentColumns": [
+        3
+      ]
+    },
+    {
+      "id": "paragraph-frame-12pt",
+      "settings": {},
+      "features": {
+        "font": {
+          "size": 12
+        }
+      },
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 3
+        }
+      ],
+      "frames": [
+        {
+          "name": "frame-a",
+          "left": 50,
+          "top": 150,
+          "width": 60,
+          "height": 30,
+          "text": "枠内の文字"
+        }
+      ]
+    },
+    {
+      "id": "all-elements-b5-style",
+      "settings": {
+        "chars": 30,
+        "lines": 30,
+        "marginTop": 25,
+        "marginBottom": 25,
+        "marginLeft": 25,
+        "marginRight": 25
+      },
+      "features": {
+        "paper": {
+          "name": "B5 単票・縦方向"
+        }
+      },
+      "headerSteps": [
+        "見出し甲"
+      ],
+      "documentColumns": [
+        2
+      ],
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "alignment",
+          "mode": "set",
+          "value": 3
+        }
+      ],
+      "frames": [
+        {
+          "name": "frame-a",
+          "left": 40,
+          "top": 120,
+          "width": 60,
+          "height": 30,
+          "text": "枠内の文字"
+        }
+      ]
+    }
+  ]
+}

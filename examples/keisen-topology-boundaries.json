@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "name": "keisen-topology-boundaries",
+  "text": "　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 7,
+    "columns": 13
+  },
+  "samples": [
+    {
+      "id": "reverse-blue",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            6
+          ],
+          "columns": [
+            3,
+            11
+          ],
+          "lineType": 3,
+          "color": "R0G0B255"
+        },
+        {
+          "type": "tableDivide",
+          "axis": "column",
+          "parts": 2
+        },
+        {
+          "type": "tableDivide",
+          "axis": "row",
+          "parts": 2
+        },
+        {
+          "type": "tableMerge",
+          "axis": "column",
+          "boundary": 1
+        },
+        {
+          "type": "tableMerge",
+          "axis": "row",
+          "boundary": 1
+        }
+      ]
+    },
+    {
+      "id": "divide-again",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            6
+          ],
+          "columns": [
+            3,
+            11
+          ],
+          "lineType": 3,
+          "color": "R0G0B255"
+        },
+        {
+          "type": "tableDivide",
+          "axis": "row",
+          "parts": 2
+        },
+        {
+          "type": "tableMerge",
+          "axis": "row",
+          "boundary": 1
+        },
+        {
+          "type": "tableDivide",
+          "axis": "row",
+          "parts": 2
+        }
+      ]
+    },
+    {
+      "id": "resize-divide",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4
+          ],
+          "columns": [
+            3,
+            7
+          ],
+          "lineType": 3,
+          "color": "R0G0B255"
+        },
+        {
+          "type": "tableResize",
+          "axis": "row",
+          "index": 1,
+          "delta": 2
+        },
+        {
+          "type": "tableResize",
+          "axis": "column",
+          "index": 1,
+          "delta": 4
+        },
+        {
+          "type": "tableDivide",
+          "axis": "row",
+          "parts": 2
+        },
+        {
+          "type": "tableDivide",
+          "axis": "column",
+          "parts": 2
+        }
+      ]
+    }
+  ]
+}

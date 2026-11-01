@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "name": "keisen-cell-text-boundaries",
+  "text": "　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 5,
+    "columns": 15
+  },
+  "samples": [
+    {
+      "id": "four-characters",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4
+          ],
+          "columns": [
+            3,
+            13
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "解析試料"
+        }
+      ]
+    },
+    {
+      "id": "styled-replace",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4
+          ],
+          "columns": [
+            3,
+            13
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "attribute": "alignment",
+          "value": 3
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "attribute": "fill",
+          "value": 50
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "甲"
+        },
+        {
+          "type": "tableText",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "text": "A=01"
+        }
+      ]
+    }
+  ]
+}

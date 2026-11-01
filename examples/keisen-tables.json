@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "name": "keisen-tables",
+  "text": "　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 7,
+    "columns": 13
+  },
+  "samples": [
+    {
+      "id": "table",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        }
+      ]
+    },
+    {
+      "id": "table-fill",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "fill",
+          "value": 50
+        }
+      ]
+    },
+    {
+      "id": "table-color",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "fill",
+          "value": 50
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "color",
+          "value": "R255G0B0"
+        }
+      ]
+    },
+    {
+      "id": "table-clear-fill",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "fill",
+          "value": 50
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "fill",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "table-alignment",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "alignment",
+          "value": 2
+        }
+      ]
+    }
+  ]
+}

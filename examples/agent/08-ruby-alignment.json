@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "ruby-alignment",
+  "samples": [
+    {
+      "id": "ruby-left", "title": "ルビ左寄せ", "purpose": "ルビの左寄せ属性を解析する", "feature": "ruby",
+      "expected": [{"property": "range[2:4].ruby.alignment", "value": "left"}],
+      "document": {"kind": "text", "text": "甲乙対象丙丁", "annotations": [
+        {"capability": "ruby", "range": {"start": 2, "end": 4, "text": "対象"}, "parameters": {"reading": "よみ", "alignment": "left"}}
+      ]}
+    },
+    {
+      "id": "ruby-center", "title": "ルビ中央寄せ", "purpose": "ルビの中央寄せ属性を解析する", "feature": "ruby",
+      "expected": [{"property": "range[2:4].ruby.alignment", "value": "center"}],
+      "document": {"kind": "text", "text": "甲乙対象丙丁", "annotations": [
+        {"capability": "ruby", "range": {"start": 2, "end": 4, "text": "対象"}, "parameters": {"reading": "よみ", "alignment": "center"}}
+      ]}
+    },
+    {
+      "id": "ruby-right", "title": "ルビ右寄せ", "purpose": "ルビの右寄せ属性を解析する", "feature": "ruby",
+      "expected": [{"property": "range[2:4].ruby.alignment", "value": "right"}],
+      "document": {"kind": "text", "text": "甲乙対象丙丁", "annotations": [
+        {"capability": "ruby", "range": {"start": 2, "end": 4, "text": "対象"}, "parameters": {"reading": "よみ", "alignment": "right"}}
+      ]}
+    },
+    {
+      "id": "ruby-distributed", "title": "ルビ均等配置", "purpose": "位置指定が適用対象外となる均等配置を解析する", "feature": "ruby",
+      "expected": [{"property": "range[2:4].ruby.alignment", "value": "distributed"}],
+      "document": {"kind": "text", "text": "甲乙対象丙丁", "annotations": [
+        {"capability": "ruby", "range": {"start": 2, "end": 4, "text": "対象"}, "parameters": {"reading": "よみ", "alignment": "distributed"}}
+      ]}
+    }
+  ]
+}

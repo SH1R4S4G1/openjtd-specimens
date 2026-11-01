@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "id": "page-number",
+  "samples": [
+    {
+      "id": "bottom-right-start5",
+      "title": "bottom-right-start5",
+      "purpose": "右下・開始番号5のページ番号設定を確認する",
+      "feature": "document-page",
+      "expected": [
+        {
+          "property": "pageNumber.position",
+          "value": "bottom-right"
+        },
+        {
+          "property": "pageNumber.start",
+          "value": 5
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "ページ番号の確認",
+        "pageNumber": {
+          "position": "bottom-right",
+          "start": 5
+        }
+      }
+    },
+    {
+      "id": "top-center-margin",
+      "title": "top-center-margin",
+      "purpose": "中央上・余白12mm・飾り文字列を確認する",
+      "feature": "document-page",
+      "expected": [
+        {
+          "property": "pageNumber.position",
+          "value": "top-center"
+        },
+        {
+          "property": "pageNumber.marginMm",
+          "value": 12
+        },
+        {
+          "property": "pageNumber.decoration",
+          "value": "- # -"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "ページ番号の確認",
+        "pageNumber": {
+          "position": "top-center",
+          "marginMm": 12,
+          "decoration": "- # -"
+        }
+      }
+    },
+    {
+      "id": "no-page-number",
+      "title": "no-page-number",
+      "purpose": "ページ番号を付けない設定を確認する",
+      "feature": "document-page",
+      "expected": [
+        {
+          "property": "pageNumber.position",
+          "value": "none"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "ページ番号の確認",
+        "pageNumber": {
+          "position": "none"
+        }
+      }
+    },
+    {
+      "id": "page-number-with-footer",
+      "title": "page-number-with-footer",
+      "purpose": "フッター文字列と右下ページ番号の共存を確認する",
+      "feature": "document-page",
+      "expected": [
+        {
+          "property": "footer.bottom.left.text",
+          "value": "脚部乙"
+        },
+        {
+          "property": "pageNumber.position",
+          "value": "bottom-right"
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "第一段落の本文\n第二段落の本文\n第三段落の本文",
+        "headerFooter": {
+          "position": "footer",
+          "text": "脚部乙"
+        },
+        "pageNumber": {
+          "position": "bottom-right"
+        }
+      }
+    }
+  ]
+}

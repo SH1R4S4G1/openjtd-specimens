@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "id": "character-style",
+  "samples": [
+    {
+      "id": "bold",
+      "title": "bold",
+      "purpose": "範囲の太字（和文スタイル名「太字」）を確認する",
+      "feature": "character-font-style",
+      "expected": [
+        {
+          "property": "range[2:4].fontStyle",
+          "value": "bold"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁戊己庚辛",
+        "annotations": [
+          {
+            "capability": "character-font-style",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "style": "bold"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "italic",
+      "title": "italic",
+      "purpose": "範囲の斜体（和文スタイル名「斜体」）を確認する",
+      "feature": "character-font-style",
+      "expected": [
+        {
+          "property": "range[2:4].fontStyle",
+          "value": "italic"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁戊己庚辛",
+        "annotations": [
+          {
+            "capability": "character-font-style",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "style": "italic"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "red-text",
+      "title": "red-text",
+      "purpose": "範囲の文字色を確認する",
+      "feature": "character-color",
+      "expected": [
+        {
+          "property": "range[2:4].color",
+          "value": "R255G0B0"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁戊己庚辛",
+        "annotations": [
+          {
+            "capability": "character-color",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "color": "R255G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "gothic-font",
+      "title": "gothic-font",
+      "purpose": "範囲の和文書体の変更を確認する",
+      "feature": "character-font",
+      "expected": [
+        {
+          "property": "range[2:4].fontName",
+          "value": "游ゴシック"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁戊己庚辛",
+        "annotations": [
+          {
+            "capability": "character-font",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "name": "游ゴシック"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed-ranges",
+      "title": "mixed-ranges",
+      "purpose": "別々の範囲の太字・文字色・書体・下線が互いに漏れないことを確認する",
+      "feature": "character-font-style",
+      "expected": [
+        {
+          "property": "range[0:2].fontStyle",
+          "value": "bold"
+        },
+        {
+          "property": "range[2:4].color",
+          "value": "R0G0B255"
+        },
+        {
+          "property": "range[5:7].fontName",
+          "value": "游ゴシック"
+        },
+        {
+          "property": "range[8:10].underline",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁戊己庚辛",
+        "annotations": [
+          {
+            "capability": "character-font-style",
+            "range": {
+              "start": 0,
+              "end": 2,
+              "text": "甲乙"
+            },
+            "parameters": {
+              "style": "bold"
+            }
+          },
+          {
+            "capability": "character-color",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "color": "R0G0B255"
+            }
+          },
+          {
+            "capability": "character-font",
+            "range": {
+              "start": 5,
+              "end": 7,
+              "text": "丁戊"
+            },
+            "parameters": {
+              "name": "游ゴシック"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 8,
+              "end": 10,
+              "text": "庚辛"
+            },
+            "parameters": {
+              "underline": 1
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

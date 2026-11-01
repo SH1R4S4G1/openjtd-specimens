@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "name": "range-paragraphs",
+  "text": "一段落目は折り返しを確かめるために長めの文を置いています。行の長さを越える本文で範囲の位置が保たれるかを見ます。\n二段落目には下線を付ける対象語があります。対象語の前後に十分な文字を置き、折り返しの前後でも位置がずれないことを確かめます。\n三段落目は漢字にルビを付けます。ここでも長い文を続けて、段落の区切りと折り返しを越えた位置で読みを照合します。",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "targets": [
+    {
+      "id": "word",
+      "kind": "text",
+      "start": 69,
+      "end": 72,
+      "expected": "対象語"
+    },
+    {
+      "id": "kanji",
+      "kind": "text",
+      "start": 125,
+      "end": 127,
+      "expected": "漢字"
+    }
+  ],
+  "samples": [
+    {
+      "id": "underline-and-ruby",
+      "settings": {},
+      "operations": [
+        {
+          "target": "word",
+          "type": "character",
+          "attribute": "underline",
+          "mode": "set",
+          "value": 1
+        },
+        {
+          "target": "kanji",
+          "type": "character",
+          "attribute": "ruby",
+          "mode": "set",
+          "reading": "かんじ",
+          "evenly": null,
+          "position": null,
+          "sizeMm": null,
+          "distanceMm": null,
+          "placement": null
+        }
+      ]
+    }
+  ]
+}

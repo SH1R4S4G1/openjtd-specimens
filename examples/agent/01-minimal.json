@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "minimal",
+  "samples": [
+    {
+      "id": "text-only",
+      "title": "text-only",
+      "purpose": "OpenJTDの解析結果が要求した属性と一致することを確認する",
+      "feature": "plain-text",
+      "expected": [
+        {
+          "property": "text",
+          "value": "解析用の本文"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "解析用の本文"
+      }
+    }
+  ]
+}

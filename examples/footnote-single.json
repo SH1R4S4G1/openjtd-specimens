@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "name": "footnote-single",
+  "text": "保護甲乙\n対象丙丁\n保護戊己",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "note-short",
+      "settings": {},
+      "footnote": {
+        "text": "脚注本文甲乙"
+      }
+    },
+    {
+      "id": "note-other",
+      "settings": {},
+      "footnote": {
+        "text": "別内容丙丁"
+      }
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "name": "paragraph-decoration-color-fill",
+  "text": "前段落の確認\n対象段落の確認\n後段落の確認",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "paragraphTargets": [
+    {
+      "id": "middle",
+      "index": 2,
+      "expected": "対象段落の確認"
+    }
+  ],
+  "samples": [
+    {
+      "id": "border-color-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R255G0B0"
+        }
+      ]
+    },
+    {
+      "id": "border-color-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R255G0B0"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R0G0B255"
+        }
+      ]
+    },
+    {
+      "id": "border-color-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R255G0B0"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R0G0B255"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "border-color-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R255G0B0"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R0G0B255"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationColor",
+          "mode": "set",
+          "value": "R255G0B0"
+        }
+      ]
+    },
+    {
+      "id": "fill-density-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 25
+        }
+      ]
+    },
+    {
+      "id": "fill-density-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 25
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 50
+        }
+      ]
+    },
+    {
+      "id": "fill-density-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 25
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 50
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "fill-density-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 25
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 50
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 25
+        }
+      ]
+    },
+    {
+      "id": "fill-pattern-set",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 101
+        }
+      ]
+    },
+    {
+      "id": "fill-pattern-change",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 107
+        }
+      ]
+    },
+    {
+      "id": "fill-pattern-clear",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 107
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "fill-pattern-reset",
+      "settings": {},
+      "paragraphOperations": [
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 101
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 107
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "clear"
+        },
+        {
+          "target": "middle",
+          "attribute": "decorationFill",
+          "mode": "set",
+          "value": 101
+        }
+      ]
+    }
+  ]
+}

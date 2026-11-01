@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "name": "keisen-cells",
+  "text": "　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 7,
+    "columns": 13
+  },
+  "samples": [
+    {
+      "id": "control",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        }
+      ]
+    },
+    {
+      "id": "top-left",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "attribute": "fill",
+          "value": 50
+        }
+      ]
+    },
+    {
+      "id": "bottom-right",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "attribute": "fill",
+          "value": 80
+        }
+      ]
+    },
+    {
+      "id": "diagonal",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "attribute": "fill",
+          "value": 50
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "attribute": "fill",
+          "value": 80
+        }
+      ]
+    },
+    {
+      "id": "clear-one",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "attribute": "fill",
+          "value": 50
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 2,
+            "column": 2
+          },
+          "attribute": "fill",
+          "value": 80
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 1,
+            "column": 1
+          },
+          "attribute": "fill",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "cell-blue",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 1,
+            "column": 2
+          },
+          "attribute": "textColor",
+          "value": "R0G0B255"
+        }
+      ]
+    },
+    {
+      "id": "cell-bold",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "cell": {
+            "row": 2,
+            "column": 1
+          },
+          "attribute": "bold",
+          "value": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "id": "layout-frames",
+  "samples": [
+    {
+      "id": "single-frame",
+      "title": "single-frame",
+      "purpose": "1ページ目の固定枠の位置・大きさ・枠内文字を確認する",
+      "feature": "layout-frame",
+      "expected": [
+        {
+          "property": "frame[frame-a].text",
+          "value": "枠内の文字"
+        },
+        {
+          "property": "frame[frame-a].page",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "本文の第一段落\n本文の第二段落\n本文の第三段落",
+        "frames": [
+          {
+            "name": "frame-a",
+            "left": 50,
+            "top": 100,
+            "width": 60,
+            "height": 30,
+            "text": "枠内の文字"
+          }
+        ]
+      }
+    },
+    {
+      "id": "vertical-bordered-frame",
+      "title": "vertical-bordered-frame",
+      "purpose": "縦書き・枠飾り付きの枠を確認する",
+      "feature": "layout-frame",
+      "expected": [
+        {
+          "property": "frame[frame-v].writingMode",
+          "value": "vertical"
+        },
+        {
+          "property": "frame[frame-v].border",
+          "value": true
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "本文の第一段落\n本文の第二段落\n本文の第三段落",
+        "frames": [
+          {
+            "name": "frame-v",
+            "left": 120,
+            "top": 120,
+            "width": 40,
+            "height": 80,
+            "text": "縦書きの枠",
+            "writingMode": "vertical",
+            "border": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "three-frames",
+      "title": "three-frames",
+      "purpose": "重ならない3つの枠の名前と内容を確認する",
+      "feature": "layout-frame",
+      "expected": [
+        {
+          "property": "frameCount",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "paragraphs",
+        "text": "本文の第一段落\n本文の第二段落\n本文の第三段落",
+        "frames": [
+          {
+            "name": "top-left",
+            "left": 30,
+            "top": 80,
+            "width": 50,
+            "height": 25,
+            "text": "左上の枠"
+          },
+          {
+            "name": "top-right",
+            "left": 120,
+            "top": 80,
+            "width": 50,
+            "height": 25,
+            "text": "右上の枠",
+            "border": true
+          },
+          {
+            "name": "bottom",
+            "left": 40,
+            "top": 180,
+            "width": 120,
+            "height": 40,
+            "text": "下段の横長枠"
+          }
+        ]
+      }
+    }
+  ]
+}

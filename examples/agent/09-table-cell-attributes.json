@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "table-cell-attributes",
+  "samples": [
+    {
+      "id": "cell-diagonal",
+      "title": "罫線表セル属性 cell-diagonal",
+      "purpose": "指定セルの最終属性と対象外への漏れを調べる",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "attributes": {
+              "fill": 50,
+              "color": "R255G0B0"
+            }
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "attributes": {
+              "alignment": 3,
+              "bold": 1,
+              "italic": 1,
+              "textColor": "R0G0B255"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cell-clear",
+      "title": "罫線表セル属性 cell-clear",
+      "purpose": "指定セルの最終属性と対象外への漏れを調べる",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 3,
+        "color": "R0G0B255",
+        "cells": [
+          {
+            "row": 1,
+            "column": 2,
+            "attributes": {
+              "fill": 0,
+              "bold": 0,
+              "italic": 0,
+              "alignment": 1,
+              "textColor": "R0G0B0",
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

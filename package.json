@@ -1,0 +1,31 @@
+{
+  "name": "openjtd-specimens",
+  "version": "0.21.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "Unofficial tool that makes controlled JTD and PDF specimens with Ichitaro 2026 for OpenJTD, from declarative Sample Catalogs",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "ichitaro-agent": "./bin/ichitaro.mjs",
+    "ichitaro-macro": "./bin/ichitaro-macro.mjs",
+    "ichitaro-coverage": "./bin/ichitaro-coverage.mjs",
+    "ichitaro-observe": "./bin/ichitaro-observe.mjs",
+    "ichitaro-catalog": "./bin/ichitaro-catalog.mjs"
+  },
+  "scripts": {
+    "generate:capabilities": "node scripts/generate-capabilities.mjs",
+    "test": "node --test",
+    "check": "node scripts/check.mjs",
+    "check:evidence": "node scripts/check-evidence.mjs",
+    "plan": "node bin/ichitaro.mjs plan",
+    "verify": "node bin/ichitaro.mjs verify",
+    "report": "node bin/ichitaro.mjs report",
+    "macro": "node bin/ichitaro-macro.mjs",
+    "coverage": "node bin/ichitaro-coverage.mjs",
+    "observe": "node bin/ichitaro-observe.mjs",
+    "catalog": "node bin/ichitaro-catalog.mjs"
+  }
+}

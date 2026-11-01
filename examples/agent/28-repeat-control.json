@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "repeat-control",
+  "samples": [
+    {
+      "id": "underline-repeated",
+      "title": "underline-repeated",
+      "purpose": "同じ下線の要求を3回独立に作り、対照（変更なしの再保存）と比べて保存ごとの差を見積もる",
+      "feature": "character-decoration",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "range[2:4].underline",
+          "value": 1
+        }
+      ],
+      "repeat": 3,
+      "control": true,
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "underline": 1
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

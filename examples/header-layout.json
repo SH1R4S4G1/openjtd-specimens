@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "name": "header-layout",
+  "text": "一ページ目の本文\n二ページ目の本文",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "three-slots",
+      "settings": {},
+      "headerLayout": {
+        "position": 1,
+        "odd": {
+          "left": "左側",
+          "center": "中央",
+          "right": "右側"
+        }
+      }
+    },
+    {
+      "id": "center-only-footer",
+      "settings": {},
+      "headerLayout": {
+        "position": 2,
+        "odd": {
+          "center": "中央脚部"
+        }
+      }
+    },
+    {
+      "id": "right-only",
+      "settings": {},
+      "headerLayout": {
+        "position": 1,
+        "odd": {
+          "right": "右寄せ"
+        }
+      }
+    },
+    {
+      "id": "odd-even-header",
+      "settings": {},
+      "headerLayout": {
+        "position": 1,
+        "odd": {
+          "left": "奇数頁"
+        },
+        "even": {
+          "right": "偶数頁"
+        }
+      }
+    },
+    {
+      "id": "odd-even-footer",
+      "settings": {},
+      "headerLayout": {
+        "position": 2,
+        "odd": {
+          "right": "奇数脚部"
+        },
+        "even": {
+          "left": "偶数脚部"
+        }
+      }
+    }
+  ]
+}

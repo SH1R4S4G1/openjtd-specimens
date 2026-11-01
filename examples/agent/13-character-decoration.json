@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "id": "character-decoration",
+  "samples": [
+    {
+      "id": "underline-red",
+      "title": "underline-red",
+      "purpose": "下線の線種と飾り色をOpenJTDが範囲属性として読めることを確認する",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[2:4].underline",
+          "value": 1
+        },
+        {
+          "property": "range[2:4].decorationColor",
+          "value": "R255G0B0"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "underline": 1,
+              "color": "R255G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "strike-through",
+      "title": "strike-through",
+      "purpose": "取消線の線種コードを確認する",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[2:4].strikeThrough",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "strikeThrough": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-pattern",
+      "title": "fill-pattern",
+      "purpose": "塗りつぶしパターンコードを確認する",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[2:4].fill",
+          "value": 101
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "fill": 101
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "combined-decoration",
+      "title": "combined-decoration",
+      "purpose": "同一範囲の下線・取消線・塗りつぶしと共有色が同時に保存されることを確認する",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[2:4].underline",
+          "value": 15
+        },
+        {
+          "property": "range[2:4].strikeThrough",
+          "value": 1
+        },
+        {
+          "property": "range[2:4].fill",
+          "value": 50
+        },
+        {
+          "property": "range[2:4].decorationColor",
+          "value": "R0G0B255"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "underline": 15,
+              "strikeThrough": 1,
+              "fill": 50,
+              "color": "R0G0B255"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "border-box",
+      "title": "border-box",
+      "purpose": "文字囲み罫線の線種と色を確認する",
+      "feature": "character-border",
+      "expected": [
+        {
+          "property": "range[2:4].border",
+          "value": 3
+        },
+        {
+          "property": "range[2:4].decorationColor",
+          "value": "R0G128B0"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-border",
+            "range": {
+              "start": 2,
+              "end": 4,
+              "text": "対象"
+            },
+            "parameters": {
+              "lineType": 3,
+              "color": "R0G128B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "border-and-underline",
+      "title": "border-and-underline",
+      "purpose": "隣接しない別範囲の文字囲みと下線が互いに漏れないことを確認する",
+      "feature": "character-border",
+      "expected": [
+        {
+          "property": "range[0:2].border",
+          "value": 1
+        },
+        {
+          "property": "range[4:6].underline",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "甲乙対象丙丁",
+        "annotations": [
+          {
+            "capability": "character-border",
+            "range": {
+              "start": 0,
+              "end": 2,
+              "text": "甲乙"
+            },
+            "parameters": {
+              "lineType": 1
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 4,
+              "end": 6,
+              "text": "丙丁"
+            },
+            "parameters": {
+              "underline": 1
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

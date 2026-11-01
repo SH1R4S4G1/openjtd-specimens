@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "name": "keisen-table-attributes",
+  "text": "　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 7,
+    "columns": 13
+  },
+  "samples": [
+    {
+      "id": "control",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        }
+      ]
+    },
+    {
+      "id": "text-blue",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "textColor",
+          "value": "R0G0B255"
+        }
+      ]
+    },
+    {
+      "id": "bold",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "bold",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "bold-clear",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "bold",
+          "value": 1
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "bold",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "italic",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "italic",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "italic-clear",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "italic",
+          "value": 1
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "italic",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "pattern",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "fill",
+          "value": 107
+        }
+      ]
+    },
+    {
+      "id": "right",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            4,
+            6
+          ],
+          "columns": [
+            3,
+            7,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "tableAttribute",
+          "attribute": "alignment",
+          "value": 3
+        }
+      ]
+    }
+  ]
+}

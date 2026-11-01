@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "name": "character-named-style",
+  "text": "本文の開始甲乙丙\n本文の中間丁戊己\n本文の末尾庚辛壬",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "define",
+      "settings": {},
+      "namedStyle": {
+        "kind": "character",
+        "steps": [
+          "define"
+        ]
+      }
+    },
+    {
+      "id": "apply",
+      "settings": {},
+      "namedStyle": {
+        "kind": "character",
+        "steps": [
+          "define",
+          "apply"
+        ]
+      }
+    },
+    {
+      "id": "direct",
+      "settings": {},
+      "namedStyle": {
+        "kind": "character",
+        "steps": [
+          "define",
+          "apply",
+          "direct"
+        ]
+      }
+    },
+    {
+      "id": "redefine",
+      "settings": {},
+      "namedStyle": {
+        "kind": "character",
+        "steps": [
+          "define",
+          "apply",
+          "direct",
+          "redefine"
+        ]
+      }
+    },
+    {
+      "id": "clear",
+      "settings": {},
+      "namedStyle": {
+        "kind": "character",
+        "steps": [
+          "define",
+          "apply",
+          "direct",
+          "redefine",
+          "clear"
+        ]
+      }
+    }
+  ]
+}

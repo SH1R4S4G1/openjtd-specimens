@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "name": "body-keisen",
+  "text": "　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　\n　　　　　　　　",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "keisenCanvas": {
+    "rows": 7,
+    "columns": 13
+  },
+  "samples": [
+    {
+      "id": "control",
+      "settings": {}
+    },
+    {
+      "id": "horizontal",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          },
+          "lineType": 1,
+          "color": "R0G0B0"
+        }
+      ]
+    },
+    {
+      "id": "vertical",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 2,
+            "column": 7
+          },
+          "to": {
+            "row": 6,
+            "column": 7
+          },
+          "lineType": 1,
+          "color": "R0G0B255"
+        }
+      ]
+    },
+    {
+      "id": "cross",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          },
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 2,
+            "column": 7
+          },
+          "to": {
+            "row": 6,
+            "column": 7
+          },
+          "lineType": 1,
+          "color": "R0G0B255"
+        }
+      ]
+    },
+    {
+      "id": "line-change",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          },
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "line",
+          "mode": "change",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          },
+          "lineType": 3,
+          "color": "R255G0B0"
+        }
+      ]
+    },
+    {
+      "id": "line-clear",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          },
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "line",
+          "mode": "clear",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          }
+        }
+      ]
+    },
+    {
+      "id": "line-reset",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          },
+          "lineType": 1,
+          "color": "R0G0B0"
+        },
+        {
+          "type": "line",
+          "mode": "clear",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          }
+        },
+        {
+          "type": "line",
+          "mode": "draw",
+          "from": {
+            "row": 3,
+            "column": 3
+          },
+          "to": {
+            "row": 3,
+            "column": 11
+          },
+          "lineType": 3,
+          "color": "R255G0B0"
+        }
+      ]
+    },
+    {
+      "id": "frame",
+      "settings": {},
+      "keisenOperations": [
+        {
+          "type": "table",
+          "rows": [
+            2,
+            6
+          ],
+          "columns": [
+            3,
+            11
+          ],
+          "lineType": 1,
+          "color": "R0G0B0"
+        }
+      ]
+    }
+  ]
+}

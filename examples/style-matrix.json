@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "name": "style-matrix",
+  "text": "一太郎 Macro 検証 ABC 0123",
+  "defaults": {"chars":40,"lines":40,"characterSpacing":1,"lineSpacing":60,"marginTop":30,"marginBottom":30,"marginLeft":30,"marginRight":30},
+  "samples": [
+    {"id":"lines-39","settings":{"lines":39}},
+    {"id":"top-31","settings":{"marginTop":31}},
+    {"id":"bottom-31","settings":{"marginBottom":31}},
+    {"id":"left-31","settings":{"marginLeft":31}},
+    {"id":"right-31","settings":{"marginRight":31}},
+    {"id":"char-spacing-2","layoutPriority":"spacing","settings":{"characterSpacing":2}},
+    {"id":"line-spacing-61","layoutPriority":"spacing","settings":{"lineSpacing":61}}
+  ]
+}

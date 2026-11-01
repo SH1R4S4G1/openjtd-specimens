@@ -1,0 +1,413 @@
+{
+  "schemaVersion": 1,
+  "sampleCatalogSchemaVersion": 1,
+  "pdfCatalogSchemaVersion": 1,
+  "applicationVersion": "0.21.1",
+  "capabilities": [
+    {
+      "id": "plain-text",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "横書き・縦書きの本文（最大60000字、LF区切りの複数段落。2000字を超えると横書きで、注釈は置いた段落だけ1文字ずつ読み戻す）",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/textDocument",
+      "limitations": [
+        "1..60000 BMP characters without controls other than LF paragraph breaks or combining marks; paragraphs must be nonempty.",
+        "Up to 2000 characters: multi-paragraph bodies and bodies with annotations are read back character by character before save and after reopen (identity, attributes, start coordinates, empty cursor slots, paragraph ends); this walk is horizontal only. A single paragraph without annotations is compared as the joined GetString(1) lines. About 4.5ms per character per readback stage was measured; macro timeouts scale with length and stages up to 300s.",
+        "Over 2000 characters (CR-003): horizontal text only (no vertical writing), at most 1000 paragraphs. Annotations are allowed; the paragraphs that hold them (at most 2000 characters in total) get the character walk described above, so attributes outside those paragraphs are not read. The whole body is checked before save and after reopen without the character walk: the joined GetString(1) lines equal the text without paragraph breaks, every requested paragraph is a run of whole lines, and a NextParagraph walk checks the first and last character and the end of every paragraph and that no paragraph follows the last. Characters are not read one by one, so a break moved between equal neighbouring characters is not detected; attributes and positions are not read.",
+        "Each sample records how its body was compared: bodyComparison in the run manifest (verification) and in execution-results.json (exact-text, single-paragraph-ignore-readback-line-breaks, range-characters-and-joined-string or long-text-joined-lines-and-paragraph-walk, among others)."
+      ]
+    },
+    {
+      "id": "document-style",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書全体の字数・行数・字間・行間・余白と優先モード",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/documentStyle",
+      "limitations": [
+        "Priority settings and all four margins are required. Dependent settings are optional strict assertions; omitted values are calculated and recorded. Spacing is percent; margins are mm. Base: horizontal A4, Yu Mincho regular 10.5pt. Combines with font, page, writingMode, columnFormat, pageNumber and range annotations (text documents), and with keisen-table documents (style only, CR-008); application order is document style base, then font/paper/other document settings, then the requested numeric style values (margins and counts re-applied once if Ichitaro adjusted them), then range annotations. Ichitaro may adjust values that do not fit (for example a larger font with 40 characters and 30mm margins); such samples stop as a readback mismatch with the adjusted values recorded. All requested values must match before save and after reopening. Paper (page) and writing direction (writingMode) may be combined; binding and spread printing are not public parameters."
+      ]
+    },
+    {
+      "id": "document-footnote",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "任意の本文位置の複数番号付き脚注",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/footnoteDocument",
+      "limitations": [
+        "Final state only: 0..8 notes, 1..8 nonempty short BMP paragraphs. Anchors are zero-based original-body paragraph/offset positions, including paragraph end. One note per offset. Fixed horizontal A4 Yu Mincho 10.5pt. No other attributes combined. Internal history supports add/modify/remove. Per-note content, corresponding jumps, whole body and save/reopen are verified; physical layout and inherited formatting are not."
+      ]
+    },
+    {
+      "id": "document-font",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書全体の和文フォント名・ポイントサイズ",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/font",
+      "limitations": [
+        "Installed Japanese font only; omitted fields inherit the environment. Font changes may affect layout."
+      ]
+    },
+    {
+      "id": "character-scaleX",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の横拡大率",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/scale",
+      "limitations": [
+        "Effective value verified; no distinction between inherited and explicit attributes."
+      ]
+    },
+    {
+      "id": "character-size",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲のポイントサイズ",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/size",
+      "limitations": [
+        "Effective value verified; no distinction between inherited and explicit attributes."
+      ]
+    },
+    {
+      "id": "character-spacing",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲内部の数値字間",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/spacing",
+      "limitations": [
+        "At least two characters; affects internal gaps only."
+      ]
+    },
+    {
+      "id": "closely-spacing",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の密着割付",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/closely",
+      "limitations": [
+        "At least two characters; presence is verified, not a numeric spacing value."
+      ]
+    },
+    {
+      "id": "evenly-spacing",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の絶対幅による均等割付",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/evenly",
+      "limitations": [
+        "At least two characters. Presence only: requested width is NOT verified by the generator."
+      ]
+    },
+    {
+      "id": "ruby",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "指定した読みのルビ",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/ruby",
+      "limitations": [
+        "Explicit reading required; physical dimensions are not measured. Omitted placement/size/distance/alignment are omitted in the Sprint call; Ichitaro selects their values. Actual getters and reopen preservation are recorded; only explicit values are asserted. Omitted sizeMm leaves the size argument out of the Ruby call; on 2026-10-14 the size getter read back empty (NIL) with and without a document style (explicit 3 read back 3). Its resolved numeric size is not verified. Left/center/right disable distribution. Position is not applicable under distributed alignment."
+      ]
+    },
+    {
+      "id": "character-font-style",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の太字・斜体（和文スタイル名）",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/fontStyle",
+      "limitations": [
+        "Final state regular, bold or italic, read back as the Japanese style name 標準/太字/斜体 before save and after reopen. Bold and italic cannot be combined (Ichitaro ignores 太字斜体). Bold() and Font(,\"太字\") were observed to give the same state. Other attributes of the range and characters outside it are checked unchanged."
+      ]
+    },
+    {
+      "id": "character-color",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の文字色",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/textColor",
+      "limitations": [
+        "RGB text color read back exactly before save and after reopen. Other attributes of the range and characters outside it are checked unchanged."
+      ]
+    },
+    {
+      "id": "character-font",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の和文書体",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/fontName",
+      "limitations": [
+        "Installed Japanese font name only; a font that is not installed is not applied and fails readback. Read back exactly before save and after reopen. Layout may change with the font. Western font and style are not set. Other attributes of the range and characters outside it are checked unchanged."
+      ]
+    },
+    {
+      "id": "character-decoration",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の下線・取消線・塗りつぶしと共通の飾り色",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/decoration",
+      "limitations": [
+        "Final state only; at least one of underline, strikeThrough or fill. Line type 1..15 and fill 1..107 are Ichitaro codes verified by getter; appearance is not identified. One color is shared by every decoration on the range (Ichitaro shares the decoration color). Omitted color inherits the environment and is recorded, not asserted. Unrequested decorations and characters outside the range are checked unchanged. Paragraph decoration and body ruled lines are separate."
+      ]
+    },
+    {
+      "id": "character-border",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文字範囲の文字囲み罫線",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/border",
+      "limitations": [
+        "Final state only; line type 1..15 is an Ichitaro code verified by getter; geometry is not measured. Color is the decoration color shared with other decorations on the same characters, so a range cannot combine a border with another decoration annotation. Unrequested decorations and characters outside the range are checked unchanged."
+      ]
+    },
+    {
+      "id": "document-header",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "全ページ共通の左寄せヘッダーまたはフッター文字列",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/headerFooter",
+      "limitations": [
+        "paragraphs document with exactly 3 short paragraphs; one header or footer, left slot, fixed 20mm margin; optional pageBreaks puts each paragraph on its own page (3 pages). Fixed horizontal A4 Yu Mincho 10.5pt, 40x40. Exact string, enabled flag, margin, area and page number are checked on every page before save and after reopen; the other three positions and arrangement settings are guarded. Odd/even, center/right slots, fields such as page numbers, geometry and font inheritance are not supported or verified. Combines with the other paragraphs-document elements as listed in docs/combinations.md; document font, page and style may be added."
+      ]
+    },
+    {
+      "id": "header-layout",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "ヘッダー・フッターの左・中央・右の文字列と奇数偶数ページ別",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/headerFooter",
+      "limitations": [
+        "paragraphs document; headerFooter with center, right or evenPages. Odd (or all) page strings are verified exactly per slot by getter, together with the enabled flag and odd/even setting, before save and after reopen; each page must show the requested strings in left-center-right order. evenPages needs exactly 2 paragraphs (one per page); even-page slot identity cannot be read back, only the order of strings on page 2. Fixed 20mm margin; page number fields, fonts and geometry are not set or verified. Cannot combine with other elements; document font, page and style may be added."
+      ]
+    },
+    {
+      "id": "document-columns-body",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書全体の横書き2段・3段組",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/columnCount",
+      "limitations": [
+        "paragraphs document with 3..8 short paragraphs; whole document, or one paragraph range (columnRange) with the paragraphs before and after kept at one column. Every character of every paragraph and its GetColumns value are checked before save and after reopen. Physical flow, column width/gap, pagination and inherited formatting are not verified. Fixed horizontal A4 Yu Mincho 10.5pt, 40x40. Combines with the other paragraphs-document elements as listed in docs/combinations.md; document font, page and style may be added."
+      ]
+    },
+    {
+      "id": "paragraph-attribute",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "段落の文字揃え・字下げ・段落間",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/paragraphFormat",
+      "limitations": [
+        "paragraphs document with 3..8 short paragraphs; final state per paragraph. Alignment left/center/right/distributed. Indent (mm or columns) and paragraph spacing (mm or percent) are written as complete groups: unspecified components become 0. Every paragraph text, character identity and all 23 paragraph attribute getter slots in every paragraph are checked before save and after reopen; unformatted paragraphs must stay unset. At most 8 operations per document (each paragraph uses one per specified attribute). Tabs, paragraph decoration, line pitch and rendered geometry are not public or verified. Combines with the other paragraphs-document elements as listed in docs/combinations.md; document font, page and style may be added."
+      ]
+    },
+    {
+      "id": "document-columns",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書スタイルの段組書式（共通段間・段間罫線・2段組／3段組の段間と字数）",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/columnFormat",
+      "limitations": [
+        "Document-style setting only: it does not put the body into columns (use paragraphs.columns). Requested gap, rule and two/three-column gap and chars are checked by GetDocumentStyleColumns before save and after reopen; Ichitaro calculates the column character spacing, which is recorded, not requested. When combined with body columns, whether a section is rendered with this format cannot be read back and is not verified. Chars that do not fit the text width are corrected by Ichitaro and fail verification."
+      ]
+    },
+    {
+      "id": "document-page",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書スタイルのページ番号（位置・余白・開始番号・飾り）",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/pageNumber",
+      "limitations": [
+        "Document-style page number settings read back by GetDocumentStylePage before save and after reopen: position (none, bottom/top left/center/right), margin mm, start number, decoration string. The printed page number text and how the decoration string is rendered have no getter and are not verified. Ichitaro default is bottom-center, 18mm, start 1, decoration \"- ? -\". Vertical-writing kanji numbers and distribution are not public."
+      ]
+    },
+    {
+      "id": "document-typesetting",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書スタイルの禁則・ジャスティフィケーション・ぶら下げ・追い込み・括弧類の重なり",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/typesetting",
+      "limitations": [
+        "Document-style typesetting set with DocumentStyleRoman in one call and read back by GetDocumentStyleRoman before save and after reopen; all twenty getter values are compared between before-save and reopened. Requested: justification on/off (value 2 is rejected by Ichitaro and not offered), kinsoku on/off, complete line-start and line-end forbidden character lists, hanging (ぶら下げ), pushIn (追い込み) and bracketOverlap (括弧類の重なり処理). Observed dependencies: kinsoku false forces the three switches off; hanging true and bracketOverlap false are rejected unless pushIn is false, so requests must state pushIn: false. How lines actually break, hang or squeeze is not measured. 字間の広げ方 writes are not reflected and it is not public; proportional punctuation squeezing (約物の詰め) has no DocumentStyleRoman argument. Other DocumentStyleRoman values (word wrap, hyphenation, base position, line-start shift and the rest) are recorded, not public."
+      ]
+    },
+    {
+      "id": "document-paper",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "単票の用紙サイズ（A3/A4/A5/B4/B5）と向き",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/page",
+      "limitations": [
+        "Single-sheet paper names verified on Ichitaro 2026 for A3/A4/A5/B4/B5 portrait and landscape; the requested paper name is checked before save and after reopen. Ichitaro adjusts chars, lines, spacing and margins to fit the paper (for example A5 portrait can reduce side margins to 0); add style to state those values explicitly. Physical page dimensions are not read back."
+      ]
+    },
+    {
+      "id": "document-style-source",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "一太郎の新規文書の文書スタイルをそのまま使う（設定しない）",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/styleSource",
+      "limitations": [
+        "Text documents only. Neither the baseline nor the sample calls a DocumentStyle setter or SetDocumentStyle: the baseline is a new document with the body inserted and saved; the sample opens it, applies the range annotations and is saved under a new name. Cannot combine with style, font, page, writingMode, columnFormat, pageNumber or typesetting. Character counts, spacing, margins, units, priority, font, paper, columns, page number, typesetting and writing direction are read back before save and after reopening and recorded; they must agree with each other but are not compared with requested values, so the result depends on the Ichitaro environment (its new-document template). Range annotations require the new document to be horizontal."
+      ]
+    },
+    {
+      "id": "document-layout",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書全体の縦書き・横書き",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/writingMode",
+      "limitations": [
+        "Vertical writing is checked by the layout getter before save and after reopen. Annotations require horizontal writing. Visual line direction and character rotation are not measured."
+      ]
+    },
+    {
+      "id": "layout-frame",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "1ページ目の名前付き固定枠（レイアウトボックス）と枠内文字",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/frame",
+      "limitations": [
+        "paragraphs document; 1..3 non-overlapping fixed frames on page 1 of a fixed A4 portrait 40x40 document. Each frame: name, position and size in mm, one short text line, horizontal or vertical text, border on/off. Ichitaro snaps edges to the layout grid; requested geometry is asserted within 2mm and the observed geometry must be identical after reopen. Name, page, text direction, fixed anchor, border flag, frame text and every body character are checked before save and after reopen. Frame font, wrapping, background, decoration details and a count of all frames are not verified. Combines with the other paragraphs-document elements as listed in docs/combinations.md; document font, page and style may be added."
+      ]
+    },
+    {
+      "id": "paragraph-tabs",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "段落のタブ位置（mmまたはカラム）",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/paragraphFormat",
+      "limitations": [
+        "paragraphs document; paragraphFormats[].tabs with 1..8 strictly increasing positions (mm up to 60, columns up to 20). Positions and unit are checked in every paragraph through all 23 paragraph getter slots before save and after reopen. Tab characters in the text are confirmed one by one with GetCharacterType=9 (GetString renders them as spaces). Tab alignment is called as left but its getter returns nil, so the tab type is NOT verified. Text may contain tab characters only when paragraphFormats is the only element. May combine with alignment, indent and spacing."
+      ]
+    },
+    {
+      "id": "named-styles",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "文書内の文字・段落スタイル（名前とサイズ）の定義と段落への適用",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/styleDefinition",
+      "limitations": [
+        "paragraphs document; 1..4 document-local definitions (character or paragraph, ASCII name, size 6..36pt) and whole-paragraph applications (one style per paragraph). Registry names, every character effective size (GetCharacterPoint), character attribute size unchanged from before the styles and paragraph style name are checked before save and after reopen. The effective size of applied paragraphs proves the definition size; an unapplied definition is verified by name only. Character style assignment has no name getter. Other style attributes, stacking of character and paragraph styles, inheritance between styles and system registration are not supported. Cannot combine with other elements; document font, page and style may be added."
+      ]
+    },
+    {
+      "id": "keisen-table",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "罫線表（最大4x4・行高/列幅・結合・セル文字・線種・線色・セル属性）",
+      "parametersSchema": "schemas/sample-catalog.schema.json#/$defs/tableDocument",
+      "limitations": [
+        "One table described by its final state. Up to 2x2 with default sizes and no merges: omitted lineType/color use Ichitaro current settings. Larger tables (up to 4x4), rowHeights (2..4 lines, total <= 9), columnWidths (even 4..10 half-width columns, total <= 18) or merges (up to 4 non-overlapping rectangles) require explicit lineType and color. Tables beyond 2x2 or with merges allow at most fifteen merges, texts and attributes and are drawn rule by rule on the structured path (as is text in rows taller than two lines); other tables allow at most seven texts and attributes. Cell text: nonwhitespace BMP characters, at most min(4, width/2-1) for the final (merged) cell width, one line; a merged cell is addressed by its top-left position. Rules in all eight directions on the bounded grid, every cell attribute and physical cell text lines are read back before save and after reopen. Only explicit type/color values are asserted; unspecified cell attributes inherit the environment. Mixed character formats inside a cell, multi-line cell text, splitting history and physical dimensions in mm are not verified.",
+        "Optional document style (CR-008): chars, lines, margins and priority as for text documents, set and verified on the horizontal base (Yu Mincho regular 10.5pt, A4 portrait) before the table is drawn at the top of the document. Without it the table keeps the new-document form (40x40, 30mm margins). Column widths stay in half-width character units, so their physical width follows the character pitch.",
+        "Optional leading paragraphs (CR-009): 1..8 body paragraphs before the table, each at most 200 characters (empty for a blank line; a long one wraps over several lines) with an optional point size and optional space before/after (mm or percent), and an optional document font (as for text documents, e.g. ＭＳ 明朝). The table starts on the page line after the last paragraph, read at run time (GetRow), and must stay on the first page. Every leading character (identity, type, size), each paragraph end, the page lines each paragraph spans and that they follow each other up to the table, and the requested spacing are read back before save and after reopening; the top and bottom of each paragraph first line and of the canvas first line are recorded (GetPosition, mm), not asserted."
+      ]
+    },
+    {
+      "id": "pdf-from-jtd",
+      "status": "implemented",
+      "requestSupported": true,
+      "description": "既存のJTD（このアプリが作っていない文書）を開いてPDFに保存する（PDF Catalog、1カタログ1000件まで）",
+      "parametersSchema": "schemas/pdf-catalog.schema.json",
+      "limitations": [
+        "Separate catalog kind (kind: pdf-from-jtd), not a Sample Catalog document; no baseline is made and nothing in the document is read back or verified. Up to 1000 documents, processed one at a time.",
+        "Each JTD is copied from the input directory into the output directory, and only the copy is opened. A copy whose SHA-256 differs from the catalog is INPUT_MISMATCH; a file that starts neither with the OLE compound file signature (JTD, Ver7, template, compressed) nor with the older Ichitaro signature \"DOC\" and five NUL bytes (Ver5, Ver6) is NOT_ICHITARO_FORMAT, because other bytes made Ichitaro show a modal dialog. Ichitaro is not started for either.",
+        "One macro run per document: WarningMode(0), OpenDocumentFile, SaveDocument(<pdf>,\"\",\"\",23) as in --pdf, then GetSheetCount() and CountMacros(2) are recorded, the document is closed without saving (Close(3)) and Ichitaro quits (Quit(3)). The copy's SHA-256 is compared before opening and after closing (JTD_CHANGED when different).",
+        "A macro that reports an error while opening, saving the PDF or closing (OPEN_FAILED, PDF_FAILED, CLOSE_FAILED; reasonCode MACRO_ERROR) is recorded and the batch continues. The outcome is unknown in two cases only, and the batch then stops with the adapter lock left (with its reason) for a person to look at: no completion marker in time (a dialog, for example: TIMEOUT_UNKNOWN_OUTCOME, the text of the Ichitaro windows is recorded by UI Automation without clicking), or an Ichitaro process still running after the marker (ICHITARO_STILL_RUNNING). Sharing violations (EBUSY, EPERM, EACCES) on any file are retried up to a limit (since 0.17.1); a file still held after that is FILE_BUSY (reasonCode NOT_VERIFIED) and the batch continues.",
+        "A stopped catalog can be resumed (since 0.17.1): documents with an outcome from an earlier attempt are carried over unchanged, and only the stopped document and those not reached are run again.",
+        "The default PDF (document.pdf) holds one sheet: the sheet that was current when the JTD was last saved, not necessarily the main sheet. Since 0.17.0 a document with two or more sheets (GetSheetCount) also gets one PDF per sheet (sheet-<i>.pdf, i counted from the left), saved in the same macro run after the default PDF by ChangeCurrentSheet(i) and the same SaveDocument call; the sheet kind (1 main, 2 Ichitaro sheet, 10 OLE sheet), tab caption and count of text characters (GetString(1) after SelectAll(1); figures and images are not counted, null when it could not be read) are recorded. Since 0.17.2 every sheet is tried even when an earlier one fails; a sheet without a PDF has path null, a reason (EMPTY_SHEET_NOT_SAVED, SAVE_FAILED, SHEET_FAILED, PDF_NOT_WRITTEN, NOT_REACHED) and the message. A save that fails on a sheet with no text characters (EMPTY_SHEET_NOT_SAVED) leaves the document PDF_SAVED; any other sheet without a PDF makes it SHEET_PDF_FAILED (reasonCode MACRO_ERROR, the batch continues), keeping document.pdf and every sheet PDF that was written. OLE sheets were not tried on the real machine.",
+        "The PDF page count is counted from the uncompressed page objects; font substitution and the rendered appearance are not verified."
+      ]
+    },
+    {
+      "id": "keisen-table-structure",
+      "status": "implemented",
+      "requestSupported": false,
+      "description": "行列追加・削除と任意セルの結合・分割",
+      "parametersReference": "docs/developer-guide.md",
+      "limitations": [
+        "initial blank canvas; at most 25 rectangular cells and 16 operations; canvas guard required",
+        "version 4 proof required; physical text lines checked ignoring structural whitespace; raw getter lines preserved across reopen",
+        "a split through existing text or below minimum cell interior is rejected; deleting the final row/column is rejected",
+        "merged cell attributes currently required to agree across parents; character-level mixed formatting is not measured",
+        "legacy resize/divide/merge operations cannot be mixed with structured operations; external request API not published",
+        "Not exposed in Sample Catalog v1. Do not request this capability."
+      ]
+    },
+    {
+      "id": "range-text",
+      "status": "implemented",
+      "requestSupported": false,
+      "description": "範囲・位置",
+      "parametersReference": "docs/developer-guide.md",
+      "limitations": [
+        "text kind only; horizontal, single paragraph, BMP, 1..96 characters",
+        "all characters checked; paragraph/cell selection not implemented",
+        "GetString consumes selection; reselect before applying",
+        "Not exposed in Sample Catalog v1. Do not request this capability."
+      ]
+    },
+    {
+      "id": "body-keisen",
+      "status": "implemented",
+      "requestSupported": false,
+      "description": "本文罫線",
+      "parametersReference": "docs/developer-guide.md",
+      "limitations": [
+        "blank canvas only; body verified as whitespace, not exact text",
+        "horizontal/vertical segments, crossings; half-width columns and normal rows",
+        "bounded grid only; outside grid and geometry in mm not verified",
+        "Not exposed in Sample Catalog v1. Do not request this capability."
+      ]
+    },
+    {
+      "id": "keisen-table-resize",
+      "status": "implemented",
+      "requestSupported": false,
+      "description": "罫線表の行高・列幅",
+      "parametersReference": "docs/developer-guide.md",
+      "limitations": [
+        "inserts/deletes interior space; cell counts unchanged; copy insertion not exposed",
+        "resize before attributes and boundary rule changes only; geometry and cell probes follow moved boundaries",
+        "minimum interior and bounded observation margin required; mm dimensions not measured",
+        "Not exposed in Sample Catalog v1. Do not request this capability."
+      ]
+    },
+    {
+      "id": "keisen-table-topology",
+      "status": "implemented",
+      "requestSupported": false,
+      "description": "罫線表の分割・結合",
+      "parametersReference": "docs/developer-guide.md",
+      "limitations": [
+        "blank canvas; maximum 2x2 cells; topology changes before attributes and boundary rule changes only",
+        "outer dimensions preserved; child/merged cell probes compared against all overlapping prior cells",
+        "arbitrary cell merge and copy insertion not supported",
+        "Not exposed in Sample Catalog v1. Do not request this capability."
+      ]
+    },
+    {
+      "id": "paragraph-decoration",
+      "status": "implemented",
+      "requestSupported": false,
+      "description": "段落飾り",
+      "parametersReference": "docs/developer-guide.md",
+      "limitations": [
+        "separate from character borders and body ruled lines; internal paragraph Recipe only",
+        "no decoration getter: samples remain saved with reviewRequired=true, never automatically verified",
+        "text and unrelated paragraph attributes checked in every paragraph before save and after reopen; decoration appearance and outside-target leakage require visual review",
+        "clear removes the requested border and fill together; other settings are fixed for each isolated trial; absence of an internal decoration record is not verified",
+        "CancelParagraphDecoration enters interactive start-point selection and is excluded from unattended execution",
+        "standard border width; black fill; no shadow/background; gradient, shadow, fill color, rounding and distance are not exposed; external request API not published",
+        "Not exposed in Sample Catalog v1. Do not request this capability."
+      ]
+    },
+    {
+      "id": "document-structure",
+      "status": "unimplemented",
+      "requestSupported": false,
+      "description": "文書構造・複合要素",
+      "parametersReference": "docs/developer-guide.md",
+      "limitations": [
+        "compound structural operations pending",
+        "Not exposed in Sample Catalog v1. Do not request this capability."
+      ]
+    }
+  ]
+}

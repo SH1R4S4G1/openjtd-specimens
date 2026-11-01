@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "id": "keisen-table-leading",
+  "samples": [
+    {
+      "id": "lead2",
+      "title": "lead2",
+      "purpose": "罫線表 2×4 の前に、本文の大きさの段落を 2 つ（CR-009）",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        },
+        {
+          "property": "table.columns",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 4,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "leadingParagraphs": [
+          {
+            "text": "一つ目の段落です。"
+          },
+          {
+            "text": "二つ目の段落です。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lead-blank-large",
+      "title": "lead-blank-large",
+      "purpose": "空行と 15pt の段落のあとに罫線表、本文は 11pt（CR-009）",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        },
+        {
+          "property": "table.columns",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 4,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "font": {
+          "sizePt": 11
+        },
+        "leadingParagraphs": [
+          {
+            "text": "本文の段落です。"
+          },
+          {
+            "text": ""
+          },
+          {
+            "text": "大きい字",
+            "sizePt": 15
+          }
+        ]
+      }
+    },
+    {
+      "id": "lead-wrap-spacing",
+      "title": "lead-wrap-spacing",
+      "purpose": "折り返す段落（41 字・33 字）と段落前後の空き、ＭＳ 明朝のあとに罫線表（CR-009 質問 4）",
+      "feature": "keisen-table",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "table.rows",
+          "value": 2
+        },
+        {
+          "property": "table.columns",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 4,
+        "lineType": 1,
+        "color": "R0G0B0",
+        "font": {
+          "name": "ＭＳ 明朝"
+        },
+        "leadingParagraphs": [
+          {
+            "text": "この段落は一行に収まらないので二行に折り返します。表はそのあとの行から始まります。"
+          },
+          {
+            "text": "二つ目の段落も長いので次の行へ折り返すことになります。。。。。。。",
+            "spacing": {
+              "unit": "mm",
+              "before": 3,
+              "after": 2
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

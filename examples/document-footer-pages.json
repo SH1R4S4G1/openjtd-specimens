@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "name": "document-lower-footer-three-pages",
+  "text": "本文の開始甲乙丙\n本文の中間丁戊己\n本文の末尾庚辛壬",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "footer-set",
+      "settings": {},
+      "headerSteps": [
+        "脚部甲"
+      ],
+      "headerPosition": 2,
+      "headerPages": 3
+    },
+    {
+      "id": "footer-change",
+      "settings": {},
+      "headerSteps": [
+        "脚部甲",
+        "脚部乙"
+      ],
+      "headerPosition": 2,
+      "headerPages": 3
+    },
+    {
+      "id": "footer-clear",
+      "settings": {},
+      "headerSteps": [
+        "脚部甲",
+        "脚部乙",
+        ""
+      ],
+      "headerPosition": 2,
+      "headerPages": 3
+    },
+    {
+      "id": "footer-reset",
+      "settings": {},
+      "headerSteps": [
+        "脚部甲",
+        "脚部乙",
+        "",
+        "脚部甲"
+      ],
+      "headerPosition": 2,
+      "headerPages": 3
+    }
+  ]
+}

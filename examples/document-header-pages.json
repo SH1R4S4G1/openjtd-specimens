@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "name": "document-upper-header-three-pages",
+  "text": "本文の開始甲乙丙\n本文の中間丁戊己\n本文の末尾庚辛壬",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "samples": [
+    {
+      "id": "header-set",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲"
+      ],
+      "headerPages": 3
+    },
+    {
+      "id": "header-change",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲",
+        "見出し乙"
+      ],
+      "headerPages": 3
+    },
+    {
+      "id": "header-clear",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲",
+        "見出し乙",
+        ""
+      ],
+      "headerPages": 3
+    },
+    {
+      "id": "header-reset",
+      "settings": {},
+      "headerSteps": [
+        "見出し甲",
+        "見出し乙",
+        "",
+        "見出し甲"
+      ],
+      "headerPages": 3
+    }
+  ]
+}

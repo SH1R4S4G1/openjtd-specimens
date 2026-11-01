@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "id": "new-document-style",
+  "samples": [
+    {
+      "id": "new-doc-text",
+      "title": "新規文書の形の本文",
+      "purpose": "新規文書の既定の形で作り、文書スタイルの保存値を新規文書と比べる",
+      "feature": "document-style-source",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "documentStyle.source",
+          "value": "new-document"
+        }
+      ],
+      "control": true,
+      "document": {
+        "kind": "text",
+        "text": "本文の途中に漢字を置いた例です。",
+        "styleSource": "new-document"
+      }
+    },
+    {
+      "id": "new-doc-ruby",
+      "title": "新規文書の形にルビ",
+      "purpose": "新規文書の既定の形で、ルビの配置を確かめる",
+      "feature": "ruby",
+      "expected": [
+        {
+          "property": "documentStyle.source",
+          "value": "new-document"
+        },
+        {
+          "property": "range[6:8].ruby.reading",
+          "value": "かんじ"
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "本文の途中に漢字を置いた例です。",
+        "styleSource": "new-document",
+        "annotations": [
+          {
+            "capability": "ruby",
+            "range": {
+              "start": 6,
+              "end": 8,
+              "text": "漢字"
+            },
+            "parameters": {
+              "reading": "かんじ",
+              "placement": "above",
+              "alignment": "distributed"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "explicit-style-text",
+      "title": "既定値を明示した本文（比較用）",
+      "purpose": "同じ本文で文書スタイルを明示し、新規文書の形との保存値の差を比べる",
+      "feature": "document-style",
+      "testIntent": "comparison",
+      "expected": [
+        {
+          "property": "document.style.chars",
+          "value": 40
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "本文の途中に漢字を置いた例です。",
+        "style": {
+          "chars": 40,
+          "lines": 40,
+          "marginTop": 30,
+          "marginBottom": 30,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "layoutPriority": "counts"
+        }
+      }
+    }
+  ]
+}

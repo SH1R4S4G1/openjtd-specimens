@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "name": "decoration-boundaries",
+  "text": "対象対象甲乙",
+  "defaults": {
+    "chars": 40,
+    "lines": 40,
+    "characterSpacing": 1,
+    "lineSpacing": 60,
+    "marginTop": 30,
+    "marginBottom": 30,
+    "marginLeft": 30,
+    "marginRight": 30
+  },
+  "targets": [
+    {
+      "id": "first",
+      "kind": "text",
+      "start": 0,
+      "end": 2,
+      "expected": "対象"
+    },
+    {
+      "id": "second",
+      "kind": "text",
+      "start": 2,
+      "end": 4,
+      "expected": "対象"
+    },
+    {
+      "id": "last",
+      "kind": "text",
+      "start": 5,
+      "end": 6,
+      "expected": "乙"
+    }
+  ],
+  "samples": [
+    {
+      "id": "first-underline",
+      "settings": {},
+      "operations": [
+        {
+          "target": "first",
+          "type": "character",
+          "attribute": "underline",
+          "mode": "set",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "id": "second-border",
+      "settings": {},
+      "operations": [
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "border",
+          "mode": "set",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "id": "last-fill",
+      "settings": {},
+      "operations": [
+        {
+          "target": "last",
+          "type": "character",
+          "attribute": "fill",
+          "mode": "set",
+          "value": 107
+        }
+      ]
+    },
+    {
+      "id": "adjacent-clear",
+      "settings": {},
+      "operations": [
+        {
+          "target": "first",
+          "type": "character",
+          "attribute": "border",
+          "mode": "set",
+          "value": 1
+        },
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "border",
+          "mode": "set",
+          "value": 3
+        },
+        {
+          "target": "first",
+          "type": "character",
+          "attribute": "border",
+          "mode": "clear"
+        }
+      ]
+    },
+    {
+      "id": "shared-color",
+      "settings": {},
+      "operations": [
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "underline",
+          "mode": "set",
+          "value": 1,
+          "color": "R0G0B255"
+        },
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "border",
+          "mode": "set",
+          "value": 3,
+          "color": "R255G0B0"
+        }
+      ]
+    },
+    {
+      "id": "preserve-other-decoration",
+      "settings": {},
+      "operations": [
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "underline",
+          "mode": "set",
+          "value": 1,
+          "color": "R0G0B255"
+        },
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "strikeThrough",
+          "mode": "set",
+          "value": 1
+        },
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "border",
+          "mode": "set",
+          "value": 1,
+          "color": "R255G0B0"
+        },
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "fill",
+          "mode": "set",
+          "value": 50
+        },
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "border",
+          "mode": "clear"
+        },
+        {
+          "target": "second",
+          "type": "character",
+          "attribute": "underline",
+          "mode": "clear"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+# Generated contract files are checked byte-for-byte (scripts/check-contract.mjs).
+# Keep every checkout LF regardless of core.autocrlf so a fresh clone passes.
+* text=auto eol=lf
