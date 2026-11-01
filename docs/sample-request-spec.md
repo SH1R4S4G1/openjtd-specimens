@@ -32,7 +32,7 @@ UTF-8 JSON（BOM可）のSample Catalogを1ファイルで渡します。JSON Sc
 
 識別子は小文字英字で始まる1～60文字の小文字英数字・ハイフンです。`baseline`、Windowsの予約デバイス名（`con`、`nul`、`com1`等）は使用できません。
 
-`expected[].property` は1～200文字の属性名、`value` は文字列・有限数値・真偽値・nullです。例の `range[2:4].ruby.reading` は比較対象を示すラベルで、実行可能な式や標準化済みのOpenJTDパス構文ではありません。現在は値をそのまま保持し、解析後の比較器へ引き渡します。期待値と文書の整合は作成者が確認してください。検証コマンドは期待値の正しさ、前提条件の充足、OpenJTDのPASS/FAILを判定しません。
+`expected[].property` は1～200文字の属性名、`value` は文字列・有限数値・真偽値・nullです。例の `range[2:4].ruby.reading` は比較対象を示すラベルで、実行可能な式や標準化済みのOpenJTDパス構文ではありません。`document` の項目を指すラベルは、`document` からの相対パスで書くことを勧めます（例：`style.chars`、`pageNumber.position`、`range[2:4].ruby.reading`。先頭に `document.` は付けません）。例には `table.rows`、`header.top.left.text` のように対象の名前で始まるラベルもあります。本ツールは `property` を解釈しないので、どの書き方も検査はしません。現在は値をそのまま保持し、解析後の比較器へ引き渡します。期待値と文書の整合は作成者が確認してください。検証コマンドは期待値の正しさ、前提条件の充足、OpenJTDのPASS/FAILを判定しません。
 
 ## 文書の指定
 
@@ -40,7 +40,7 @@ UTF-8 JSON（BOM可）のSample Catalogを1ファイルで渡します。JSON Sc
 
 範囲属性は任意の `annotations` 配列に記述します。各要素は `capability`、`range`、`parameters` が必須です。`range` は `{ "start": 2, "end": 4, "text": "対象" }`。位置は0始まりのUTF-16単位、endは対象を含まない位置で、textは本文の該当部分と完全一致させます。現在の範囲本文はBMP限定のため通常の文字数と一致します。能力IDとparametersを推測せず、詳細表の同じ分岐から選びます。
 
-意味上の注意として、密着割付と数値字間は別機能です。均等割付の有無を確認できても、幅の正しさまで検証できるとは限りません。ルビの読みは明示し、自動推測しません。各能力の省略時の扱いと検証の限界は詳細表のlimitationsを確認してください。
+意味上の注意として、密着割付と数値字間は別機能です。均等割付の有無を確認できても、幅の正しさまで検証できるとは限りません。ルビの読みは明示し、自動推測しません。各能力の省略時の扱いと検証の限界は詳細表のlimitationsを確認してください。下線・取消線・文字囲み・罫線表の線種（1〜15）と文字の塗りつぶし（1〜107）の番号は一太郎のもので、見た目は本ツールが同定しません。下線・文字の塗りつぶし・罫線表の線種は、[見本のCatalog](../examples/agent/36-decoration-swatches.json)を `ichitaro-request` に `--pdf` を付けて実行し、出力されたPDFで確かめてください（PDFの出方は一太郎と環境によるもので、本ツールは検証しません）。
 
 ルビの文字揃え（alignment）と上下配置（placement）は別の属性です。均等配置では左右位置の指定は適用対象外になります。[文字揃えの完成例](../examples/agent/08-ruby-alignment.json)を参照してください。
 
@@ -117,7 +117,7 @@ Few-shot用の完成ファイルは [examples/agent](../examples/agent) にあ�
 node bin/ichitaro.mjs validate examples/agent/03-ruby.json
 ```
 
-成功時は標準出力に `ok: true` のJSON、終了コード0。失敗時は標準エラーに `ok: false` と `error.code`、`message`、可能なら `path` を出し、終了コード1にします。JSON解析 → Schema検証 → ID・参照・本文範囲・能力・組合せの意味的検証 → 内部計画の検証まで行います。一太郎は起動しません。成功したCatalogをWindows側へ渡してください。
+成功時は標準出力に `ok: true` のJSON、終了コード0。失敗時は標準エラーに `ok: false` と `error.code`、`message`、可能なら `path` を出し、終了コード1にします。Schemaの誤り（`ERR_SAMPLE_SCHEMA`）の `path` は `$.samples[0].document.annotations[1].parameters` のようなJSON上の場所です。`kind`・`capability` のように分岐を決めるフィールドの値が既知なら、その分岐の中の誤りをその場所で示し（例：`$.samples[0].document.annotations[1].parameters: unknown field bold`）、未知なら受け付ける値を列挙します（例：`unknown capability "Bold"; supported: character-scaleX, …`）。そのフィールドがない値や、どの分岐とも決まらない値は `must match exactly one supported structure` で示します。試料ごとの意味的検証の誤り（`ERR_SAMPLE_SEMANTIC`）は試料IDで始まります。範囲の誤りは、注釈の添字（配列での順番、0始まり）、要求した `text`、その位置にある実際の文字（終端が始端以前のときを除く）、本文の長さを示します（例：`annotations[2].range: text "重要" is not the text at [5,7) (found "注意"; body length 24; start counts from 0 and end is exclusive)`）。JSON解析 → Schema検証 → ID・参照・本文範囲・能力・組合せの意味的検証 → 内部計画の検証まで行います。一太郎は起動しません。成功したCatalogをWindows側へ渡してください。
 
 validate成功は生成時の成功保証ではありません。フォント、既定スタイル、属性による折り返しなどの環境依存があり、保存前・再読込後の本文や属性が一致しなければWindows側は失敗として報告します。
 
@@ -137,13 +137,15 @@ Schemaだけを使う外部検証器はJSON Schema Draft 2020-12、ECMAScript Un
 
 一太郎の新規文書の形をそのまま使うときは、`style` の代わりに `document.styleSource: "new-document"` を置きます（[例](../examples/agent/31-new-document-style.json)、CR-001）。基準試料・試料のどちらでも文書スタイルのsetterと `SetDocumentStyle()` を呼ばないので、画面上の値が同じでも、`style` で既定値を明示した文書とは保存値が違うことがあります。`kind: text` だけで、`style`・`font`・`page`・`writingMode`・`columnFormat`・`pageNumber`・`typesetting` とは組み合わせません。範囲の注釈は使えます。文書スタイルのgetterの値は保存前と再読込後に記録して両者の一致だけを確かめ、要求値とは照合しません。結果は一太郎の環境（新規文書のテンプレート）に依存します。
 
-## 省略したルビ・罫線属性
+## 省略したルビ・罫線属性とページ番号
 
 [省略と明示指定の例](../examples/agent/11-application-defaults.json) のように、ルビの `placement`・`sizeMm`・`distanceMm`・`alignment`、罫線表の `lineType`・`color` を省略すると、対応するマクロ引数も省略します。一太郎の公開APIの既定動作を利用し、このアプリの値を補いません。罫線は一太郎の現在の設定に依存するため、試料の再現条件を固定したい場合は明示してください。
 
 省略したルビサイズはgetterで空値（NIL）になる場合があります。その場合、数値に変換せず自動設定状態として記録し、保存・再読込での保持を確認します。具体的なサイズが数値で検証できたとは扱いません。罫線は描画位置・線の存在と観測値の保持を検証します。明示した属性の値との照合、範囲外への漏れの検査は継続します。
 
 従来の外部要求で省略していた属性の結果は変わる可能性があります。以前の値を再現する場合はルビ `placement: above`・`sizeMm: 3`・`distanceMm: 0`・`alignment: distributed`、表 `lineType: 1`・`color: R0G0B0` を明示してください。
+
+`text`・`paragraphs` 文書で `pageNumber` を省略すると、一太郎の新規文書のページ番号の既定がそのまま入ります。このアプリは値を補いません。ページ番号の設定値（位置・余白・開始番号・飾り文字列など）は保存前と再読込後に読み戻して記録し、両者の一致だけを確かめます（要求値がないので照合はしません）。一太郎 2026 でPDFを目視した例では、ページの下に「- 1 -」が印字されました。印字される文字そのものにはgetterがなく、本ツールは検証しません。ページ番号が要らない試料には `"pageNumber": {"position": "none"}` を書いてください（[ページ番号の例](../examples/agent/24-page-number.json) の `no-page-number`）。`keisen-table`・`footnotes` 文書と `styleSource: "new-document"` の文書には `pageNumber` を書けないので、一太郎の既定のままになります。
 
 ## 脚注の最終状態
 

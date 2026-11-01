@@ -9,7 +9,7 @@
       "feature": "document-style",
       "expected": [
         {
-          "property": "document.style.chars",
+          "property": "style.chars",
           "value": 40
         }
       ],
@@ -34,7 +34,7 @@
       "feature": "document-style",
       "expected": [
         {
-          "property": "document.style.chars",
+          "property": "style.chars",
           "value": 36
         }
       ],
@@ -59,7 +59,7 @@
       "feature": "document-style",
       "expected": [
         {
-          "property": "document.style.characterSpacing",
+          "property": "style.characterSpacing",
           "value": 2
         }
       ],
@@ -84,7 +84,7 @@
       "feature": "document-style",
       "expected": [
         {
-          "property": "document.style.chars",
+          "property": "style.chars",
           "value": 40
         }
       ],

@@ -40,6 +40,16 @@ function typesettingFeature(id, t) {
   return Object.fromEntries(Object.entries(t).map(([key, value]) => [key, typeof value === 'boolean' ? Number(value) : value]));
 }
 
+// A range must name the exact text at half-open offsets. The message names the
+// annotation by its index in the request, the text found there and the rule.
+function checkRange(id, text, range, position) {
+  const where = `annotations[${position}].range`, found = JSON.stringify(text.slice(range.start,range.end));
+  const rule = `body length ${text.length}; start counts from 0 and end is exclusive`;
+  if (range.end <= range.start) fail(id,`${where}: end ${range.end} must be greater than start ${range.start} (text ${JSON.stringify(range.text)}; ${rule})`);
+  if (range.end > text.length) fail(id,`${where}: [${range.start},${range.end}) runs past the end of the body (text ${JSON.stringify(range.text)}; found ${found}; ${rule})`);
+  if (range.text !== text.slice(range.start,range.end)) fail(id,`${where}: text ${JSON.stringify(range.text)} is not the text at [${range.start},${range.end}) (found ${found}; ${rule})`);
+}
+
 function compileSample(sample) {
   const doc = sample.document;
   const recipe = {schemaVersion:1,name:sample.id,text:'',defaults:{...defaults},samples:[]};
@@ -286,15 +296,16 @@ function compileSample(sample) {
     }
     // Annotations are a set of non-overlapping final attributes, not an
     // instruction sequence. Sorting makes output independent of array order.
-    const annotations = [...(doc.annotations ?? [])].sort((a,b)=>a.range.start-b.range.start);
+    // position keeps the index in the request for error messages.
+    const annotations = (doc.annotations ?? []).map((annotation,position)=>({...annotation,position})).sort((a,b)=>a.range.start-b.range.start);
     if (annotations.length) { recipe.targets=[]; variant.operations=[]; }
     // A multi-paragraph body without annotations still gets the per-character walk
     // (identity and paragraph ends): GetString lines cannot prove paragraph structure.
     if (!annotations.length && !longText && textParagraphs.length > 1) { recipe.targets=[{id:'body-check',kind:'text',start:0,end:1,expected:doc.text[0]}]; variant.operations=[]; }
     for (const [index, annotation] of annotations.entries()) {
-      const {capability,range,parameters:p} = annotation;
+      const {capability,range,parameters:p,position} = annotation;
       used.add(capability);
-      if (range.end <= range.start || range.text !== doc.text.slice(range.start,range.end) || range.end > doc.text.length) fail(sample.id,'range must match the exact text and half-open offsets');
+      checkRange(sample.id,doc.text,range,position);
       if (index && annotations[index-1].range.end > range.start) fail(sample.id,'overlapping annotations are not supported by Sample Catalog v1');
       const target = `range-${index}`;
       recipe.targets.push({id:target,kind:'text',start:range.start,end:range.end,expected:range.text});

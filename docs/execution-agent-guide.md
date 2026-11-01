@@ -47,7 +47,9 @@ node bin/ichitaro-request.mjs examples/agent/03-ruby.json tmp/ruby-request runs 
 
 ```powershell
 node bin/ichitaro-request.mjs examples/agent/13-character-decoration.json tmp/my-request runs
-```複数の要求は対応表の `jobs` を順に処理し、同時実行はしません。実行前に要求・Recipeのハッシュを対応表と照合してください。編集が必要なら元Catalogを修正し再コンパイルします。
+```
+
+複数の要求は対応表の `jobs` を順に処理し、同時実行はしません。実行前に要求・Recipeのハッシュを対応表と照合してください。編集が必要なら元Catalogを修正し再コンパイルします。
 
 標準出力の `runDir` と `sampleId` の対応を保存します。要求JTDは `<runDir>/samples/<outputSampleId>/document.jtd`、基準JTDは `<runDir>/samples/baseline/document.jtd` です。対応表が指す元要求からpurpose、expected、tags等を取得できます。これらをRecipeに埋め込まないことで既存の厳密なRecipe形式との互換性を保ちます。
 

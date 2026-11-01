@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { compileCatalog, validateCatalog, writeCompilation, loadCatalog } from '../src/sample-catalog.mjs';
 import { SAMPLE_SCHEMA } from '../src/sample-schema.mjs';
-import { assertSupportedSchema, validateSchema } from '../src/schema-validation.mjs';
+import { assertSupportedSchema, validateSchema, oneOfDiscriminator } from '../src/schema-validation.mjs';
 import { buildCapabilities } from '../src/sample-capabilities.mjs';
 import { expandExperiment } from '../src/experiment.mjs';
 import { compileSample } from '../src/adapters/macro.mjs';
@@ -212,12 +212,93 @@ test('decoration annotations compile to a stable final state with one shared col
   annotation(input).parameters={color:'R1G2B3'};
   assert.throws(()=>compileCatalog(input),/requires underline, strikeThrough or fill/);
   annotation(input).parameters={};
-  assert.throws(()=>compileCatalog(input),/must match exactly one supported structure/);
+  assert.throws(()=>compileCatalog(input),{code:'ERR_SAMPLE_SCHEMA',path:'$.samples[0].document.annotations[0].parameters',
+    message:'$.samples[0].document.annotations[0].parameters: object must not be empty'});
   input.samples[0].feature='character-border';
   input.samples[0].document.annotations=[{capability:'character-border',range:{start:0,end:2,text:'甲乙'},parameters:{lineType:3}}];
   assert.deepEqual(compileCatalog(input).jobs[0].recipe.samples[0].operations,[{target:'range-0',type:'character',attribute:'border',mode:'set',value:3}]);
   annotation(input).parameters={lineType:16};
   assert.throws(()=>compileCatalog(input));
+});
+
+test('schema errors follow the kind or capability a value names and list the supported values otherwise',()=>{
+  // Positive: a correct catalog with two annotations passes.
+  const two=()=>{const input=fixture();input.samples[0].document.annotations.push({capability:'character-color',range:{start:4,end:6,text:'丙丁'},parameters:{color:'R255G0B0'}});return input;};
+  assert.equal(validateCatalog(two()).ok,true);
+  const error=(mutate,expected)=>{const input=two();mutate(input);assert.throws(()=>compileCatalog(input),expected);};
+  // A known capability with a wrong parameter: the branch's own error, with its deep location.
+  error(v=>Object.assign(v.samples[0].document.annotations[1],{capability:'character-decoration',parameters:{underline:1,bold:1}}),
+    {code:'ERR_SAMPLE_SCHEMA',path:'$.samples[0].document.annotations[1].parameters',message:'$.samples[0].document.annotations[1].parameters: unknown field bold'});
+  error(v=>v.samples[0].document.annotations[1].parameters={color:'red'},
+    {path:'$.samples[0].document.annotations[1].parameters.color',message:'$.samples[0].document.annotations[1].parameters.color: string does not match required pattern'});
+  // A nested oneOf (spacing units) is explained the same way.
+  error(v=>Object.assign(v.samples[0].document.annotations[1],{capability:'character-spacing',parameters:{value:1,unit:'pt'}}),
+    {message:'$.samples[0].document.annotations[1].parameters.unit: unknown unit "pt"; supported: mm, percent'});
+  // An unknown capability: every supported value is listed, read from the schema.
+  const capabilities=SAMPLE_SCHEMA.$defs.annotation.oneOf.map(branch=>branch.properties.capability.const);
+  assert.ok(capabilities.includes('character-font-style')&&capabilities.length>=11);
+  for (const name of ['Bold','bold'])
+    error(v=>v.samples[0].document.annotations[1].capability=name,
+      {code:'ERR_SAMPLE_SCHEMA',path:'$.samples[0].document.annotations[1].capability',message:`$.samples[0].document.annotations[1].capability: unknown capability "${name}"; supported: ${capabilities.join(', ')}`});
+  // document.kind: the same rule through $ref branches.
+  error(v=>v.samples[0].document.kind='table',
+    {path:'$.samples[0].document.kind',message:'$.samples[0].document.kind: unknown kind "table"; supported: text, keisen-table, footnotes, paragraphs'});
+  error(v=>{v.samples[0].feature='keisen-table';v.samples[0].document={kind:'keisen-table',rows:5,columns:2};},
+    {path:'$.samples[0].document.rows',message:'$.samples[0].document.rows: number outside supported bounds'});
+  error(v=>v.samples[0].document.annotation=[],{message:'$.samples[0].document: unknown field annotation'});
+  // Without the discriminator in the value, or for a value that is not an object, the general message stays.
+  error(v=>delete v.samples[0].document.annotations[1].capability,
+    {message:'$.samples[0].document.annotations[1]: must match exactly one supported structure (check kind/capability, required fields, unknown fields and parameter bounds)'});
+  for (const value of ['x',null,[]])
+    error(v=>v.samples[0].document.annotations[1]=value,{message:'$.samples[0].document.annotations[1]: must match exactly one supported structure (check kind/capability, required fields, unknown fields and parameter bounds)'});
+  // The discriminator is found from the schema, not by name; no discriminator or
+  // two matching branches keep the general message.
+  const shapes={$defs:{a:{type:'object',additionalProperties:false,properties:{shape:{const:'a'},n:{type:'integer'}},required:['shape']},
+    b:{type:'object',additionalProperties:false,properties:{shape:{const:'b'}},required:['shape']},via:{$ref:'#/$defs/b'}},oneOf:[{$ref:'#/$defs/a'},{$ref:'#/$defs/via'}]};
+  assert.throws(()=>validateSchema({shape:'c'},shapes),{path:'$.shape',message:'$.shape: unknown shape "c"; supported: a, b'});
+  assert.throws(()=>validateSchema({shape:'a',n:'1'},shapes),{path:'$.n',message:'$.n: must have type integer'});
+  assert.throws(()=>validateSchema({shape:'b',n:1},shapes),{message:'$: unknown field n'});
+  assert.doesNotThrow(()=>validateSchema({shape:'a',n:1},shapes));
+  assert.throws(()=>validateSchema(true,{oneOf:[{type:'string'},{type:'number'}]}),/^Error: \$: must match exactly one supported structure/);
+  assert.throws(()=>validateSchema(1,{oneOf:[{type:'number'},{type:'integer'}]}),/\$: must match exactly one supported structure/);
+  // A const shared by two branches does not discriminate.
+  assert.throws(()=>validateSchema({k:'x'},{oneOf:[{properties:{k:{const:'x'}},required:['y']},{properties:{k:{const:'x'}},required:['z']}]}),/\$: must match exactly one supported structure/);
+});
+
+test('every oneOf of the Sample Catalog schema has a discriminator, so its errors keep their location',()=>{
+  const found=[];
+  const walk=node=>{
+    if(!node||typeof node!=='object')return;
+    if(Array.isArray(node)){node.forEach(walk);return;}
+    if(node.oneOf){const key=oneOfDiscriminator(node.oneOf,SAMPLE_SCHEMA);assert.ok(key,JSON.stringify(node).slice(0,120));found.push(key.name);}
+    Object.values(node).forEach(walk);
+  };
+  walk(SAMPLE_SCHEMA);
+  assert.deepEqual([...new Set(found)].sort(),['capability','kind','layoutPriority','unit']);
+});
+
+test('range errors name the annotation index, the text found at the offsets and the counting rule',()=>{
+  // The wrong annotation is second in the request but first after sorting by start.
+  const input=fixture();input.samples[0].document.annotations.push({capability:'character-color',range:{start:0,end:2,text:'甲丙'},parameters:{color:'R255G0B0'}});
+  assert.throws(()=>compileCatalog(input),{code:'ERR_SAMPLE_SEMANTIC',path:'test-sample',
+    message:'test-sample: annotations[1].range: text "甲丙" is not the text at [0,2) (found "甲乙"; body length 6; start counts from 0 and end is exclusive)'});
+  const empty=fixture();annotation(empty).range={start:4,end:2,text:'対象'};
+  assert.throws(()=>compileCatalog(empty),{message:'test-sample: annotations[0].range: end 2 must be greater than start 4 (text "対象"; body length 6; start counts from 0 and end is exclusive)'});
+  const past=fixture();annotation(past).range={start:5,end:7,text:'丁'};
+  assert.throws(()=>compileCatalog(past),{message:'test-sample: annotations[0].range: [5,7) runs past the end of the body (text "丁"; found "丁"; body length 6; start counts from 0 and end is exclusive)'});
+  // A line feed counts as one character in the body length and the offsets.
+  const lines=fixture();lines.samples[0].document.text='甲乙\n対象丙丁';annotation(lines).range={start:2,end:4,text:'対象'};
+  assert.throws(()=>compileCatalog(lines),{message:'test-sample: annotations[0].range: text "対象" is not the text at [2,4) (found "\\n対"; body length 7; start counts from 0 and end is exclusive)'});
+  annotation(lines).range={start:3,end:5,text:'対象'};assert.equal(validateCatalog(lines).ok,true);
+});
+
+test('CLI validation errors carry the deep path of a schema error',async t=>{
+  const dir=await temporary(t),file=path.join(dir,'catalog.json'),input=fixture();annotation(input).capability='Bold';
+  await fs.writeFile(file,JSON.stringify(input));
+  const result=cli(['validate',file]);assert.equal(result.status,1);
+  const {error}=JSON.parse(result.stderr);
+  assert.equal(error.code,'ERR_SAMPLE_SCHEMA');assert.equal(error.path,'$.samples[0].document.annotations[0].capability');
+  assert.match(error.message,/unknown capability "Bold"; supported: character-scaleX, /);
 });
 
 test('paragraphs documents compile header/footer and columns and reject unsupported shapes',()=>{
@@ -288,4 +369,13 @@ test('typesetting combines with structural paragraphs elements over the shared b
   input.samples[0].document={kind:'paragraphs',text:'第一段落\n第二段落\n第三段落',headerFooter:{position:'header',text:'見出し'},columns:2,typesetting:{kinsoku:false}};
   const sample=compileCatalog(input).jobs[0].recipe.samples.at(-1);
   assert.deepEqual(sample.features.typesetting,{kinsoku:0});
+});
+test('the swatch catalog covers every underline, fill and table line type code exactly once',async()=>{
+  const catalog=await loadCatalog('examples/agent/36-decoration-swatches.json'),defs=SAMPLE_SCHEMA.$defs;
+  const codes=(list,min,max)=>{assert.deepEqual([...list].sort((a,b)=>a-b),Array.from({length:max-min+1},(_,i)=>min+i));};
+  const parameters=catalog.samples.flatMap(sample=>sample.document.annotations??[]).map(annotation=>annotation.parameters);
+  codes(parameters.filter(p=>p.underline!==undefined).map(p=>p.underline),defs.decoration.properties.underline.minimum,defs.decoration.properties.underline.maximum);
+  codes(parameters.filter(p=>p.fill!==undefined).map(p=>p.fill),defs.decoration.properties.fill.minimum,defs.decoration.properties.fill.maximum);
+  codes(catalog.samples.filter(sample=>sample.document.kind==='keisen-table').map(sample=>sample.document.lineType),defs.tableDocument.properties.lineType.minimum,defs.tableDocument.properties.lineType.maximum);
+  assert.equal(validateCatalog(catalog).sampleCount,31);
 });

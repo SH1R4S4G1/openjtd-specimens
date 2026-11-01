@@ -44,9 +44,9 @@ test('styleSource cannot combine with any field that sets the document style', (
     font: { sizePt: 12 }, page: { paper: 'A4', orientation: 'portrait' }, writingMode: 'horizontal', columnFormat: { gapMm: 5 }, pageNumber: { position: 'bottom-center' }, typesetting: { kinsoku: true } })) {
     assert.throws(() => validateCatalog(catalog({ [key]: value })), new RegExp(`styleSource cannot combine with ${key}|\\$\\.samples`), key);
   }
-  assert.throws(() => validateCatalog({ ...catalog({}), samples: [{ ...catalog({}).samples[0], document: { kind: 'paragraphs', text: 'a\nb', styleSource: 'new-document', paragraphFormats: [{ paragraph: 0, alignment: 'center' }] } }] }), /must match exactly one supported structure/);
+  assert.throws(() => validateCatalog({ ...catalog({}), samples: [{ ...catalog({}).samples[0], document: { kind: 'paragraphs', text: 'a\nb', styleSource: 'new-document', paragraphFormats: [{ paragraph: 0, alignment: 'center' }] } }] }), { message: '$.samples[0].document: unknown field styleSource' });
   assert.throws(() => validateCatalog(catalog({ style: { chars: 40, lines: 40, marginTop: 30, marginBottom: 30, marginLeft: 30, marginRight: 30, layoutPriority: 'counts' } })), /styleSource cannot combine with style: each sets the document style/);
-  assert.throws(() => validateCatalog(catalog({ styleSource: 'template' })), /must match exactly one supported structure/);
+  assert.throws(() => validateCatalog(catalog({ styleSource: 'template' })), { message: '$.samples[0].document.styleSource: must be one of new-document' });
 });
 
 test('the internal recipe refuses defaults, settings and features next to styleSource', () => {

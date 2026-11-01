@@ -13,7 +13,7 @@
           "value": "たいしょう"
         },
         {
-          "property": "document.font.sizePt",
+          "property": "font.sizePt",
           "value": 12
         }
       ],

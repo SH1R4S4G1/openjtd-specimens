@@ -20,21 +20,61 @@ export function assertSupportedSchema(schema) {
   }
 }
 
+const schemaError = (location, message) => Object.assign(new Error(`${location}: ${message}`),
+  {code: 'ERR_SAMPLE_SCHEMA', path: location});
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const refTarget = (ref, root) => {
+  const match = /^#\/\$defs\/([A-Za-z0-9_-]+)$/.exec(ref);
+  return match && Object.hasOwn(root.$defs ?? {}, match[1]) ? root.$defs[match[1]] : undefined;
+};
+
+// Properties a oneOf branch fixes with const, following $ref (own properties win).
+function constProperties(branch, root, seen = new Set()) {
+  const result = new Map();
+  for (const [name, child] of Object.entries(branch.properties ?? {})) if (Object.hasOwn(child, 'const')) result.set(name, child.const);
+  const target = branch.$ref && !seen.has(branch.$ref) ? refTarget(branch.$ref, root) : undefined;
+  if (target) for (const [name, value] of constProperties(target, root, new Set([...seen, branch.$ref]))) if (!result.has(name)) result.set(name, value);
+  return result;
+}
+
+// The discriminator of a oneOf: the first property that every branch fixes
+// with a const of its own, all different (document.kind, annotation.capability).
+export function oneOfDiscriminator(branches, root) {
+  const maps = branches.map(branch => constProperties(branch, root));
+  for (const name of maps[0]?.keys() ?? []) {
+    if (!maps.every(map => map.has(name))) continue;
+    const values = maps.map(map => map.get(name));
+    if (new Set(values.map(item => JSON.stringify(item))).size === values.length) return {name, values};
+  }
+  return undefined;
+}
+
+// No branch matched. With a discriminator, report the error of the branch the
+// value names, or list the supported values; otherwise the caller keeps the
+// general message.
+function explainNoMatch(value, branches, root, location) {
+  const key = oneOfDiscriminator(branches, root);
+  if (!key || value === null || typeof value !== 'object' || Array.isArray(value) || !Object.hasOwn(value, key.name)) return;
+  const index = key.values.findIndex(item => same(item, value[key.name]));
+  if (index >= 0) { validateSchema(value, branches[index], root, location); return; }
+  const label = item => typeof item === 'string' ? item : JSON.stringify(item);
+  throw schemaError(`${location}.${key.name}`, `unknown ${key.name} ${JSON.stringify(value[key.name])}; supported: ${key.values.map(label).join(', ')}`);
+}
+
 export function validateSchema(value, schema, root = schema, location = '$') {
-  const fail = message => { throw Object.assign(new Error(`${location}: ${message}`),
-    {code: 'ERR_SAMPLE_SCHEMA', path: location}); };
+  const fail = message => { throw schemaError(location, message); };
   if (schema.$ref) {
-    const match = /^#\/\$defs\/([A-Za-z0-9_-]+)$/.exec(schema.$ref);
-    if (!match || !Object.hasOwn(root.$defs ?? {}, match[1])) fail('unresolved schema reference');
-    validateSchema(value, root.$defs[match[1]], root, location);
+    const target = refTarget(schema.$ref, root);
+    if (!target) fail('unresolved schema reference');
+    validateSchema(value, target, root, location);
   }
   if (schema.oneOf) {
     const matches = schema.oneOf.filter(branch => {
       try { validateSchema(value, branch, root, location); return true; } catch { return false; }
     });
+    if (matches.length === 0) explainNoMatch(value, schema.oneOf, root, location);
     if (matches.length !== 1) fail('must match exactly one supported structure (check kind/capability, required fields, unknown fields and parameter bounds)');
   }
-  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   if (Object.hasOwn(schema, 'const') && !same(value, schema.const)) fail(`must equal ${JSON.stringify(schema.const)}`);
   if (schema.enum && !schema.enum.some(item => same(value, item))) fail(`must be one of ${schema.enum.join(', ')}`);
   const types = Array.isArray(schema.type) ? schema.type : schema.type ? [schema.type] : [];

@@ -9,7 +9,7 @@
       "feature": "document-font",
       "expected": [
         {
-          "property": "document.font.sizePt",
+          "property": "font.sizePt",
           "value": 10.5
         }
       ],
@@ -28,7 +28,7 @@
       "feature": "document-font",
       "expected": [
         {
-          "property": "document.font.sizePt",
+          "property": "font.sizePt",
           "value": 12
         }
       ],

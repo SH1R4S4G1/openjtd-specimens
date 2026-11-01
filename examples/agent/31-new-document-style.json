@@ -65,7 +65,7 @@
       "testIntent": "comparison",
       "expected": [
         {
-          "property": "document.style.chars",
+          "property": "style.chars",
           "value": 40
         }
       ],

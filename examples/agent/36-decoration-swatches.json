@@ -1,0 +1,2467 @@
+{
+  "schemaVersion": 1,
+  "id": "decoration-swatches",
+  "samples": [
+    {
+      "id": "underline-01-08",
+      "title": "下線 1〜8",
+      "purpose": "下線の番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に下線の番号1〜8を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].underline",
+          "value": 1
+        },
+        {
+          "property": "range[7:11].underline",
+          "value": 2
+        },
+        {
+          "property": "range[13:17].underline",
+          "value": 3
+        },
+        {
+          "property": "range[19:23].underline",
+          "value": 4
+        },
+        {
+          "property": "range[25:29].underline",
+          "value": 5
+        },
+        {
+          "property": "range[31:35].underline",
+          "value": 6
+        },
+        {
+          "property": "range[37:41].underline",
+          "value": 7
+        },
+        {
+          "property": "range[43:47].underline",
+          "value": 8
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 1,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 2,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 3,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 4,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 5,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 6,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 7,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 8,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "underline-09-15",
+      "title": "下線 9〜15",
+      "purpose": "下線の番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に下線の番号9〜15を付ける（行頭の全角数字は行の順番で、番号ではない）。8行目は装飾なし。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].underline",
+          "value": 9
+        },
+        {
+          "property": "range[7:11].underline",
+          "value": 10
+        },
+        {
+          "property": "range[13:17].underline",
+          "value": 11
+        },
+        {
+          "property": "range[19:23].underline",
+          "value": 12
+        },
+        {
+          "property": "range[25:29].underline",
+          "value": 13
+        },
+        {
+          "property": "range[31:35].underline",
+          "value": 14
+        },
+        {
+          "property": "range[37:41].underline",
+          "value": 15
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 9,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 10,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 11,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 12,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 13,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 14,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "underline": 15,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-001-008",
+      "title": "塗りつぶし 1〜8",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号1〜8を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 1
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 2
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 3
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 4
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 5
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 6
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 7
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 8
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 1,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 2,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 3,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 4,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 5,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 6,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 7,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 8,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-009-016",
+      "title": "塗りつぶし 9〜16",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号9〜16を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 9
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 10
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 11
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 12
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 13
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 14
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 15
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 16
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 9,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 10,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 11,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 12,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 13,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 14,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 15,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 16,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-017-024",
+      "title": "塗りつぶし 17〜24",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号17〜24を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 17
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 18
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 19
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 20
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 21
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 22
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 23
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 24
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 17,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 18,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 19,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 20,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 21,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 22,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 23,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 24,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-025-032",
+      "title": "塗りつぶし 25〜32",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号25〜32を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 25
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 26
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 27
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 28
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 29
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 30
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 31
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 32
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 25,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 26,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 27,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 28,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 29,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 30,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 31,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 32,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-033-040",
+      "title": "塗りつぶし 33〜40",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号33〜40を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 33
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 34
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 35
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 36
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 37
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 38
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 39
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 40
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 33,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 34,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 35,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 36,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 37,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 38,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 39,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 40,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-041-048",
+      "title": "塗りつぶし 41〜48",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号41〜48を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 41
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 42
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 43
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 44
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 45
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 46
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 47
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 48
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 41,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 42,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 43,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 44,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 45,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 46,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 47,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 48,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-049-056",
+      "title": "塗りつぶし 49〜56",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号49〜56を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 49
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 50
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 51
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 52
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 53
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 54
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 55
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 56
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 49,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 50,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 51,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 52,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 53,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 54,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 55,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 56,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-057-064",
+      "title": "塗りつぶし 57〜64",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号57〜64を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 57
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 58
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 59
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 60
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 61
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 62
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 63
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 64
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 57,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 58,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 59,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 60,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 61,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 62,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 63,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 64,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-065-072",
+      "title": "塗りつぶし 65〜72",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号65〜72を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 65
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 66
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 67
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 68
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 69
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 70
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 71
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 72
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 65,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 66,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 67,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 68,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 69,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 70,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 71,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 72,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-073-080",
+      "title": "塗りつぶし 73〜80",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号73〜80を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 73
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 74
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 75
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 76
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 77
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 78
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 79
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 80
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 73,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 74,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 75,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 76,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 77,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 78,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 79,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 80,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-081-088",
+      "title": "塗りつぶし 81〜88",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号81〜88を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 81
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 82
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 83
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 84
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 85
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 86
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 87
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 88
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 81,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 82,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 83,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 84,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 85,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 86,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 87,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 88,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-089-096",
+      "title": "塗りつぶし 89〜96",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号89〜96を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 89
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 90
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 91
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 92
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 93
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 94
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 95
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 96
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 89,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 90,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 91,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 92,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 93,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 94,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 95,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 96,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-097-104",
+      "title": "塗りつぶし 97〜104",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号97〜104を付ける（行頭の全角数字は行の順番で、番号ではない）。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 97
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 98
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 99
+        },
+        {
+          "property": "range[19:23].fill",
+          "value": 100
+        },
+        {
+          "property": "range[25:29].fill",
+          "value": 101
+        },
+        {
+          "property": "range[31:35].fill",
+          "value": 102
+        },
+        {
+          "property": "range[37:41].fill",
+          "value": 103
+        },
+        {
+          "property": "range[43:47].fill",
+          "value": 104
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 97,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 98,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 99,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 19,
+              "end": 23,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 100,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 25,
+              "end": 29,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 101,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 31,
+              "end": 35,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 102,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 37,
+              "end": 41,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 103,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 43,
+              "end": 47,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 104,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fill-105-107",
+      "title": "塗りつぶし 105〜107",
+      "purpose": "塗りつぶしの番号ごとの見た目をPDFで確かめる見本。1行目から順に、各行の「見本文字」に塗りつぶしの番号105〜107を付ける（行頭の全角数字は行の順番で、番号ではない）。4〜8行目は装飾なし。飾り色は黒。",
+      "feature": "character-decoration",
+      "expected": [
+        {
+          "property": "range[1:5].fill",
+          "value": 105
+        },
+        {
+          "property": "range[7:11].fill",
+          "value": 106
+        },
+        {
+          "property": "range[13:17].fill",
+          "value": 107
+        }
+      ],
+      "document": {
+        "kind": "text",
+        "text": "１見本文字\n２見本文字\n３見本文字\n４見本文字\n５見本文字\n６見本文字\n７見本文字\n８見本文字",
+        "annotations": [
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 1,
+              "end": 5,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 105,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 7,
+              "end": 11,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 106,
+              "color": "R0G0B0"
+            }
+          },
+          {
+            "capability": "character-decoration",
+            "range": {
+              "start": 13,
+              "end": 17,
+              "text": "見本文字"
+            },
+            "parameters": {
+              "fill": 107,
+              "color": "R0G0B0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "table-line-01",
+      "title": "罫線表の線種 1",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種1・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 1
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 1,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-02",
+      "title": "罫線表の線種 2",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種2・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 2
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 2,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-03",
+      "title": "罫線表の線種 3",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種3・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 3
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 3,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-04",
+      "title": "罫線表の線種 4",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種4・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 4
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 4,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-05",
+      "title": "罫線表の線種 5",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種5・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 5
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 5,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-06",
+      "title": "罫線表の線種 6",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種6・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 6
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 6,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-07",
+      "title": "罫線表の線種 7",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種7・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 7
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 7,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-08",
+      "title": "罫線表の線種 8",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種8・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 8
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 8,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-09",
+      "title": "罫線表の線種 9",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種9・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 9
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 9,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-10",
+      "title": "罫線表の線種 10",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種10・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 10
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 10,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-11",
+      "title": "罫線表の線種 11",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種11・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 11
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 11,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-12",
+      "title": "罫線表の線種 12",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種12・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 12
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 12,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-13",
+      "title": "罫線表の線種 13",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種13・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 13
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 13,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-14",
+      "title": "罫線表の線種 14",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種14・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 14
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 14,
+        "color": "R0G0B0"
+      }
+    },
+    {
+      "id": "table-line-15",
+      "title": "罫線表の線種 15",
+      "purpose": "罫線表の線種の番号ごとの見た目をPDFで確かめる見本。2×2の罫線表を線種15・黒で描く。",
+      "feature": "keisen-table",
+      "expected": [
+        {
+          "property": "table.lineType",
+          "value": 15
+        }
+      ],
+      "document": {
+        "kind": "keisen-table",
+        "rows": 2,
+        "columns": 2,
+        "lineType": 15,
+        "color": "R0G0B0"
+      }
+    }
+  ]
+}

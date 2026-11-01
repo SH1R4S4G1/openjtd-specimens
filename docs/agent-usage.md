@@ -1,12 +1,12 @@
 # AIエージェントの実行経路と既存Recipe
 
-## 現行の標準経路: MacroAdapter / CLI
+## 標準の経路と開発用の経路
 
-OpenJTD側AIの入口は [試料要求仕様](sample-request-spec.md)、Windows側AIの入口は [実行ガイド](execution-agent-guide.md) です。Catalogをvalidate/compileした後、既存Execution Recipeを `node bin/ichitaro-macro.mjs <recipe.json> runs` に渡すと、一太郎による生成・保存・再読込検証まで自動実行します。画面操作は使いません。詳細は [macro-adapter.md](macro-adapter.md) を参照してください。
+OpenJTD側AIの入口は [試料要求仕様](sample-request-spec.md)、Windows側AIの入口は [実行ガイド](execution-agent-guide.md) です。標準の経路は `ichitaro-request` です。Sample Catalogをvalidate・compileし、一太郎で全試料を生成・保存・再読込検証します（`node bin/ichitaro-request.mjs <catalog.json> <new-compile-directory> runs`）。画面操作は使いません。
 
 このツールは、正規の一太郎を通じた試料作成と、要求値・観測値・JTD の対応付けを支援します。Node.js 22 以上で動作し、外部 npm パッケージは必要ありません。
 
-`ichitaro.mjs` のplan/verify/reportは計画・整合性検査用で、生成は `ichitaro-macro.mjs` が担当します。画面操作で試料を作っていた旧経路（Workbench）は 0.21.0 で削除しました（[開発者ガイド](developer-guide.md)）。
+`ichitaro.mjs` のplan/verify/reportは計画・整合性検査用です。`ichitaro-macro`（`node bin/ichitaro-macro.mjs <recipe.json> runs`）は内部形式のExecution Recipeを直接実行する開発用コマンドで、互換性は保証されません（[README](../README.md) の「内部形式と観測」、[macro-adapter.md](macro-adapter.md)）。以下の「既存Execution Recipeの計画を確認する」「レシピの形式」の2節は、その開発用の経路で扱うRecipeの説明です。「記録の確認」のverify・reportは、どちらの経路のrunにも使えます。画面操作で試料を作っていた旧経路（Workbench）は 0.21.0 で削除しました（[開発者ガイド](developer-guide.md)）。
 
 ## 既存Execution Recipeの計画を確認する
 
