@@ -30,7 +30,7 @@ Catalog の検証（`validate`）とコンパイル（`compile`）は macOS や 
 ```sh
 mkdir -p tmp
 node bin/ichitaro.mjs validate examples/agent/01-minimal.json
-node bin/ichitaro.mjs compile examples/agent/01-minimal.json tmp/minimal-compile
+node bin/ichitaro.mjs compile examples/agent/01-minimal.json tmp/01-minimal
 ```
 
 ## 必要な環境
@@ -49,15 +49,15 @@ node bin/ichitaro.mjs compile examples/agent/01-minimal.json tmp/minimal-compile
 ```powershell
 mkdir tmp, output
 node bin/ichitaro.mjs validate examples/agent/01-minimal.json
-node bin/ichitaro-request.mjs examples/agent/01-minimal.json tmp/minimal-request runs --pdf
-node bin/ichitaro-package.mjs tmp/minimal-request output/minimal-request
+node bin/ichitaro-request.mjs examples/agent/01-minimal.json tmp/01-minimal runs --pdf
+node bin/ichitaro-package.mjs tmp/01-minimal output/01-minimal
 ```
 
-`examples/agent/` の Sample Catalog はどれでも手順は同じです（`01-minimal.json` は本文だけの試料 1 件、ほかはフォント・ルビ・罫線表などの例。`33-pdf-from-jtd.json` だけは PDF Catalog で、後述の `ichitaro-pdf` で処理します）。`tmp/minimal-request` と `output/minimal-request` には、**まだ存在しない新しいディレクトリ**を指定します（既に存在する場合はエラーになります）。親ディレクトリの `tmp/` と `output/` はあらかじめ作成しておいてください（いずれも Git の追跡対象外です）。
+`examples/agent/` の Sample Catalog はどれでも手順は同じです（`01-minimal.json` は本文だけの試料 1 件、ほかはフォント・ルビ・罫線表などの例。`33-pdf-from-jtd.json` だけは PDF Catalog で、後述の `ichitaro-pdf` で処理します）。`tmp/01-minimal` と `output/01-minimal` には、**まだ存在しない新しいディレクトリ**を指定します（名前は Catalog に合わせて付け替えます。既に存在する場合はエラーになります）。親ディレクトリの `tmp/` と `output/` はあらかじめ作成しておいてください（いずれも Git の追跡対象外です）。
 
 * **`validate`**: JSON Schema・対応機能・意味的制約を検査します。一太郎は起動しません。
 
-* **`ichitaro-request`**: Catalog を内部形式の Recipe にコンパイルし（出力先は新規ディレクトリ）、試料ごとに一太郎を起動して「基準文書（baseline）」と「要求文書」の 2 つの JTD（対照用の `control` を指定した試料では 3 つ）を作成します。さらに読み戻し結果を照合し、`--pdf` 指定時は JTD から PDF も出力します。全体の集計結果は `tmp/minimal-request/execution-results.json` に、各実行（run）の詳細データは `runs/<run-id>/` に保存されます。読み戻し結果が一致しなかった試料は記録を残して次の試料へ進みますが、結果が確定しないタイムアウトやマクロエラーが発生した場合はその時点で停止します。全試料が `verified`（検証済み）にならなかった場合や、`--pdf` 指定時に PDF が出力されない試料があった場合、終了コードは `0` 以外になります。
+* **`ichitaro-request`**: Catalog を内部形式の Recipe にコンパイルし（出力先は新規ディレクトリ）、試料ごとに一太郎を起動して「基準文書（baseline）」と「要求文書」の 2 つの JTD（対照用の `control` を指定した試料では 3 つ）を作成します。さらに読み戻し結果を照合し、`--pdf` 指定時は JTD から PDF も出力します。全体の集計結果は `tmp/01-minimal/execution-results.json` に、各実行（run）の詳細データは `runs/<run-id>/` に保存されます。読み戻し結果が一致しなかった試料は記録を残して次の試料へ進みますが、結果が確定しないタイムアウトやマクロエラーが発生した場合はその時点で停止します。全試料が `verified`（検証済み）にならなかった場合や、`--pdf` 指定時に PDF が出力されない試料があった場合、終了コードは `0` 以外になります。
 
 * **`ichitaro-package`**: 生成された run を再検証し、JTD・PDF・各種記録を 1 つのフォルダにまとめてコピーしたうえで `package-manifest.json` を作成します。このフォルダが OpenJTD 側へ受け渡すパッケージ単位になります。
 
