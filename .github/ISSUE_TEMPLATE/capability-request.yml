@@ -1,0 +1,50 @@
+name: 能力の追加の提案
+description: Sample Catalog で今は作れない文書の種類や設定を、作れるようにする提案
+title: "[能力] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        このツールが作れる文書の種類と設定（能力）を増やす提案です。書く前に [capabilities.json](https://github.com/SH1R4S4G1/openjtd-specimens/blob/main/capabilities.json) と [Sample Catalog 仕様](https://github.com/SH1R4S4G1/openjtd-specimens/blob/main/docs/sample-request-spec.md) で、今の能力に含まれていないことを確かめてください。
+
+        例の Catalog は提案の形を示すためのもので、この Issue から試料を作って返す仕組みではありません。
+
+        採否と時期は作者が決めます（応じる義務はありません）。状態（accepted / declined / implemented とその版）は、作者がコメントで追記します。
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景
+      description: なぜ要るか。手作業で作っている試料の種類と件数など。
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 欲しい最終状態
+      description: 一太郎の文書として何ができていればよいか。操作手順やマクロは書かないでください。
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 受け入れ条件
+      description: 提案する能力が働いたと言える条件。保存値（JTD）・参照 PDF・読み戻し（getter）のどれで、何が一致すればよいか。
+    validations:
+      required: true
+  - type: textarea
+    id: catalog
+    attributes:
+      label: 例の Catalog
+      description: >-
+        提案する指定の形（JSON）。今の Schema にないフィールドは、JSON の前後の文か
+        `"_note": "提案"` のような欄で「提案」と明記してください。正式な Schema は作者が決めます。
+    validations:
+      required: false
+  - type: textarea
+    id: questions
+    attributes:
+      label: 質問
+      description: 分からない点。
+    validations:
+      required: false

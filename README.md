@@ -16,7 +16,7 @@
 
 * 本ツールで作成した試料には、元になった Sample Catalog（または PDF Catalog）が出力の一部として残ります（`request.json` と、そのハッシュと版を記録した `compilation.json`）。この記録は corpus 側の要件ではありません。Sample Catalog は試料を作成したときの設定そのものなので、これがあれば同じ条件の試料を一太郎で作り直すことができ、spec が `reproduced` の根拠に求めるもののうち、作成手順と道具・版と再現手段を提供します（変えた変数と結果は、試料の組と観測の側で示します）。PDF Catalog は、どの JTD ファイルから PDF を出力したかの記録です（入力用の JTD は Catalog 作成者が用意します）。
 
-* このリポジトリの Issue では、対応機能の追加提案と不具合報告を受け付けています。現在対応している機能は [capabilities.json](capabilities.json) を、Sample Catalog の書き方は[仕様書](docs/sample-request-spec.md)・[JSON Schema](schemas/sample-catalog.schema.json)・[サンプル集](examples/agent)を参照してください。
+* このリポジトリの Issue では、対応機能の追加提案と不具合報告を受け付けています。現在対応している機能は [capabilities.json](capabilities.json) を、Sample Catalog の書き方は[仕様書](docs/sample-request-spec.md)・[JSON Schema](schemas/sample-catalog.schema.json)・[サンプル集](examples/agent)を参照してください。能力の追加の提案は、[Issue テンプレート](.github/ISSUE_TEMPLATE/capability-request.yml)の節（背景、欲しい最終状態、受け入れ条件、例の Catalog、質問）に沿って書いてください。不具合の報告にも[テンプレート](.github/ISSUE_TEMPLATE/bug-report.yml)があります。
 
 ## 読者別の入口
 

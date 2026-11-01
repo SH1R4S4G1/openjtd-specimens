@@ -1,0 +1,52 @@
+name: 不具合の報告
+description: コマンドが想定どおりに動かない、記録や文書が要求と違う
+title: "[不具合] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        JTD や PDF、run の記録を添えるときは、含まれる本文や設定が公開してよいものかを確かめてください。
+  - type: textarea
+    id: steps
+    attributes:
+      label: 実行したコマンド
+      render: powershell
+    validations:
+      required: true
+  - type: textarea
+    id: catalog
+    attributes:
+      label: 使った Catalog
+      description: "`examples/agent/` のどれか、または Catalog の内容（公開してよいものに限る）。"
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 何が起きたか
+      description: エラーの文言、終了コード、`execution-results.json` や `manifest.json` の該当部分。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待したこと
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: ツールの版
+      description: "`package.json` の `version`、または出力の `compilation.json` の `applicationVersion`。"
+      placeholder: "0.x.y"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 環境
+      description: Windows の版、Node.js の版、一太郎の版。
+      placeholder: "Windows 11、Node.js 22.x、一太郎 2026"
+    validations:
+      required: true
