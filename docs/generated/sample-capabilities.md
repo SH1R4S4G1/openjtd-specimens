@@ -4,7 +4,7 @@
 
 直接編集禁止。コード上の能力定義・公開バインディングと正式JSON Schemaから生成します。更新: `node scripts/generate-capabilities.mjs`。
 
-Application: <code>0.22.3</code> / Catalog schema: <code>1</code>
+Application: <code>0.22.4</code> / Catalog schema: <code>1</code>
 
 [概念・書き方・検証](../sample-request-spec.md) / [機械一覧](../../capabilities.json) / [正式Schema](../../schemas/sample-catalog.schema.json) / [内部パラメータの公開対応表](parameter-exposure.md)
 
@@ -191,7 +191,7 @@ document kind: <code>text</code> / 指定場所: <code>document</code>
 | <code>pageNumber.position</code> | string | 必須 | <code>"none"</code>, <code>"bottom-left"</code>, <code>"bottom-center"</code>, <code>"bottom-right"</code>, <code>"top-left"</code>, <code>"top-center"</code>, <code>"top-right"</code> | — | — |
 | <code>pageNumber.marginMm</code> | number | 任意（親指定時） | — | <code>minimum=0</code><br><code>maximum=50</code> | — |
 | <code>pageNumber.start</code> | integer | 任意（親指定時） | — | <code>minimum=-9</code><br><code>maximum=10000</code> | — |
-| <code>pageNumber.decoration</code> | string | 任意（親指定時） | — | <code>minLength=1</code><br><code>maxLength=16</code><br><code>pattern="^[ -~]+$(?![sS])"</code> | — |
+| <code>pageNumber.decoration</code> | string | 任意（親指定時） | — | <code>minLength=1</code><br><code>maxLength=16</code><br><code>pattern="^[ -~]+$(?![\\s\\S])"</code> | — |
 | <code>typesetting</code> | object | 任意（親指定時） | — | <code>minProperties=1</code><br><code>additionalProperties=false</code> | — |
 | <code>typesetting.justification</code> | boolean | 任意（親指定時） | — | — | — |
 | <code>typesetting.kinsoku</code> | boolean | 任意（親指定時） | — | — | — |
@@ -654,7 +654,7 @@ document kind: <code>paragraphs</code> / 指定場所: <code>document.pageNumber
 | <code>position</code> | string | 必須 | <code>"none"</code>, <code>"bottom-left"</code>, <code>"bottom-center"</code>, <code>"bottom-right"</code>, <code>"top-left"</code>, <code>"top-center"</code>, <code>"top-right"</code> | — | — |
 | <code>marginMm</code> | number | 任意（親指定時） | — | <code>minimum=0</code><br><code>maximum=50</code> | — |
 | <code>start</code> | integer | 任意（親指定時） | — | <code>minimum=-9</code><br><code>maximum=10000</code> | — |
-| <code>decoration</code> | string | 任意（親指定時） | — | <code>minLength=1</code><br><code>maxLength=16</code><br><code>pattern="^[ -~]+$(?![sS])"</code> | — |
+| <code>decoration</code> | string | 任意（親指定時） | — | <code>minLength=1</code><br><code>maxLength=16</code><br><code>pattern="^[ -~]+$(?![\\s\\S])"</code> | — |
 
 制限:
 
@@ -760,7 +760,7 @@ document kind: <code>paragraphs</code> / 指定場所: <code>document.frames[]</
 | parameter / field | 型 | 必須 / 任意 | enum / const | 値域・構造制約 | 条件 |
 |---|---|---|---|---|---|
 | <code>.</code> | object | 必須 | — | <code>additionalProperties=false</code> | — |
-| <code>name</code> | string | 必須 | — | <code>pattern="^[a-z][a-z0-9-]{0,31}$(?![sS])"</code> | — |
+| <code>name</code> | string | 必須 | — | <code>pattern="^[a-z][a-z0-9-]{0,31}$(?![\\s\\S])"</code> | — |
 | <code>left</code> | number | 必須 | — | <code>minimum=10</code><br><code>maximum=190</code> | — |
 | <code>top</code> | number | 必須 | — | <code>minimum=10</code><br><code>maximum=280</code> | — |
 | <code>width</code> | number | 必須 | — | <code>minimum=20</code><br><code>maximum=150</code> | — |
@@ -821,7 +821,7 @@ document kind: <code>paragraphs</code> / 指定場所: <code>document.styles.def
 |---|---|---|---|---|---|
 | <code>.</code> | object | 必須 | — | <code>additionalProperties=false</code> | — |
 | <code>kind</code> | string | 必須 | <code>"character"</code>, <code>"paragraph"</code> | — | — |
-| <code>name</code> | string | 必須 | — | <code>pattern="^[A-Za-z][A-Za-z0-9]{0,15}$(?![sS])"</code> | — |
+| <code>name</code> | string | 必須 | — | <code>pattern="^[A-Za-z][A-Za-z0-9]{0,15}$(?![\\s\\S])"</code> | — |
 | <code>sizePt</code> | number | 必須 | — | <code>minimum=6</code><br><code>maximum=36</code> | — |
 
 制限:

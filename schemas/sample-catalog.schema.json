@@ -547,7 +547,7 @@
           "minLength": 1,
           "maxLength": 60000,
           "pattern": "^[^\\u0000-\\u0009\\u000b-\\u001f\\u007f\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}\\p{M}]+$(?![\\s\\S])",
-          "description": "1..60000 BMP characters. LF separates nonempty paragraphs; range offsets count the LF as one character and a range stays inside one paragraph. Up to 2000 characters, multi-paragraph text is read back character by character (horizontal writing only). Over 2000 characters (CR-003) the text is horizontal with at most 1000 paragraphs; annotations are read back character by character only in the paragraphs that hold them (at most 2000 characters in total), and the whole text is checked by the joined GetString lines, the line split at every paragraph end and a paragraph walk (first and last character and end of each paragraph), not character by character."
+          "description": "1..60000 BMP characters without U+0000..U+0009, U+000B..U+001F, U+007F or combining marks (LF, U+000A, is allowed). LF separates nonempty paragraphs; range offsets count the LF as one character and a range stays inside one paragraph. Up to 2000 characters, multi-paragraph text is read back character by character (horizontal writing only). Over 2000 characters (CR-003) the text is horizontal with at most 1000 paragraphs; annotations are read back character by character only in the paragraphs that hold them (at most 2000 characters in total), and the whole text is checked by the joined GetString lines, the line split at every paragraph end and a paragraph walk (first and last character and end of each paragraph), not character by character."
         },
         "font": {
           "$ref": "#/$defs/font"
@@ -1423,7 +1423,7 @@
         "name": {
           "type": "string",
           "description": "Frame name: 1..32 characters, a lowercase letter a-z first, then a-z, 0-9 or hyphens",
-          "pattern": "^[a-z][a-z0-9-]{0,31}$(?![sS])"
+          "pattern": "^[a-z][a-z0-9-]{0,31}$(?![\\s\\S])"
         },
         "left": {
           "type": "number",
@@ -1544,8 +1544,8 @@
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z][A-Za-z0-9]{0,15}$(?![sS])",
-          "description": "ASCII style name (avoids Ichitaro system style names)."
+          "pattern": "^[A-Za-z][A-Za-z0-9]{0,15}$(?![\\s\\S])",
+          "description": "ASCII style name: a letter A-Z or a-z first, then up to 15 letters or digits (avoids Ichitaro system style names)."
         },
         "sizePt": {
           "type": "number",
@@ -1571,8 +1571,8 @@
         },
         "style": {
           "type": "string",
-          "pattern": "^[A-Za-z][A-Za-z0-9]{0,15}$(?![sS])",
-          "description": "ASCII style name (avoids Ichitaro system style names)."
+          "pattern": "^[A-Za-z][A-Za-z0-9]{0,15}$(?![\\s\\S])",
+          "description": "ASCII style name: a letter A-Z or a-z first, then up to 15 letters or digits (avoids Ichitaro system style names)."
         }
       },
       "required": [
@@ -1610,8 +1610,8 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 16,
-          "pattern": "^[ -~]+$(?![sS])",
-          "description": "Stored decoration string (Ichitaro default reads \"- ? -\"). How Ichitaro substitutes the number into it is not verified."
+          "pattern": "^[ -~]+$(?![\\s\\S])",
+          "description": "Decoration string of 1..16 printable ASCII characters (U+0020..U+007E), stored as given; Ichitaro's default reads \"- ? -\". How Ichitaro substitutes the number into it is not verified."
         }
       },
       "required": [
@@ -1689,7 +1689,7 @@
           "minLength": 0,
           "maxLength": 200,
           "pattern": "^[^\\s\\p{C}\\p{M}\\uD800-\\uDFFF\\u{10000}-\\u{10FFFF}]*$(?![\\s\\S])",
-          "description": "0..200 BMP characters without whitespace; empty makes a blank line. A long paragraph wraps over several lines; the table starts on the line after the last paragraph. The paragraphs and the table must stay on the first page."
+          "description": "0..200 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned); empty makes a blank line. A long paragraph wraps over several lines; the table starts on the line after the last paragraph. The paragraphs and the table must stay on the first page."
         },
         "sizePt": {
           "type": "number",

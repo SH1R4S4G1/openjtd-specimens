@@ -287,7 +287,7 @@ test('schema errors give the value and the allowed range, and a pattern by its d
   error(v=>v.samples[0].id='Ruby','$.samples[0].id: does not match the required form: Identifier: 1..60 characters, a lowercase letter a-z first, then a-z, 0-9 or hyphens (got "Ruby")');
   error(v=>annotation(v).parameters.reading='よ\tみ','$.samples[0].document.annotations[0].parameters.reading: does not match the required form: Ruby reading: 1..64 BMP characters without U+0000..U+001F, U+007F or combining marks (got "よ\\tみ")');
   // A long description gives its first sentence only.
-  error(v=>v.samples[0].document.text='a\tb','$.samples[0].document.text: does not match the required form: 1..60000 BMP characters (got "a\\tb")');
+  error(v=>v.samples[0].document.text='a\tb','$.samples[0].document.text: does not match the required form: 1..60000 BMP characters without U+0000..U+0009, U+000B..U+001F, U+007F or combining marks (LF, U+000A, is allowed) (got "a\\tb")');
   assert.throws(()=>validateSchema('x',{type:'string',pattern:'^[0-9]+$'}),{message:'$: does not match the required pattern ^[0-9]+$ (got "x")'});
   // Every pattern of the Sample Catalog schema has a description, which accepts the same values as before.
   const missing=[];
@@ -371,6 +371,11 @@ test('table errors name the cell or merge by its request index and position, wit
   error({...structured,merges:[{from:{row:2,column:2},to:{row:1,column:2}}]},'merges[0] (row 2, column 2)-(row 1, column 2): merge needs from at the top-left and at least two cells');
   error({...structured,merges:[{from:{row:2,column:2},to:{row:3,column:3}},{from:{row:1,column:1},to:{row:2,column:2}}]},
     'merges[0] (row 2, column 2)-(row 3, column 3): merges overlap; (row 2, column 2) is already in merges[1] (row 1, column 1)-(row 2, column 2)');
+  // Two merges that share only their top-left cell are an overlap too (the top-left cell owns itself, so coordinates alone did not show it).
+  error({...structured,merges:[{from:{row:1,column:1},to:{row:1,column:2}},{from:{row:1,column:1},to:{row:2,column:1}}]},
+    'merges[1] (row 1, column 1)-(row 2, column 1): merges overlap; (row 1, column 1) is already in merges[0] (row 1, column 1)-(row 1, column 2)');
+  error({...structured,merges:[{from:{row:1,column:1},to:{row:2,column:1}},{from:{row:1,column:1},to:{row:1,column:2}}]},
+    'merges[1] (row 1, column 1)-(row 1, column 2): merges overlap; (row 1, column 1) is already in merges[0] (row 1, column 1)-(row 2, column 1)');
   // Sizes and totals.
   error({...structured,rowHeights:[2,2]},'rowHeights/columnWidths need one entry per row/column (rowHeights has 2 for 3 rows, columnWidths 3 for 3 columns)');
   error({...structured,columnWidths:[6,5,4]},'columnWidths are half-width units and must be even (full-width character boundaries); columnWidths[1] is 5');

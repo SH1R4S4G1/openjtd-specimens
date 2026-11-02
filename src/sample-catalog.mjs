@@ -225,7 +225,7 @@ function compileSample(sample) {
       if (to.row < from.row || to.column < from.column || (to.row === from.row && to.column === from.column)) fail(sample.id, `${where}: merge needs from at the top-left and at least two cells`);
       for (let r = from.row; r <= to.row; r++) for (let c = from.column; c <= to.column; c++) {
         const covered = owner[r - 1][c - 1];
-        if (covered.row !== r || covered.column !== c) fail(sample.id, `${where}: merges overlap; ${cellAt({row:r, column:c})} is already in merges[${covered.merge}] ${mergeAt(merges[covered.merge])}`);
+        if (covered.merge !== undefined) fail(sample.id, `${where}: merges overlap; ${cellAt({row:r, column:c})} is already in merges[${covered.merge}] ${mergeAt(merges[covered.merge])}`);
         owner[r - 1][c - 1] = {row:from.row, column:from.column, merge:position};
       }
       variant.keisenOperations.push({type:'cellMerge', from:{...from}, to:{...to}});

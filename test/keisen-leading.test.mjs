@@ -33,7 +33,7 @@ test('CR-009: leading paragraphs come first in the text and move the canvas down
   assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: 'あ', spacing: { unit: 'mm', before: 12 } }] }), /spacing in mm must be 0..10/);
   assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: 'あ'.repeat(201) }] }), { message: `$.samples[0].document.leadingParagraphs[0].text: string length 201 is outside 0..200 (got "${'あ'.repeat(40)}"…)` });
   assert.throws(() => compile({ ...table, leadingParagraphs: [] }), { message: '$.samples[0].document.leadingParagraphs: array length 0 is outside 1..8' });
-  assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: '空 白' }] }), { message: '$.samples[0].document.leadingParagraphs[0].text: does not match the required form: 0..200 BMP characters without whitespace; empty makes a blank line (got "空 白")' });
+  assert.throws(() => compile({ ...table, leadingParagraphs: [{ text: '空 白' }] }), { message: '$.samples[0].document.leadingParagraphs[0].text: does not match the required form: 0..200 BMP characters without whitespace, combining marks or characters of Unicode category C (control, format, private use, unassigned); empty makes a blank line (got "空 白")' });
 });
 
 test('CR-009: every table coordinate is shifted by the leading lines; sizes are set and every leading line is read back', () => {

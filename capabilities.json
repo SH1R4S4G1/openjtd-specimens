@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sampleCatalogSchemaVersion": 1,
   "pdfCatalogSchemaVersion": 1,
-  "applicationVersion": "0.22.3",
+  "applicationVersion": "0.22.4",
   "capabilities": [
     {
       "id": "plain-text",
